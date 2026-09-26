@@ -1,1 +1,123 @@
-aW1wb3J0IFN3aWZ0VUkKCnN0cnVjdCBDaGFubmVsTWFuYWdlclZpZXc6IFZpZXcgewogICAgQEVudmlyb25tZW50T2JqZWN0IHZhciByZXBvOiBDaGFubmVsUmVwb3NpdG9yeQogICAgQEVudmlyb25tZW50T2JqZWN0IHZhciB0aGVtZU1hbmFnZXI6IFRoZW1lTWFuYWdlcgogICAgQFN0YXRlIHByaXZhdGUgdmFyIHNob3dpbmdBZGRTaGVldCA9IGZhbHNlCiAgICBAU3RhdGUgcHJpdmF0ZSB2YXIgZWRpdGluZ0NoYW5uZWw6IENoYW5uZWw/CiAgICBAU3RhdGUgcHJpdmF0ZSB2YXIgc2hvd2luZ0RlbGV0ZUN1c3RvbUFsZXJ0ID0gZmFsc2UKICAgIEBTdGF0ZSBwcml2YXRlIHZhciBmaWx0ZXJUZXh0ID0gIiIKCiAgICB2YXIgZGlzcGxheWVkQ2hhbm5lbHM6IFtDaGFubmVsXSB7CiAgICAgICAgZmlsdGVyVGV4dC5pc0VtcHR5ID8gcmVwby5jaGFubmVscyA6IHJlcG8uY2hhbm5lbHMuZmlsdGVyIHsKICAgICAgICAgICAgJDAubmFtZS5sb2NhbGl6ZWRDYXNlSW5zZW5zaXRpdmVDb250YWlucyhmaWx0ZXJUZXh0KSB8fCAkMC5jYXRlZ29yeS5sb2NhbGl6ZWRDYXNlSW5zZW5zaXRpdmVDb250YWlucyhmaWx0ZXJUZXh0KQogICAgICAgIH0KICAgIH0KCiAgICB2YXIgYm9keTogc29tZSBWaWV3IHsKICAgICAgICBOYXZpZ2F0aW9uVmlldyB7CiAgICAgICAgICAgIExpc3QgewogICAgICAgICAgICAgICAgU2VjdGlvbihoZWFkZXI6IFRleHQoItil2KzYsdin2KHYp9iqINiz2LHZiti52KkiKS5mb3JlZ3JvdW5kQ29sb3IodGhlbWVNYW5hZ2VyLmN1cnJlbnRUaGVtZS5hY2NlbnRDb2xvcikpIHsKICAgICAgICAgICAgICAgICAgICBCdXR0b24geyBzaG93aW5nQWRkU2hlZXQgPSB0cnVlIH0gbGFiZWw6IHsKICAgICAgICAgICAgICAgICAgICAgICAgTGFiZWwoItil2LbYp9mB2Kkg2YLZhtin2Kkg2KzYr9mK2K/YqSIsIHN5c3RlbUltYWdlOiAicGx1cy5jaXJjbGUuZmlsbCIpLmZvcmVncm91bmRDb2xvcih0aGVtZU1hbmFnZXIuY3VycmVudFRoZW1lLmFjY2VudENvbG9yKQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBCdXR0b24geyBzaG93aW5nRGVsZXRlQ3VzdG9tQWxlcnQgPSB0cnVlIH0gbGFiZWw6IHsKICAgICAgICAgICAgICAgICAgICAgICAgTGFiZWwoItit2LDZgSDYrNmF2YrYuSDYp9mE2YLZhtmI2KfYqiDYp9mE2YXYrti12LXYqSIsIHN5c3RlbUltYWdlOiAidHJhc2guY2lyY2xlLmZpbGwiKS5mb3JlZ3JvdW5kQ29sb3IoLnJlZCkKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgQnV0dG9uIHsgcmVwby5yZXNldFRvQnVuZGxlZERlZmF1bHRzKCkgfSBsYWJlbDogewogICAgICAgICAgICAgICAgICAgICAgICBMYWJlbCgi2KfYs9iq2LnYp9iv2Kkg2KfZhNmC2YbZiNin2Kog2KfZhNin2YHYqtix2KfYttmK2KkiLCBzeXN0ZW1JbWFnZTogImFycm93LmNvdW50ZXJjbG9ja3dpc2UuY2lyY2xlLmZpbGwiKS5mb3JlZ3JvdW5kQ29sb3IoLm9yYW5nZSkKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9Lmxpc3RSb3dCYWNrZ3JvdW5kKENvbG9yKHdoaXRlOiAwLjEpKQoKICAgICAgICAgICAgICAgIFNlY3Rpb24oaGVhZGVyOiBUZXh0KCLYp9mE2YLZhtmI2KfYqiDYp9mE2K3Yp9mE2YrYqSAoXChyZXBvLmNoYW5uZWxzLmNvdW50KSkiKS5mb3JlZ3JvdW5kQ29sb3IodGhlbWVNYW5hZ2VyLmN1cnJlbnRUaGVtZS5hY2NlbnRDb2xvcikpIHsKICAgICAgICAgICAgICAgICAgICBGb3JFYWNoKGRpc3BsYXllZENoYW5uZWxzLCBpZDogXC5pZCkgeyBjaCBpbgogICAgICAgICAgICAgICAgICAgICAgICBIU3RhY2sgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgQnV0dG9uIHsgZWRpdGluZ0NoYW5uZWwgPSBjaCB9IGxhYmVsOiB7IEltYWdlKHN5c3RlbU5hbWU6ICJwZW5jaWwuY2lyY2xlIikuZm9yZWdyb3VuZENvbG9yKHRoZW1lTWFuYWdlci5jdXJyZW50VGhlbWUuYWNjZW50Q29sb3IpIH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuYnV0dG9uU3R5bGUoQm9yZGVybGVzc0J1dHRvblN0eWxlKCkpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBWU3RhY2soYWxpZ25tZW50OiAubGVhZGluZywgc3BhY2luZzogMikgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRleHQoY2gubmFtZSkuZm9udCguc3lzdGVtKHNpemU6IDE1LCB3ZWlnaHQ6IC5ib2xkKSkuZm9yZWdyb3VuZENvbG9yKC53aGl0ZSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBUZXh0KCJcKGNoLmNhdGVnb3J5KSBcKGNoLmlzQ3VzdG9tID8gIuKAoiDZhdiu2LXYtdipIiA6ICIiKSIpLmZvbnQoLnN5c3RlbShzaXplOiAxMikpLmZvcmVncm91bmRDb2xvciguZ3JheSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIFNwYWNlcigpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBCdXR0b24geyByZXBvLmRlbGV0ZUNoYW5uZWwoaWQ6IGNoLmlkKSB9IGxhYmVsOiB7IEltYWdlKHN5c3RlbU5hbWU6ICJ0cmFzaCIpLmZvcmVncm91bmRDb2xvcigucmVkLm9wYWNpdHkoMC44KSkgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5idXR0b25TdHlsZShCb3JkZXJsZXNzQnV0dG9uU3R5bGUoKSkKICAgICAgICAgICAgICAgICAgICAgICAgfS5wYWRkaW5nKC52ZXJ0aWNhbCwgNCkKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9Lmxpc3RSb3dCYWNrZ3JvdW5kKENvbG9yKHdoaXRlOiAwLjA4KSkKICAgICAgICAgICAgfQogICAgICAgICAgICAuYmFja2dyb3VuZCh0aGVtZU1hbmFnZXIuY3VycmVudFRoZW1lLmJhY2tncm91bmREYXJrLmlnbm9yZXNTYWZlQXJlYSgpKQogICAgICAgICAgICAubmF2aWdhdGlvblRpdGxlKCLYpdiv2KfYsdipINin2YTZgtmG2YjYp9iqIikKICAgICAgICAgICAgLnNlYXJjaGFibGUodGV4dDogJGZpbHRlclRleHQsIHByb21wdDogItio2K3YqyDZgdmKINin2YTZgtmG2YjYp9iqLi4uIikKICAgICAgICAgICAgLnNoZWV0KGlzUHJlc2VudGVkOiAkc2hvd2luZ0FkZFNoZWV0KSB7IEFkZENoYW5uZWxTaGVldCgpIH0KICAgICAgICAgICAgLnNoZWV0KGl0ZW06ICRlZGl0aW5nQ2hhbm5lbCkgeyBFZGl0Q2hhbm5lbFNoZWV0KGNoYW5uZWw6ICQwKSB9CiAgICAgICAgICAgIC5hbGVydCgi2K3YsNmBINin2YTZgtmG2YjYp9iqINin2YTZhdiu2LXYtdipIiwgaXNQcmVzZW50ZWQ6ICRzaG93aW5nRGVsZXRlQ3VzdG9tQWxlcnQpIHsKICAgICAgICAgICAgICAgIEJ1dHRvbigi2K3YsNmBIiwgcm9sZTogLmRlc3RydWN0aXZlKSB7IHJlcG8uZGVsZXRlQWxsQ3VzdG9tQ2hhbm5lbHMoKSB9CiAgICAgICAgICAgICAgICBCdXR0b24oItil2YTYutin2KEiLCByb2xlOiAuY2FuY2VsKSB7fQogICAgICAgICAgICB9IG1lc3NhZ2U6IHsgVGV4dCgi2LPZitiq2YUg2K3YsNmBINin2YTZgtmG2YjYp9iqINin2YTYqtmKINij2LbZgdiq2YfYpyDZitiv2YjZitmL2Kcg2YHZgti3LiIpIH0KICAgICAgICB9Lm5hdmlnYXRpb25WaWV3U3R5bGUoLnN0YWNrKQogICAgfQp9CgpzdHJ1Y3QgQWRkQ2hhbm5lbFNoZWV0OiBWaWV3IHsKICAgIEBFbnZpcm9ubWVudChcLmRpc21pc3MpIHByaXZhdGUgdmFyIGRpc21pc3MKICAgIEBFbnZpcm9ubWVudE9iamVjdCB2YXIgcmVwbzogQ2hhbm5lbFJlcG9zaXRvcnkKICAgIEBFbnZpcm9ubWVudE9iamVjdCB2YXIgdGhlbWVNYW5hZ2VyOiBUaGVtZU1hbmFnZXIKICAgIEBTdGF0ZSBwcml2YXRlIHZhciBuYW1lID0gIiIKICAgIEBTdGF0ZSBwcml2YXRlIHZhciB1cmwgPSAiIgogICAgQFN0YXRlIHByaXZhdGUgdmFyIGNhdGVnb3J5ID0gItix2YrYp9i22KkiCiAgICBwcml2YXRlIGxldCBjYXRlZ29yaWVzID0gWyLYsdmK2KfYttipIiwi2KPZgdmE2KfZhSIsItiq2LHZgdmK2YciLCLYo9iu2KjYp9ixIiwi2KPYt9mB2KfZhCIsItmI2KvYp9im2YLZiiIsIti52KfZhSJdCgogICAgdmFyIGJvZHk6IHNvbWUgVmlldyB7CiAgICAgICAgTmF2aWdhdGlvblZpZXcgewogICAgICAgICAgICBGb3JtIHsKICAgICAgICAgICAgICAgIFNlY3Rpb24oItio2YrYp9mG2KfYqiDYp9mE2YLZhtin2KkiKSB7CiAgICAgICAgICAgICAgICAgICAgVGV4dEZpZWxkKCLYp9iz2YUg2KfZhNmC2YbYp9ipIiwgdGV4dDogJG5hbWUpCiAgICAgICAgICAgICAgICAgICAgVGV4dEZpZWxkKCLYsdin2KjYtyDYp9mE2KjYqyAobTN1OCDYo9mIIHRzKSIsIHRleHQ6ICR1cmwpLmF1dG9jYXBpdGFsaXphdGlvbigubm9uZSkuZGlzYWJsZUF1dG9jb3JyZWN0aW9uKHRydWUpCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBTZWN0aW9uKCLYp9mE2KrYtdmG2YrZgSIpIHsKICAgICAgICAgICAgICAgICAgICBQaWNrZXIoItin2YTYqti12YbZitmBIiwgc2VsZWN0aW9uOiAkY2F0ZWdvcnkpIHsgRm9yRWFjaChjYXRlZ29yaWVzLCBpZDogXC5zZWxmKSB7IFRleHQoJDApLnRhZygkMCkgfSB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBCdXR0b24oItit2YHYuCDZiNil2LbYp9mB2Kkg2KfZhNmC2YbYp9ipIikgewogICAgICAgICAgICAgICAgICAgIGxldCBuID0gbmFtZS50cmltbWluZ0NoYXJhY3RlcnMoaW46IC53aGl0ZXNwYWNlc0FuZE5ld2xpbmVzKQogICAgICAgICAgICAgICAgICAgIGxldCB1ID0gdXJsLnRyaW1taW5nQ2hhcmFjdGVycyhpbjogLndoaXRlc3BhY2VzQW5kTmV3bGluZXMpCiAgICAgICAgICAgICAgICAgICAgZ3VhcmQgIW4uaXNFbXB0eSwgIXUuaXNFbXB0eSBlbHNlIHsgcmV0dXJuIH0KICAgICAgICAgICAgICAgICAgICByZXBvLmFkZENoYW5uZWwobmFtZTogbiwgdXJsOiB1LCBjYXRlZ29yeTogY2F0ZWdvcnkpCiAgICAgICAgICAgICAgICAgICAgZGlzbWlzcygpCiAgICAgICAgICAgICAgICB9LmZvcmVncm91bmRDb2xvcih0aGVtZU1hbmFnZXIuY3VycmVudFRoZW1lLmFjY2VudENvbG9yKQogICAgICAgICAgICB9Lm5hdmlnYXRpb25UaXRsZSgi2KXYttin2YHYqSDZgtmG2KfYqSIpLnRvb2xiYXIgeyBUb29sYmFySXRlbShwbGFjZW1lbnQ6IC5jYW5jZWxsYXRpb25BY3Rpb24pIHsgQnV0dG9uKCLYpdmE2LrYp9ihIikgeyBkaXNtaXNzKCkgfSB9IH0KICAgICAgICB9CiAgICB9Cn0KCnN0cnVjdCBFZGl0Q2hhbm5lbFNoZWV0OiBWaWV3IHsKICAgIEBFbnZpcm9ubWVudChcLmRpc21pc3MpIHByaXZhdGUgdmFyIGRpc21pc3MKICAgIEBFbnZpcm9ubWVudE9iamVjdCB2YXIgcmVwbzogQ2hhbm5lbFJlcG9zaXRvcnkKICAgIEBFbnZpcm9ubWVudE9iamVjdCB2YXIgdGhlbWVNYW5hZ2VyOiBUaGVtZU1hbmFnZXIKICAgIGxldCBjaGFubmVsOiBDaGFubmVsCiAgICBAU3RhdGUgcHJpdmF0ZSB2YXIgbmFtZTogU3RyaW5nCiAgICBAU3RhdGUgcHJpdmF0ZSB2YXIgdXJsOiBTdHJpbmcKICAgIEBTdGF0ZSBwcml2YXRlIHZhciBjYXRlZ29yeTogU3RyaW5nCgogICAgaW5pdChjaGFubmVsOiBDaGFubmVsKSB7CiAgICAgICAgc2VsZi5jaGFubmVsID0gY2hhbm5lbAogICAgICAgIF9uYW1lID0gU3RhdGUoaW5pdGlhbFZhbHVlOiBjaGFubmVsLm5hbWUpCiAgICAgICAgX3VybCA9IFN0YXRlKGluaXRpYWxWYWx1ZTogY2hhbm5lbC51cmwpCiAgICAgICAgX2NhdGVnb3J5ID0gU3RhdGUoaW5pdGlhbFZhbHVlOiBjaGFubmVsLmNhdGVnb3J5KQogICAgfQoKICAgIHZhciBib2R5OiBzb21lIFZpZXcgewogICAgICAgIE5hdmlnYXRpb25WaWV3IHsKICAgICAgICAgICAgRm9ybSB7CiAgICAgICAgICAgICAgICBTZWN0aW9uKCLYqti52K/ZitmEINin2YTYqNmK2KfZhtin2KoiKSB7CiAgICAgICAgICAgICAgICAgICAgVGV4dEZpZWxkKCLYp9iz2YUg2KfZhNmC2YbYp9ipIiwgdGV4dDogJG5hbWUpCiAgICAgICAgICAgICAgICAgICAgVGV4dEZpZWxkKCLYsdin2KjYtyDYp9mE2KjYqyIsIHRleHQ6ICR1cmwpLmF1dG9jYXBpdGFsaXphdGlvbigubm9uZSkKICAgICAgICAgICAgICAgICAgICBUZXh0RmllbGQoItin2YTYqti12YbZitmBIiwgdGV4dDogJGNhdGVnb3J5KQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgQnV0dG9uKCLYrdmB2Lgg2KfZhNiq2LnYr9mK2YTYp9iqIikgewogICAgICAgICAgICAgICAgICAgIHJlcG8udXBkYXRlQ2hhbm5lbChpZDogY2hhbm5lbC5pZCwgbmFtZTogbmFtZSwgdXJsOiB1cmwsIGNhdGVnb3J5OiBjYXRlZ29yeSkKICAgICAgICAgICAgICAgICAgICBkaXNtaXNzKCkKICAgICAgICAgICAgICAgIH0uZm9yZWdyb3VuZENvbG9yKHRoZW1lTWFuYWdlci5jdXJyZW50VGhlbWUuYWNjZW50Q29sb3IpCiAgICAgICAgICAgIH0ubmF2aWdhdGlvblRpdGxlKCLYqti52K/ZitmEINin2YTZgtmG2KfYqSIpLnRvb2xiYXIgeyBUb29sYmFySXRlbShwbGFjZW1lbnQ6IC5jYW5jZWxsYXRpb25BY3Rpb24pIHsgQnV0dG9uKCLYpdmE2LrYp9ihIikgeyBkaXNtaXNzKCkgfSB9IH0KICAgICAgICB9CiAgICB9Cn0K
+import SwiftUI
+
+struct ChannelManagerView: View {
+    @EnvironmentObject var repo: ChannelRepository
+    @EnvironmentObject var themeManager: ThemeManager
+    @State private var showingAddSheet = false
+    @State private var editingChannel: Channel?
+    @State private var showingDeleteCustomAlert = false
+    @State private var filterText = ""
+
+    var displayedChannels: [Channel] {
+        filterText.isEmpty ? repo.channels : repo.channels.filter {
+            $0.name.localizedCaseInsensitiveContains(filterText) || $0.category.localizedCaseInsensitiveContains(filterText)
+        }
+    }
+
+    var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("إجراءات سريعة").foregroundColor(themeManager.currentTheme.accentColor)) {
+                    Button { showingAddSheet = true } label: {
+                        Label("إضافة قناة جديدة", systemImage: "plus.circle.fill").foregroundColor(themeManager.currentTheme.accentColor)
+                    }
+                    Button { showingDeleteCustomAlert = true } label: {
+                        Label("حذف جميع القنوات المخصصة", systemImage: "trash.circle.fill").foregroundColor(.red)
+                    }
+                    Button { repo.resetToBundledDefaults() } label: {
+                        Label("استعادة القنوات الافتراضية", systemImage: "arrow.counterclockwise.circle.fill").foregroundColor(.orange)
+                    }
+                }.listRowBackground(Color(white: 0.1))
+
+                Section(header: Text("القنوات الحالية (\(repo.channels.count))").foregroundColor(themeManager.currentTheme.accentColor)) {
+                    ForEach(displayedChannels, id: \.id) { ch in
+                        HStack {
+                            Button { editingChannel = ch } label: { Image(systemName: "pencil.circle").foregroundColor(themeManager.currentTheme.accentColor) }
+                                .buttonStyle(BorderlessButtonStyle())
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(ch.name).font(.system(size: 15, weight: .bold)).foregroundColor(.white)
+                                Text("\(ch.category) \(ch.isCustom ? "• مخصصة" : "")").font(.system(size: 12)).foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Button { repo.deleteChannel(id: ch.id) } label: { Image(systemName: "trash").foregroundColor(.red.opacity(0.8)) }
+                                .buttonStyle(BorderlessButtonStyle())
+                        }.padding(.vertical, 4)
+                    }
+                }.listRowBackground(Color(white: 0.08))
+            }
+            .background(themeManager.currentTheme.backgroundDark.ignoresSafeArea())
+            .navigationTitle("إدارة القنوات")
+            .searchable(text: $filterText, prompt: "بحث في القنوات...")
+            .sheet(isPresented: $showingAddSheet) { AddChannelSheet() }
+            .sheet(item: $editingChannel) { EditChannelSheet(channel: $0) }
+            .alert("حذف القنوات المخصصة", isPresented: $showingDeleteCustomAlert) {
+                Button("حذف", role: .destructive) { repo.deleteAllCustomChannels() }
+                Button("إلغاء", role: .cancel) {}
+            } message: { Text("سيتم حذف القنوات التي أضفتها يدويًا فقط.") }
+        }.navigationViewStyle(.stack)
+    }
+}
+
+struct AddChannelSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var repo: ChannelRepository
+    @EnvironmentObject var themeManager: ThemeManager
+    @State private var name = ""
+    @State private var url = ""
+    @State private var category = "رياضة"
+    private let categories = ["رياضة","أفلام","ترفيه","أخبار","أطفال","وثائقي","عام"]
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("بيانات القناة") {
+                    TextField("اسم القناة", text: $name)
+                    TextField("رابط البث (m3u8 أو ts)", text: $url).autocapitalization(.none).disableAutocorrection(true)
+                }
+                Section("التصنيف") {
+                    Picker("التصنيف", selection: $category) { ForEach(categories, id: \.self) { Text($0).tag($0) } }
+                }
+                Button("حفظ وإضافة القناة") {
+                    let n = name.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let u = url.trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard !n.isEmpty, !u.isEmpty else { return }
+                    repo.addChannel(name: n, url: u, category: category)
+                    dismiss()
+                }.foregroundColor(themeManager.currentTheme.accentColor)
+            }.navigationTitle("إضافة قناة").toolbar { ToolbarItem(placement: .cancellationAction) { Button("إلغاء") { dismiss() } } }
+        }
+    }
+}
+
+struct EditChannelSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var repo: ChannelRepository
+    @EnvironmentObject var themeManager: ThemeManager
+    let channel: Channel
+    @State private var name: String
+    @State private var url: String
+    @State private var category: String
+
+    init(channel: Channel) {
+        self.channel = channel
+        _name = State(initialValue: channel.name)
+        _url = State(initialValue: channel.url)
+        _category = State(initialValue: channel.category)
+    }
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("تعديل البيانات") {
+                    TextField("اسم القناة", text: $name)
+                    TextField("رابط البث", text: $url).autocapitalization(.none)
+                    TextField("التصنيف", text: $category)
+                }
+                Button("حفظ التعديلات") {
+                    repo.updateChannel(id: channel.id, name: name, url: url, category: category)
+                    dismiss()
+                }.foregroundColor(themeManager.currentTheme.accentColor)
+            }.navigationTitle("تعديل القناة").toolbar { ToolbarItem(placement: .cancellationAction) { Button("إلغاء") { dismiss() } } }
+        }
+    }
+}

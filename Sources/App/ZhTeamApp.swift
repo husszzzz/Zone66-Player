@@ -1,1 +1,19 @@
-aW1wb3J0IFN3aWZ0VUkKCkBtYWluCnN0cnVjdCBaaFRlYW1BcHA6IEFwcCB7CiAgICBAU3RhdGVPYmplY3QgcHJpdmF0ZSB2YXIgdGhlbWVNYW5hZ2VyID0gVGhlbWVNYW5hZ2VyLnNoYXJlZAogICAgQFN0YXRlT2JqZWN0IHByaXZhdGUgdmFyIHJlcG9zaXRvcnkgPSBDaGFubmVsUmVwb3NpdG9yeS5zaGFyZWQKICAgIEBTdGF0ZU9iamVjdCBwcml2YXRlIHZhciBzZXR0aW5ncyA9IEFwcFNldHRpbmdzLnNoYXJlZAoKICAgIHZhciBib2R5OiBzb21lIFNjZW5lIHsKICAgICAgICBXaW5kb3dHcm91cCB7CiAgICAgICAgICAgIE1haW5UYWJWaWV3KCkKICAgICAgICAgICAgICAgIC5lbnZpcm9ubWVudE9iamVjdCh0aGVtZU1hbmFnZXIpCiAgICAgICAgICAgICAgICAuZW52aXJvbm1lbnRPYmplY3QocmVwb3NpdG9yeSkKICAgICAgICAgICAgICAgIC5lbnZpcm9ubWVudE9iamVjdChzZXR0aW5ncykKICAgICAgICAgICAgICAgIC5wcmVmZXJyZWRDb2xvclNjaGVtZSguZGFyaykKICAgICAgICAgICAgICAgIC5hY2NlbnRDb2xvcih0aGVtZU1hbmFnZXIuY3VycmVudFRoZW1lLmFjY2VudENvbG9yKQogICAgICAgIH0KICAgIH0KfQo=
+import SwiftUI
+
+@main
+struct ZhTeamApp: App {
+    @StateObject private var themeManager = ThemeManager.shared
+    @StateObject private var repository = ChannelRepository.shared
+    @StateObject private var settings = AppSettings.shared
+
+    var body: some Scene {
+        WindowGroup {
+            MainTabView()
+                .environmentObject(themeManager)
+                .environmentObject(repository)
+                .environmentObject(settings)
+                .preferredColorScheme(.dark)
+                .accentColor(themeManager.currentTheme.accentColor)
+        }
+    }
+}

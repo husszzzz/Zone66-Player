@@ -1,1 +1,105 @@
-aW1wb3J0IFN3aWZ0VUkKCnN0cnVjdCBIb21lVmlldzogVmlldyB7CiAgICBARW52aXJvbm1lbnRPYmplY3QgdmFyIHJlcG86IENoYW5uZWxSZXBvc2l0b3J5CiAgICBARW52aXJvbm1lbnRPYmplY3QgdmFyIHRoZW1lTWFuYWdlcjogVGhlbWVNYW5hZ2VyCiAgICBAU3RhdGUgcHJpdmF0ZSB2YXIgc2VsZWN0ZWRDaGFubmVsOiBDaGFubmVsPwogICAgQFN0YXRlIHByaXZhdGUgdmFyIGFjdGl2ZUNhdGVnb3J5ID0gItin2YTZg9mEIgoKICAgIHZhciBib2R5OiBzb21lIFZpZXcgewogICAgICAgIE5hdmlnYXRpb25WaWV3IHsKICAgICAgICAgICAgU2Nyb2xsVmlldygudmVydGljYWwsIHNob3dzSW5kaWNhdG9yczogZmFsc2UpIHsKICAgICAgICAgICAgICAgIFZTdGFjayhzcGFjaW5nOiAyNCkgewogICAgICAgICAgICAgICAgICAgIEhlcm9CYW5uZXJWaWV3KGFjY2VudENvbG9yOiB0aGVtZU1hbmFnZXIuY3VycmVudFRoZW1lLmFjY2VudENvbG9yKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIHNlbGVjdGVkQ2hhbm5lbCA9IHJlcG8uY2hhbm5lbHMuZmlyc3QKICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIFNjcm9sbFZpZXcoLmhvcml6b250YWwsIHNob3dzSW5kaWNhdG9yczogZmFsc2UpIHsKICAgICAgICAgICAgICAgICAgICAgICAgSFN0YWNrKHNwYWNpbmc6IDEwKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBGb3JFYWNoKHJlcG8uY2F0ZWdvcmllcywgaWQ6IFwuc2VsZikgeyBjYXQgaW4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBCdXR0b24geyBhY3RpdmVDYXRlZ29yeSA9IGNhdCB9IGxhYmVsOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRleHQoY2F0KQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLmZvbnQoLnN5c3RlbShzaXplOiAxMywgd2VpZ2h0OiAuYm9sZCkpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAucGFkZGluZyguaG9yaXpvbnRhbCwgMTYpLnBhZGRpbmcoLnZlcnRpY2FsLCA5KQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLmJhY2tncm91bmQoYWN0aXZlQ2F0ZWdvcnkgPT0gY2F0ID8gdGhlbWVNYW5hZ2VyLmN1cnJlbnRUaGVtZS5hY2NlbnRDb2xvciA6IENvbG9yKHdoaXRlOiAwLjEyKSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5mb3JlZ3JvdW5kQ29sb3IoYWN0aXZlQ2F0ZWdvcnkgPT0gY2F0ID8gLmJsYWNrIDogLndoaXRlKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNsaXBTaGFwZShDYXBzdWxlKCkpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICB9LnBhZGRpbmcoLmhvcml6b250YWwsIDE2KQogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgVlN0YWNrKGFsaWdubWVudDogLnRyYWlsaW5nLCBzcGFjaW5nOiAxNCkgewogICAgICAgICAgICAgICAgICAgICAgICBIU3RhY2sgeyBTcGFjZXIoKTsgVGV4dCgi8J+UpSDYp9mE2KjYq9mI2Ksg2KfZhNmF2YXZitiy2KkiKS5mb250KC5zeXN0ZW0oc2l6ZTogMTksIHdlaWdodDogLmJsYWNrKSkuZm9yZWdyb3VuZENvbG9yKC53aGl0ZSkgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLnBhZGRpbmcoLmhvcml6b250YWwsIDE2KQoKICAgICAgICAgICAgICAgICAgICAgICAgbGV0IGxpc3QgPSByZXBvLmNoYW5uZWxzLmZpbHRlciB7IGFjdGl2ZUNhdGVnb3J5ID09ICLYp9mE2YPZhCIgfHwgJDAuY2F0ZWdvcnkgPT0gYWN0aXZlQ2F0ZWdvcnkgfS5wcmVmaXgoMjApCiAgICAgICAgICAgICAgICAgICAgICAgIExhenlWR3JpZChjb2x1bW5zOiBbR3JpZEl0ZW0oLmZsZXhpYmxlKCksIHNwYWNpbmc6IDEyKSwgR3JpZEl0ZW0oLmZsZXhpYmxlKCksIHNwYWNpbmc6IDEyKV0sIHNwYWNpbmc6IDEyKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBGb3JFYWNoKEFycmF5KGxpc3QpLCBpZDogXC5pZCkgeyBjaCBpbgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENoYW5uZWxDYXJkVmlldyhjaGFubmVsOiBjaCwgYWNjZW50Q29sb3I6IHRoZW1lTWFuYWdlci5jdXJyZW50VGhlbWUuYWNjZW50Q29sb3IpIHsgc2VsZWN0ZWRDaGFubmVsID0gY2ggfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICB9LnBhZGRpbmcoLmhvcml6b250YWwsIDE2KQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0ucGFkZGluZygudmVydGljYWwsIDE2KQogICAgICAgICAgICB9CiAgICAgICAgICAgIC5iYWNrZ3JvdW5kKHRoZW1lTWFuYWdlci5jdXJyZW50VGhlbWUuYmFja2dyb3VuZERhcmsuaWdub3Jlc1NhZmVBcmVhKCkpCiAgICAgICAgICAgIC5uYXZpZ2F0aW9uVGl0bGUoIlpvbmU2NiBUViIpCiAgICAgICAgICAgIC5uYXZpZ2F0aW9uQmFyVGl0bGVEaXNwbGF5TW9kZSguaW5saW5lKQogICAgICAgICAgICAuZnVsbFNjcmVlbkNvdmVyKGl0ZW06ICRzZWxlY3RlZENoYW5uZWwpIHsgQ2luZW1hUGxheWVyVmlldyhjaGFubmVsOiAkMCkgfQogICAgICAgIH0ubmF2aWdhdGlvblZpZXdTdHlsZSguc3RhY2spCiAgICB9Cn0KCnN0cnVjdCBIZXJvQmFubmVyVmlldzogVmlldyB7CiAgICBsZXQgYWNjZW50Q29sb3I6IENvbG9yCiAgICBsZXQgb25QbGF5OiAoKSAtPiBWb2lkCiAgICB2YXIgYm9keTogc29tZSBWaWV3IHsKICAgICAgICBaU3RhY2soYWxpZ25tZW50OiAuYm90dG9tVHJhaWxpbmcpIHsKICAgICAgICAgICAgTGluZWFyR3JhZGllbnQoY29sb3JzOiBbYWNjZW50Q29sb3Iub3BhY2l0eSgwLjQpLCBDb2xvcih3aGl0ZTogMC4wOCldLCBzdGFydFBvaW50OiAudG9wTGVhZGluZywgZW5kUG9pbnQ6IC5ib3R0b21UcmFpbGluZykKICAgICAgICAgICAgVlN0YWNrKGFsaWdubWVudDogLnRyYWlsaW5nLCBzcGFjaW5nOiA4KSB7CiAgICAgICAgICAgICAgICBIU3RhY2sgewogICAgICAgICAgICAgICAgICAgIEhTdGFjayhzcGFjaW5nOiA2KSB7IENpcmNsZSgpLmZpbGwoQ29sb3IucmVkKS5mcmFtZSh3aWR0aDogOCwgaGVpZ2h0OiA4KTsgVGV4dCgi2YXYqNin2LTYsSDYp9mE2KLZhiIpLmZvbnQoLnN5c3RlbShzaXplOiAxMSwgd2VpZ2h0OiAuYmxhY2spKS5mb3JlZ3JvdW5kQ29sb3IoLndoaXRlKSB9CiAgICAgICAgICAgICAgICAgICAgICAgIC5wYWRkaW5nKC5ob3Jpem9udGFsLCAxMCkucGFkZGluZygudmVydGljYWwsIDQpLmJhY2tncm91bmQoQ29sb3IuYmxhY2sub3BhY2l0eSgwLjQpKS5jbGlwU2hhcGUoQ2Fwc3VsZSgpKQogICAgICAgICAgICAgICAgICAgIFNwYWNlcigpCiAgICAgICAgICAgICAgICAgICAgVGV4dCgiWm9uZTY2IExpdmUiKS5mb250KC5zeXN0ZW0oc2l6ZTogMTMsIHdlaWdodDogLmJsYWNrKSkuZm9yZWdyb3VuZENvbG9yKGFjY2VudENvbG9yKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgVGV4dCgi2YXYtNin2YfYr9ipINiz2YrZhtmF2KfYptmK2Kkg2YXYqtmD2KfZhdmE2KkiKS5mb250KC5zeXN0ZW0oc2l6ZTogMjIsIHdlaWdodDogLmJsYWNrKSkuZm9yZWdyb3VuZENvbG9yKC53aGl0ZSkKICAgICAgICAgICAgICAgIFRleHQoItmC2YbZiNin2Kog2YXYqNin2LTYsdipINmF2Lkg2KXYr9in2LHYqSDZiNmF2YHYttmE2Kkg2YjZhdi02LrZhCDZhdiv2YXYrCIpLmZvbnQoLnN5c3RlbShzaXplOiAxMikpLmZvcmVncm91bmRDb2xvciguZ3JheSkKICAgICAgICAgICAgICAgIEJ1dHRvbihhY3Rpb246IG9uUGxheSkgewogICAgICAgICAgICAgICAgICAgIEhTdGFjayhzcGFjaW5nOiA4KSB7IEltYWdlKHN5c3RlbU5hbWU6ICJwbGF5LmZpbGwiKTsgVGV4dCgi2KrYtNi62YrZhCDYp9mE2KjYqyDYp9mE2KLZhiIpLmZvbnQoLnN5c3RlbShzaXplOiAxNCwgd2VpZ2h0OiAuYm9sZCkpIH0KICAgICAgICAgICAgICAgICAgICAgICAgLmZvcmVncm91bmRDb2xvciguYmxhY2spLmZyYW1lKG1heFdpZHRoOiAuaW5maW5pdHkpLnBhZGRpbmcoLnZlcnRpY2FsLCAxMykKICAgICAgICAgICAgICAgICAgICAgICAgLmJhY2tncm91bmQoYWNjZW50Q29sb3IpLmNsaXBTaGFwZShSb3VuZGVkUmVjdGFuZ2xlKGNvcm5lclJhZGl1czogMTQpKQogICAgICAgICAgICAgICAgfS5wYWRkaW5nKC50b3AsIDYpCiAgICAgICAgICAgIH0ucGFkZGluZygxOCkKICAgICAgICB9CiAgICAgICAgLmZyYW1lKGhlaWdodDogMTkwKS5jbGlwU2hhcGUoUm91bmRlZFJlY3RhbmdsZShjb3JuZXJSYWRpdXM6IDIyKSkKICAgICAgICAub3ZlcmxheShSb3VuZGVkUmVjdGFuZ2xlKGNvcm5lclJhZGl1czogMjIpLnN0cm9rZShhY2NlbnRDb2xvci5vcGFjaXR5KDAuMyksIGxpbmVXaWR0aDogMS41KSkKICAgICAgICAucGFkZGluZyguaG9yaXpvbnRhbCwgMTYpCiAgICB9Cn0KCnN0cnVjdCBDaGFubmVsQ2FyZFZpZXc6IFZpZXcgewogICAgbGV0IGNoYW5uZWw6IENoYW5uZWwKICAgIGxldCBhY2NlbnRDb2xvcjogQ29sb3IKICAgIGxldCBvblRhcDogKCkgLT4gVm9pZAogICAgdmFyIGJvZHk6IHNvbWUgVmlldyB7CiAgICAgICAgQnV0dG9uKGFjdGlvbjogb25UYXApIHsKICAgICAgICAgICAgVlN0YWNrKGFsaWdubWVudDogLnRyYWlsaW5nLCBzcGFjaW5nOiA4KSB7CiAgICAgICAgICAgICAgICBIU3RhY2sgewogICAgICAgICAgICAgICAgICAgIENpcmNsZSgpLmZpbGwoQ29sb3IucmVkKS5mcmFtZSh3aWR0aDogNywgaGVpZ2h0OiA3KQogICAgICAgICAgICAgICAgICAgIFNwYWNlcigpCiAgICAgICAgICAgICAgICAgICAgaWYgY2hhbm5lbC5pc0N1c3RvbSB7CiAgICAgICAgICAgICAgICAgICAgICAgIFRleHQoItmF2K7Ytdi12KkiKS5mb250KC5zeXN0ZW0oc2l6ZTogOSwgd2VpZ2h0OiAuYm9sZCkpLmZvcmVncm91bmRDb2xvcigub3JhbmdlKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLnBhZGRpbmcoLmhvcml6b250YWwsIDYpLnBhZGRpbmcoLnZlcnRpY2FsLCAyKS5iYWNrZ3JvdW5kKENvbG9yLm9yYW5nZS5vcGFjaXR5KDAuMikpLmNsaXBTaGFwZShDYXBzdWxlKCkpCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIEltYWdlKHN5c3RlbU5hbWU6ICJ0di5maWxsIikuZm9udCguc3lzdGVtKHNpemU6IDEzKSkuZm9yZWdyb3VuZENvbG9yKGFjY2VudENvbG9yKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgU3BhY2VyKCkKICAgICAgICAgICAgICAgIFRleHQoY2hhbm5lbC5uYW1lKS5mb250KC5zeXN0ZW0oc2l6ZTogMTQsIHdlaWdodDogLmJvbGQpKS5mb3JlZ3JvdW5kQ29sb3IoLndoaXRlKS5saW5lTGltaXQoMSkKICAgICAgICAgICAgICAgIFRleHQoY2hhbm5lbC5jYXRlZ29yeSkuZm9udCguc3lzdGVtKHNpemU6IDExLCB3ZWlnaHQ6IC5tZWRpdW0pKS5mb3JlZ3JvdW5kQ29sb3IoLmdyYXkpCiAgICAgICAgICAgIH0ucGFkZGluZygxNCkuZnJhbWUoaGVpZ2h0OiAxMDUpLmZyYW1lKG1heFdpZHRoOiAuaW5maW5pdHkpCiAgICAgICAgICAgICAuYmFja2dyb3VuZChDb2xvcih3aGl0ZTogMC4xMSkpLmNsaXBTaGFwZShSb3VuZGVkUmVjdGFuZ2xlKGNvcm5lclJhZGl1czogMTYpKQogICAgICAgICAgICAgLm92ZXJsYXkoUm91bmRlZFJlY3RhbmdsZShjb3JuZXJSYWRpdXM6IDE2KS5zdHJva2UoQ29sb3Iud2hpdGUub3BhY2l0eSgwLjA4KSwgbGluZVdpZHRoOiAxKSkKICAgICAgICB9CiAgICB9Cn0K
+import SwiftUI
+
+struct HomeView: View {
+    @EnvironmentObject var repo: ChannelRepository
+    @EnvironmentObject var themeManager: ThemeManager
+    @State private var selectedChannel: Channel?
+    @State private var activeCategory = "الكل"
+
+    var body: some View {
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 24) {
+                    HeroBannerView(accentColor: themeManager.currentTheme.accentColor) {
+                        selectedChannel = repo.channels.first
+                    }
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(repo.categories, id: \.self) { cat in
+                                Button { activeCategory = cat } label: {
+                                    Text(cat)
+                                        .font(.system(size: 13, weight: .bold))
+                                        .padding(.horizontal, 16).padding(.vertical, 9)
+                                        .background(activeCategory == cat ? themeManager.currentTheme.accentColor : Color(white: 0.12))
+                                        .foregroundColor(activeCategory == cat ? .black : .white)
+                                        .clipShape(Capsule())
+                                }
+                            }
+                        }.padding(.horizontal, 16)
+                    }
+
+                    VStack(alignment: .trailing, spacing: 14) {
+                        HStack { Spacer(); Text("🔥 البثوث المميزة").font(.system(size: 19, weight: .black)).foregroundColor(.white) }
+                            .padding(.horizontal, 16)
+
+                        let list = repo.channels.filter { activeCategory == "الكل" || $0.category == activeCategory }.prefix(20)
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+                            ForEach(Array(list), id: \.id) { ch in
+                                ChannelCardView(channel: ch, accentColor: themeManager.currentTheme.accentColor) { selectedChannel = ch }
+                            }
+                        }.padding(.horizontal, 16)
+                    }
+                }.padding(.vertical, 16)
+            }
+            .background(themeManager.currentTheme.backgroundDark.ignoresSafeArea())
+            .navigationTitle("Zone66 TV")
+            .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(item: $selectedChannel) { CinemaPlayerView(channel: $0) }
+        }.navigationViewStyle(.stack)
+    }
+}
+
+struct HeroBannerView: View {
+    let accentColor: Color
+    let onPlay: () -> Void
+    var body: some View {
+        ZStack(alignment: .bottomTrailing) {
+            LinearGradient(colors: [accentColor.opacity(0.4), Color(white: 0.08)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack(alignment: .trailing, spacing: 8) {
+                HStack {
+                    HStack(spacing: 6) { Circle().fill(Color.red).frame(width: 8, height: 8); Text("مباشر الآن").font(.system(size: 11, weight: .black)).foregroundColor(.white) }
+                        .padding(.horizontal, 10).padding(.vertical, 4).background(Color.black.opacity(0.4)).clipShape(Capsule())
+                    Spacer()
+                    Text("Zone66 Live").font(.system(size: 13, weight: .black)).foregroundColor(accentColor)
+                }
+                Text("مشاهدة سينمائية متكاملة").font(.system(size: 22, weight: .black)).foregroundColor(.white)
+                Text("قنوات مباشرة مع إدارة ومفضلة ومشغل مدمج").font(.system(size: 12)).foregroundColor(.gray)
+                Button(action: onPlay) {
+                    HStack(spacing: 8) { Image(systemName: "play.fill"); Text("تشغيل البث الآن").font(.system(size: 14, weight: .bold)) }
+                        .foregroundColor(.black).frame(maxWidth: .infinity).padding(.vertical, 13)
+                        .background(accentColor).clipShape(RoundedRectangle(cornerRadius: 14))
+                }.padding(.top, 6)
+            }.padding(18)
+        }
+        .frame(height: 190).clipShape(RoundedRectangle(cornerRadius: 22))
+        .overlay(RoundedRectangle(cornerRadius: 22).stroke(accentColor.opacity(0.3), lineWidth: 1.5))
+        .padding(.horizontal, 16)
+    }
+}
+
+struct ChannelCardView: View {
+    let channel: Channel
+    let accentColor: Color
+    let onTap: () -> Void
+    var body: some View {
+        Button(action: onTap) {
+            VStack(alignment: .trailing, spacing: 8) {
+                HStack {
+                    Circle().fill(Color.red).frame(width: 7, height: 7)
+                    Spacer()
+                    if channel.isCustom {
+                        Text("مخصصة").font(.system(size: 9, weight: .bold)).foregroundColor(.orange)
+                            .padding(.horizontal, 6).padding(.vertical, 2).background(Color.orange.opacity(0.2)).clipShape(Capsule())
+                    }
+                    Image(systemName: "tv.fill").font(.system(size: 13)).foregroundColor(accentColor)
+                }
+                Spacer()
+                Text(channel.name).font(.system(size: 14, weight: .bold)).foregroundColor(.white).lineLimit(1)
+                Text(channel.category).font(.system(size: 11, weight: .medium)).foregroundColor(.gray)
+            }.padding(14).frame(height: 105).frame(maxWidth: .infinity)
+             .background(Color(white: 0.11)).clipShape(RoundedRectangle(cornerRadius: 16))
+             .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.08), lineWidth: 1))
+        }
+    }
+}

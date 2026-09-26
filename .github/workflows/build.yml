@@ -1,1 +1,90 @@
-bmFtZTogQnVpbGQgWm9uZTY2IElQQQoKb246CiAgd29ya2Zsb3dfZGlzcGF0Y2g6CiAgcHVzaDoKICAgIGJyYW5jaGVzOiBbIG1haW4gXQoKam9iczoKICBidWlsZDoKICAgIHJ1bnMtb246IG1hY29zLWxhdGVzdAoKICAgIHN0ZXBzOgogICAgICAtIG5hbWU6IENoZWNrb3V0CiAgICAgICAgdXNlczogYWN0aW9ucy9jaGVja291dEB2NAoKICAgICAgLSBuYW1lOiBTZWxlY3QgWGNvZGUKICAgICAgICB1c2VzOiBtYXhpbS1sb2Jhbm92L3NldHVwLXhjb2RlQHYxCiAgICAgICAgd2l0aDoKICAgICAgICAgIHhjb2RlLXZlcnNpb246IGxhdGVzdC1zdGFibGUKCiAgICAgIC0gbmFtZTogUHJlcGFyZSBidWlsZAogICAgICAgIHNoZWxsOiBiYXNoCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzZXQgLWV1byBwaXBlZmFpbAogICAgICAgICAgcm0gLXJmIGJ1aWxkCiAgICAgICAgICBta2RpciAtcCBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAKCiAgICAgIC0gbmFtZTogQ29tcGlsZSBjb21wbGV0ZSBTd2lmdFVJIGFwcAogICAgICAgIHNoZWxsOiBiYXNoCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzZXQgLWV1byBwaXBlZmFpbAoKICAgICAgICAgIFNXSUZUX0ZJTEVTPSgKICAgICAgICAgICAgU291cmNlcy9BcHAvWmhUZWFtQXBwLnN3aWZ0CiAgICAgICAgICAgIFNvdXJjZXMvQ29yZS9TZXR0aW5ncy9BcHBTZXR0aW5ncy5zd2lmdAogICAgICAgICAgICBTb3VyY2VzL0NvcmUvVGhlbWUvVGhlbWVNYW5hZ2VyLnN3aWZ0CiAgICAgICAgICAgIFNvdXJjZXMvQ29yZS9UaGVtZS9aaFRoZW1lLnN3aWZ0CiAgICAgICAgICAgIFNvdXJjZXMvTW9kZWxzL0NoYW5uZWwuc3dpZnQKICAgICAgICAgICAgU291cmNlcy9TZXJ2aWNlcy9DaGFubmVsUmVwb3NpdG9yeS5zd2lmdAogICAgICAgICAgICBTb3VyY2VzL1ZpZXdzL01haW4vTWFpblRhYlZpZXcuc3dpZnQKICAgICAgICAgICAgU291cmNlcy9WaWV3cy9Ib21lL0hvbWVWaWV3LnN3aWZ0CiAgICAgICAgICAgIFNvdXJjZXMvVmlld3MvQ2hhbm5lbHMvQ2hhbm5lbHNMaXN0Vmlldy5zd2lmdAogICAgICAgICAgICBTb3VyY2VzL1ZpZXdzL0Zhdm9yaXRlcy9GYXZvcml0ZXNWaWV3LnN3aWZ0CiAgICAgICAgICAgIFNvdXJjZXMvVmlld3MvTWFuYWdlci9DaGFubmVsTWFuYWdlclZpZXcuc3dpZnQKICAgICAgICAgICAgU291cmNlcy9WaWV3cy9TZXR0aW5ncy9TZXR0aW5nc1ZpZXcuc3dpZnQKICAgICAgICAgICAgU291cmNlcy9WaWV3cy9QbGF5ZXIvQ2luZW1hUGxheWVyVmlldy5zd2lmdAogICAgICAgICAgKQoKICAgICAgICAgIHhjcnVuIC0tc2RrIGlwaG9uZW9zIHN3aWZ0YyAgICAgICAgICAgICAtdGFyZ2V0IGFybTY0LWFwcGxlLWlvczE1LjAgICAgICAgICAgICAgLXNkayAiJCh4Y3J1biAtLXNkayBpcGhvbmVvcyAtLXNob3ctc2RrLXBhdGgpIiAgICAgICAgICAgICAtTyAgICAgICAgICAgICAtbW9kdWxlLW5hbWUgWm9uZTY2ICAgICAgICAgICAgIC1mcmFtZXdvcmsgRm91bmRhdGlvbiAgICAgICAgICAgICAtZnJhbWV3b3JrIFVJS2l0ICAgICAgICAgICAgIC1mcmFtZXdvcmsgU3dpZnRVSSAgICAgICAgICAgICAtZnJhbWV3b3JrIEFWRm91bmRhdGlvbiAgICAgICAgICAgICAtZnJhbWV3b3JrIEFWS2l0ICAgICAgICAgICAgICIke1NXSUZUX0ZJTEVTW0BdfSIgICAgICAgICAgICAgLW8gYnVpbGQvUGF5bG9hZC9ab25lNjYuYXBwL1pvbmU2NgoKICAgICAgLSBuYW1lOiBDb3B5IHJlc291cmNlcwogICAgICAgIHNoZWxsOiBiYXNoCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzZXQgLWV1byBwaXBlZmFpbAogICAgICAgICAgY3AgUmVzb3VyY2VzL0luZm8ucGxpc3QgYnVpbGQvUGF5bG9hZC9ab25lNjYuYXBwL0luZm8ucGxpc3QKICAgICAgICAgIGNwIFJlc291cmNlcy9DaGFubmVsc0RhdGEuanNvbiBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvQ2hhbm5lbHNEYXRhLmpzb24KCiAgICAgICAgICAvdXNyL2xpYmV4ZWMvUGxpc3RCdWRkeSAtYyAiU2V0IDpDRkJ1bmRsZUV4ZWN1dGFibGUgWm9uZTY2IiBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvSW5mby5wbGlzdAogICAgICAgICAgL3Vzci9saWJleGVjL1BsaXN0QnVkZHkgLWMgIlNldCA6Q0ZCdW5kbGVOYW1lIFpvbmU2NiIgYnVpbGQvUGF5bG9hZC9ab25lNjYuYXBwL0luZm8ucGxpc3QKICAgICAgICAgIC91c3IvbGliZXhlYy9QbGlzdEJ1ZGR5IC1jICJTZXQgOkNGQnVuZGxlRGlzcGxheU5hbWUgWm9uZTY2IiBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvSW5mby5wbGlzdAogICAgICAgICAgL3Vzci9saWJleGVjL1BsaXN0QnVkZHkgLWMgIlNldCA6Q0ZCdW5kbGVJZGVudGlmaWVyIGNvbS56b25lNjYucGxheWVyIiBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvSW5mby5wbGlzdAoKICAgICAgICAgIHBsdXRpbCAtbGludCBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvSW5mby5wbGlzdAogICAgICAgICAgdGVzdCAtcyBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAvWm9uZTY2CiAgICAgICAgICB0ZXN0IC1zIGJ1aWxkL1BheWxvYWQvWm9uZTY2LmFwcC9DaGFubmVsc0RhdGEuanNvbgoKICAgICAgLSBuYW1lOiBTaWduIGZvciBUcm9sbFN0b3JlCiAgICAgICAgc2hlbGw6IGJhc2gKICAgICAgICBydW46IHwKICAgICAgICAgIHNldCAtZXVvIHBpcGVmYWlsCiAgICAgICAgICBjb2Rlc2lnbiAtLWZvcmNlIC0tZGVlcCAtLXNpZ24gLSBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAKICAgICAgICAgIGNvZGVzaWduIC0tdmVyaWZ5IC0tZGVlcCAtLXN0cmljdCAtLXZlcmJvc2U9MiBidWlsZC9QYXlsb2FkL1pvbmU2Ni5hcHAKCiAgICAgIC0gbmFtZTogVmFsaWRhdGUgSVBBIHN0cnVjdHVyZQogICAgICAgIHNoZWxsOiBiYXNoCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzZXQgLWV1byBwaXBlZmFpbAogICAgICAgICAgY2QgYnVpbGQKICAgICAgICAgIHppcCAtcXJ5IC4uL1pvbmU2Ni1QbGF5ZXIuaXBhIFBheWxvYWQKICAgICAgICAgIGNkIC4uCiAgICAgICAgICB1bnppcCAtdCBab25lNjYtUGxheWVyLmlwYQogICAgICAgICAgdW56aXAgLXAgWm9uZTY2LVBsYXllci5pcGEgUGF5bG9hZC9ab25lNjYuYXBwL0luZm8ucGxpc3QgPiAvdG1wL3pvbmU2Ni1pbmZvLnBsaXN0CiAgICAgICAgICBwbHV0aWwgLWxpbnQgL3RtcC96b25lNjYtaW5mby5wbGlzdAoKICAgICAgLSBuYW1lOiBVcGxvYWQgSVBBCiAgICAgICAgdXNlczogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjQKICAgICAgICB3aXRoOgogICAgICAgICAgbmFtZTogWm9uZTY2LVBsYXllci1JUEEKICAgICAgICAgIHBhdGg6IFpvbmU2Ni1QbGF5ZXIuaXBhCiAgICAgICAgICBpZi1uby1maWxlcy1mb3VuZDogZXJyb3IK
+name: Build Zone66 IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Prepare build
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf build
+          mkdir -p build/Payload/Zone66.app
+
+      - name: Compile complete SwiftUI app
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          SWIFT_FILES=(
+            Sources/App/ZhTeamApp.swift
+            Sources/Core/Settings/AppSettings.swift
+            Sources/Core/Theme/ThemeManager.swift
+            Sources/Core/Theme/ZhTheme.swift
+            Sources/Models/Channel.swift
+            Sources/Services/ChannelRepository.swift
+            Sources/Views/Main/MainTabView.swift
+            Sources/Views/Home/HomeView.swift
+            Sources/Views/Channels/ChannelsListView.swift
+            Sources/Views/Favorites/FavoritesView.swift
+            Sources/Views/Manager/ChannelManagerView.swift
+            Sources/Views/Settings/SettingsView.swift
+            Sources/Views/Player/CinemaPlayerView.swift
+          )
+
+          xcrun --sdk iphoneos swiftc             -target arm64-apple-ios15.0             -sdk "$(xcrun --sdk iphoneos --show-sdk-path)"             -O             -module-name Zone66             -framework Foundation             -framework UIKit             -framework SwiftUI             -framework AVFoundation             -framework AVKit             "${SWIFT_FILES[@]}"             -o build/Payload/Zone66.app/Zone66
+
+      - name: Copy resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp Resources/Info.plist build/Payload/Zone66.app/Info.plist
+          cp Resources/ChannelsData.json build/Payload/Zone66.app/ChannelsData.json
+
+          /usr/libexec/PlistBuddy -c "Set :CFBundleExecutable Zone66" build/Payload/Zone66.app/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleName Zone66" build/Payload/Zone66.app/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Zone66" build/Payload/Zone66.app/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.zone66.player" build/Payload/Zone66.app/Info.plist
+
+          plutil -lint build/Payload/Zone66.app/Info.plist
+          test -s build/Payload/Zone66.app/Zone66
+          test -s build/Payload/Zone66.app/ChannelsData.json
+
+      - name: Sign for TrollStore
+        shell: bash
+        run: |
+          set -euo pipefail
+          codesign --force --deep --sign - build/Payload/Zone66.app
+          codesign --verify --deep --strict --verbose=2 build/Payload/Zone66.app
+
+      - name: Validate IPA structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build
+          zip -qry ../Zone66-Player.ipa Payload
+          cd ..
+          unzip -t Zone66-Player.ipa
+          unzip -p Zone66-Player.ipa Payload/Zone66.app/Info.plist > /tmp/zone66-info.plist
+          plutil -lint /tmp/zone66-info.plist
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Zone66-Player-IPA
+          path: Zone66-Player.ipa
+          if-no-files-found: error

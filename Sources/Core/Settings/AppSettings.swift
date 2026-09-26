@@ -1,1 +1,12 @@
-aW1wb3J0IFN3aWZ0VUkKCnB1YmxpYyBmaW5hbCBjbGFzcyBBcHBTZXR0aW5nczogT2JzZXJ2YWJsZU9iamVjdCB7CiAgICBwdWJsaWMgc3RhdGljIGxldCBzaGFyZWQgPSBBcHBTZXR0aW5ncygpCgogICAgQEFwcFN0b3JhZ2UoIndhdGVybWFya19lbmFibGVkIikgcHVibGljIHZhciB3YXRlcm1hcmtFbmFibGVkOiBCb29sID0gdHJ1ZQogICAgQEFwcFN0b3JhZ2UoIndhdGVybWFya190aXRsZSIpIHB1YmxpYyB2YXIgd2F0ZXJtYXJrVGl0bGU6IFN0cmluZyA9ICJaaCBUZWFtIgogICAgQEFwcFN0b3JhZ2UoInZpZGVvX2FzcGVjdF9tb2RlIikgcHVibGljIHZhciB2aWRlb0FzcGVjdE1vZGU6IFN0cmluZyA9ICJmaXQiCiAgICBAQXBwU3RvcmFnZSgiYXV0b19wbGF5X2VuYWJsZWQiKSBwdWJsaWMgdmFyIGF1dG9QbGF5OiBCb29sID0gdHJ1ZQoKICAgIHByaXZhdGUgaW5pdCgpIHt9Cn0K
+import SwiftUI
+
+public final class AppSettings: ObservableObject {
+    public static let shared = AppSettings()
+
+    @AppStorage("watermark_enabled") public var watermarkEnabled: Bool = true
+    @AppStorage("watermark_title") public var watermarkTitle: String = "Zh Team"
+    @AppStorage("video_aspect_mode") public var videoAspectMode: String = "fit"
+    @AppStorage("auto_play_enabled") public var autoPlay: Bool = true
+
+    private init() {}
+}
