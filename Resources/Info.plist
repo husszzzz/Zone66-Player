@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>com.zone66.player</string>
+    <string>com.zone66.tv</string>
     <key>CFBundleName</key>
-    <string>Zone66 Player</string>
+    <string>Zone 66 TV</string>
     <key>CFBundleDisplayName</key>
-    <string>Zone66 TV</string>
+    <string>Zone 66 TV</string>
     <key>CFBundleExecutable</key>
     <string>Zone66</string>
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>2.0.0</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>2.0.0</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSRequiresIPhoneOS</key>
@@ -31,16 +31,23 @@
     <array>
         <string>audio</string>
     </array>
-    <key>CFBundleURLTypes</key>
+    <key>UILaunchScreen</key>
+    <dict>
+        <key>UIColorName</key>
+        <string>black</string>
+    </dict>
+    <key>UISupportedInterfaceOrientations</key>
     <array>
-        <dict>
-            <key>CFBundleURLName</key>
-            <string>com.zone66.player</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>zone66</string>
-            </array>
-        </dict>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
 </dict>
 </plist>
