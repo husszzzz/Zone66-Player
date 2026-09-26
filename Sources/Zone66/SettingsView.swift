@@ -63,7 +63,6 @@ struct SettingsView: View {
                 }
                 .listRowBackground(theme.card)
             }
-            .scrollContentBackground(.hidden)
             .background(theme.background.ignoresSafeArea())
             .navigationTitle("الإعدادات")
         }

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct Zone66Channel: Identifiable, Codable, Equatable {
+struct Zone66Channel: Identifiable, Codable, Equatable, Sendable {
     let id: String
     var name: String
     var category: String
@@ -29,7 +29,7 @@ struct Zone66Channel: Identifiable, Codable, Equatable {
     }
 }
 
-struct Zone66RemoteSettings: Codable {
+struct Zone66RemoteSettings: Codable, Sendable {
     var appName: String = "Zone66 TV"
     var heroTitle: String = "تجربة مشاهدة احترافية"
     var heroSubtitle: String = "قنواتك المفضلة في مكان واحد"

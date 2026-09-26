@@ -36,6 +36,7 @@ jobs:
             -target arm64-apple-ios15.0 \
             -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
             -O \
+            -swift-version 5 \
             -module-name Zone66 \
             -framework Foundation \
             -framework UIKit \

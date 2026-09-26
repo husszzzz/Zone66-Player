@@ -49,16 +49,20 @@ final class ChannelRepository: ObservableObject {
                 let (catalogData, _) = try await URLSession.shared.data(from: catalogURL)
                 let decoded = try JSONDecoder().decode([Zone66Channel].self, from: catalogData)
 
-                var newSettings = Zone66RemoteSettings()
+                let fetchedSettings: Zone66RemoteSettings
                 if let (settingsData, _) = try? await URLSession.shared.data(from: settingsURL),
                    let remote = try? JSONDecoder().decode(Zone66RemoteSettings.self, from: settingsData) {
-                    newSettings = remote
+                    fetchedSettings = remote
+                } else {
+                    fetchedSettings = Zone66RemoteSettings()
                 }
 
+                let enabledChannels = decoded.filter { $0.enabled }
+
                 await MainActor.run {
-                    self.channels = decoded.filter { $0.enabled }
-                    self.remoteSettings = newSettings
-                    Zone66Theme.shared.apply(hex: newSettings.accentHex)
+                    self.channels = enabledChannels
+                    self.remoteSettings = fetchedSettings
+                    Zone66Theme.shared.apply(hex: fetchedSettings.accentHex)
                     self.isLoading = false
                     self.saveCachedCatalog()
                 }
