@@ -5,7 +5,7 @@ struct HomeView: View {
     @State private var activeCategory: String = "الكل"
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
                     // 1. Hero Cinema Banner
@@ -70,6 +70,7 @@ struct HomeView: View {
                 CinemaPlayerView(channel: ch)
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 
