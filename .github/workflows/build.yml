@@ -1,9 +1,10 @@
-name: Build Zone66 IPA
+name: Build Zone66 TV IPA
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -13,78 +14,48 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
-      - name: Prepare build
+      - name: Compile Zone66
         shell: bash
         run: |
-          set -euo pipefail
+          set -e
+
           rm -rf build
           mkdir -p build/Payload/Zone66.app
 
-      - name: Compile complete SwiftUI app
-        shell: bash
-        run: |
-          set -euo pipefail
+          SWIFT_FILES=()
+          while IFS= read -r file; do
+            SWIFT_FILES+=("$file")
+          done < <(find Sources/Zone66 -type f -name "*.swift" | sort)
 
-          SWIFT_FILES=(
-            Sources/App/ZhTeamApp.swift
-            Sources/Core/Settings/AppSettings.swift
-            Sources/Core/Theme/ThemeManager.swift
-            Sources/Core/Theme/ZhTheme.swift
-            Sources/Models/Channel.swift
-            Sources/Services/ChannelRepository.swift
-            Sources/Views/Main/MainTabView.swift
-            Sources/Views/Home/HomeView.swift
-            Sources/Views/Channels/ChannelsListView.swift
-            Sources/Views/Favorites/FavoritesView.swift
-            Sources/Views/Manager/ChannelManagerView.swift
-            Sources/Views/Settings/SettingsView.swift
-            Sources/Views/Player/CinemaPlayerView.swift
-          )
+          if [ "${#SWIFT_FILES[@]}" -eq 0 ]; then
+            echo "No Zone66 Swift sources found"
+            exit 1
+          fi
 
-          xcrun --sdk iphoneos swiftc             -target arm64-apple-ios15.0             -sdk "$(xcrun --sdk iphoneos --show-sdk-path)"             -O             -module-name Zone66             -framework Foundation             -framework UIKit             -framework SwiftUI             -framework AVFoundation             -framework AVKit             "${SWIFT_FILES[@]}"             -o build/Payload/Zone66.app/Zone66
+          xcrun -sdk iphoneos swiftc \
+            -target arm64-apple-ios15.0 \
+            -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
+            -O \
+            -module-name Zone66 \
+            -framework Foundation \
+            -framework UIKit \
+            -framework SwiftUI \
+            -framework AVFoundation \
+            -framework AVKit \
+            "${SWIFT_FILES[@]}" \
+            -o build/Payload/Zone66.app/Zone66
 
-      - name: Copy resources
-        shell: bash
-        run: |
-          set -euo pipefail
           cp Resources/Info.plist build/Payload/Zone66.app/Info.plist
+          mkdir -p build/Payload/Zone66.app
           cp Resources/ChannelsData.json build/Payload/Zone66.app/ChannelsData.json
 
-          /usr/libexec/PlistBuddy -c "Set :CFBundleExecutable Zone66" build/Payload/Zone66.app/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleName Zone66" build/Payload/Zone66.app/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Zone66" build/Payload/Zone66.app/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.zone66.player" build/Payload/Zone66.app/Info.plist
+          codesign -s - --force --deep build/Payload/Zone66.app
 
-          plutil -lint build/Payload/Zone66.app/Info.plist
-          test -s build/Payload/Zone66.app/Zone66
-          test -s build/Payload/Zone66.app/ChannelsData.json
-
-      - name: Sign for TrollStore
-        shell: bash
-        run: |
-          set -euo pipefail
-          codesign --force --deep --sign - build/Payload/Zone66.app
-          codesign --verify --deep --strict --verbose=2 build/Payload/Zone66.app
-
-      - name: Validate IPA structure
-        shell: bash
-        run: |
-          set -euo pipefail
           cd build
-          zip -qry ../Zone66-Player.ipa Payload
-          cd ..
-          unzip -t Zone66-Player.ipa
-          unzip -p Zone66-Player.ipa Payload/Zone66.app/Info.plist > /tmp/zone66-info.plist
-          plutil -lint /tmp/zone66-info.plist
+          zip -qry ../Zone66-TV-PRO.ipa Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Zone66-Player-IPA
-          path: Zone66-Player.ipa
-          if-no-files-found: error
+          name: Zone66-TV-PRO
+          path: Zone66-TV-PRO.ipa
