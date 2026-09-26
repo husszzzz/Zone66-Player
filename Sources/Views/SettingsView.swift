@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Section(header: Text("إحصائيات المنصة").foregroundColor(.orange)) {
                     HStack {
@@ -15,7 +15,7 @@ struct SettingsView: View {
                     HStack {
                         Text("دقة العرض")
                         Spacer()
-                        Text("Full Retina Native")
+                        Text("Full Native Retina")
                             .foregroundColor(.green)
                     }
                 }
@@ -43,9 +43,9 @@ struct SettingsView: View {
                 }
                 .listRowBackground(Color(white: 0.1))
             }
-            .scrollContentBackground(.hidden)
             .background(Color(red: 0.04, green: 0.04, blue: 0.05).ignoresSafeArea())
             .navigationTitle("الإعدادات")
         }
+        .navigationViewStyle(.stack)
     }
 }
