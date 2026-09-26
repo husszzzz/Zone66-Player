@@ -1,17 +1,1 @@
-import Foundation
-
-public struct Channel: Identifiable, Codable, Equatable {
-    public let id: String
-    public var name: String
-    public var url: String
-    public var category: String
-    public var isCustom: Bool
-
-    public init(id: String = UUID().uuidString, name: String, url: String, category: String, isCustom: Bool = false) {
-        self.id = id
-        self.name = name
-        self.url = url
-        self.category = category
-        self.isCustom = isCustom
-    }
-}
+aW1wb3J0IEZvdW5kYXRpb24KCnB1YmxpYyBzdHJ1Y3QgQ2hhbm5lbDogSWRlbnRpZmlhYmxlLCBDb2RhYmxlLCBFcXVhdGFibGUgewogICAgcHVibGljIGxldCBpZDogU3RyaW5nCiAgICBwdWJsaWMgdmFyIG5hbWU6IFN0cmluZwogICAgcHVibGljIHZhciB1cmw6IFN0cmluZwogICAgcHVibGljIHZhciBjYXRlZ29yeTogU3RyaW5nCiAgICBwdWJsaWMgdmFyIGlzQ3VzdG9tOiBCb29sCgogICAgcHVibGljIGluaXQoaWQ6IFN0cmluZyA9IFVVSUQoKS51dWlkU3RyaW5nLCBuYW1lOiBTdHJpbmcsIHVybDogU3RyaW5nLCBjYXRlZ29yeTogU3RyaW5nLCBpc0N1c3RvbTogQm9vbCA9IGZhbHNlKSB7CiAgICAgICAgc2VsZi5pZCA9IGlkCiAgICAgICAgc2VsZi5uYW1lID0gbmFtZQogICAgICAgIHNlbGYudXJsID0gdXJsCiAgICAgICAgc2VsZi5jYXRlZ29yeSA9IGNhdGVnb3J5CiAgICAgICAgc2VsZi5pc0N1c3RvbSA9IGlzQ3VzdG9tCiAgICB9Cn0K
