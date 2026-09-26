@@ -23,17 +23,17 @@ class ChannelRepository {
     }
 
     func getFavorites() -> [Channel] {
-        let favIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] ?? []
+        let favIDs = UserDefaults.standard.stringArray(forKey: favoritesKey) ?? []
         return channels.filter { favIDs.contains($0.id) }
     }
 
     func isFavorite(channel: Channel) -> Bool {
-        let favIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] ?? []
+        let favIDs = UserDefaults.standard.stringArray(forKey: favoritesKey) ?? []
         return favIDs.contains(channel.id)
     }
 
     func toggleFavorite(channel: Channel) {
-        var favIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] ?? []
+        var favIDs = UserDefaults.standard.stringArray(forKey: favoritesKey) ?? []
         if let idx = favIDs.firstIndex(of: channel.id) {
             favIDs.remove(at: idx)
         } else {
