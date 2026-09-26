@@ -5,7 +5,7 @@ struct FavoritesView: View {
     @State private var selectedChannel: Channel?
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Group {
                 if favorites.isEmpty {
                     VStack(spacing: 14) {
@@ -36,7 +36,6 @@ struct FavoritesView: View {
                         }
                         .listRowBackground(Color(white: 0.08))
                     }
-                    .scrollContentBackground(.hidden)
                 }
             }
             .background(Color(red: 0.04, green: 0.04, blue: 0.05).ignoresSafeArea())
@@ -48,5 +47,6 @@ struct FavoritesView: View {
                 CinemaPlayerView(channel: ch)
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
