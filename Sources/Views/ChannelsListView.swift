@@ -16,7 +16,7 @@ struct ChannelsListView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List(filtered, id: \.id) { ch in
                 Button(action: { selectedChannel = ch }) {
                     HStack(spacing: 12) {
@@ -47,7 +47,6 @@ struct ChannelsListView: View {
                 }
                 .listRowBackground(Color(white: 0.08))
             }
-            .scrollContentBackground(.hidden)
             .background(Color(red: 0.04, green: 0.04, blue: 0.05).ignoresSafeArea())
             .navigationTitle("كل القنوات (671)")
             .searchable(text: $searchText, prompt: "ابحث عن اسم القناة...")
@@ -55,5 +54,6 @@ struct ChannelsListView: View {
                 CinemaPlayerView(channel: ch)
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
