@@ -9,17 +9,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .black
-        let playerVC = PlayerViewController()
-        window?.rootViewController = playerVC
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
         return true
-    }
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if let playerVC = window?.rootViewController as? PlayerViewController {
-            playerVC.playUrlString(url.absoluteString)
-            return true
-        }
-        return false
     }
 }
