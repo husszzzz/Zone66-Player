@@ -23,12 +23,13 @@ jobs:
             -framework AVFoundation \
             -framework AVKit \
             -framework SwiftUI \
-            Sources/main.swift \
-            Sources/AppDelegate.swift \
-            Sources/PlayerViewController.swift \
+            Sources/*.swift \
+            Sources/Models/*.swift \
+            Sources/Views/*.swift \
             -o build/Payload/Zone66.app/Zone66
 
           cp Resources/Info.plist build/Payload/Zone66.app/Info.plist
+          cp Resources/ChannelsData.json build/Payload/Zone66.app/ChannelsData.json
           
           # Ad-hoc sign for TrollStore
           codesign -s - --force --deep build/Payload/Zone66.app
@@ -39,5 +40,5 @@ jobs:
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Zone66-Player-TrollStore
+          name: Zone66-Player-Pro
           path: Zone66-Player.ipa
