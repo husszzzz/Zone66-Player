@@ -8,12 +8,15 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                
+
+                // MARK: - المظهر والثيمات
+
                 Section(
-                    header: Text("المظهر والثيمات")
-                        .foregroundColor(
-                            themeManager.currentTheme.accentColor
-                        )
+                    header:
+                        Text("المظهر والثيمات")
+                            .foregroundColor(
+                                themeManager.currentTheme.accentColor
+                            )
                 ) {
                     ForEach(ZhTheme.allCases) { th in
                         Button {
@@ -22,7 +25,10 @@ struct SettingsView: View {
                             HStack {
                                 Circle()
                                     .fill(th.accentColor)
-                                    .frame(width: 18, height: 18)
+                                    .frame(
+                                        width: 18,
+                                        height: 18
+                                    )
 
                                 Text(th.rawValue)
                                     .foregroundColor(.white)
@@ -34,7 +40,12 @@ struct SettingsView: View {
                                         .foregroundColor(
                                             th.accentColor
                                         )
-                                        .fontWeight(.bold)
+                                        .font(
+                                            .system(
+                                                size: 16,
+                                                weight: .bold
+                                            )
+                                        )
                                 }
                             }
                         }
@@ -44,14 +55,15 @@ struct SettingsView: View {
                     Color(white: 0.1)
                 )
 
-                
+                // MARK: - إعدادات المشغل
+
                 Section(
-                    header: Text("إعدادات المشغل")
-                        .foregroundColor(
-                            themeManager.currentTheme.accentColor
-                        )
+                    header:
+                        Text("إعدادات المشغل")
+                            .foregroundColor(
+                                themeManager.currentTheme.accentColor
+                            )
                 ) {
-                    
                     Toggle(
                         "إظهار الشعار المائي",
                         isOn: $settings.watermarkEnabled
@@ -74,7 +86,6 @@ struct SettingsView: View {
                         }
                     }
 
-                    
                     Picker(
                         "أبعاد الفيديو",
                         selection: $settings.videoAspectMode
@@ -86,7 +97,6 @@ struct SettingsView: View {
                             .tag("fill")
                     }
 
-                    
                     Toggle(
                         "التشغيل التلقائي",
                         isOn: $settings.autoPlay
@@ -96,14 +106,15 @@ struct SettingsView: View {
                     Color(white: 0.1)
                 )
 
-                
+                // MARK: - الإحصائيات
+
                 Section(
-                    header: Text("الإحصائيات")
-                        .foregroundColor(
-                            themeManager.currentTheme.accentColor
-                        )
+                    header:
+                        Text("الإحصائيات")
+                            .foregroundColor(
+                                themeManager.currentTheme.accentColor
+                            )
                 ) {
-                    
                     HStack {
                         Text("إجمالي القنوات")
 
@@ -113,10 +124,14 @@ struct SettingsView: View {
                             .foregroundColor(
                                 themeManager.currentTheme.accentColor
                             )
-                            .fontWeight(.bold)
+                            .font(
+                                .system(
+                                    size: 16,
+                                    weight: .bold
+                                )
+                            )
                     }
 
-                    
                     HStack {
                         Text("القنوات المخصصة")
 
@@ -128,7 +143,6 @@ struct SettingsView: View {
                         .foregroundColor(.gray)
                     }
 
-                    
                     HStack {
                         Text("الإصدار")
 
