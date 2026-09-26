@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Compile Swift iOS App
+      - name: Compile SwiftUI iOS App
         run: |
           mkdir -p build/Payload/Zone66.app
           
@@ -23,7 +23,7 @@ jobs:
             -framework AVFoundation \
             -framework AVKit \
             -framework SwiftUI \
-            Sources/*.swift \
+            Sources/App.swift \
             Sources/Models/*.swift \
             Sources/Views/*.swift \
             -o build/Payload/Zone66.app/Zone66
@@ -40,5 +40,5 @@ jobs:
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Zone66-Player-Pro
+          name: Zone66-Cinema-Pro
           path: Zone66-Player.ipa
