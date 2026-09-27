@@ -1,138 +1,187 @@
 import Foundation
-import SwiftUI
+import Combine
 
 final class ChannelRepository: ObservableObject {
     static let shared = ChannelRepository()
 
-    @Published private(set) var channels: [Zone66Channel] = []
-    @Published private(set) var remoteSettings = Zone66RemoteSettings()
-    @Published private(set) var isLoading = false
-    @Published private(set) var lastError: String?
+    @Published var channels: [Zone66Channel] = []
+    @Published var matches: [ZHMatch] = []
+    @Published var favorites: Set<String> = []
+    @Published var isSyncing: Bool = false
+    @Published var lastSyncDate: Date?
 
-    private let favoritesKey = "zone66_favorites"
-    private let cachedCatalogKey = "zone66_cached_catalog"
+    private let favoritesKey = "zh_team_favorites"
+    private let channelsURL = URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/channels.json")!
+    private let matchesURL = URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/matches.json")!
 
-    private var catalogURL: URL {
-        URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/channels.json?t=\(Int(Date().timeIntervalSince1970))")!
+    var enabledChannels: [Zone66Channel] {
+        channels.filter { bash.isEnabled }
     }
 
-    private var settingsURL: URL {
-        URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/settings.json?t=\(Int(Date().timeIntervalSince1970))")!
+    var favoriteChannels: [Zone66Channel] {
+        channels.filter { favorites.contains(bash.id) }
+    }
+
+    var categories: [String] {
+        let set = Set(enabledChannels.map { bash.category })
+        return ["الكل"] + Array(set).sorted()
     }
 
     private init() {
         loadFavorites()
-        loadCachedCatalog()
-        loadBundledFallback()
+        loadLocalData()
         refresh()
     }
 
-    var categories: [String] {
-        let values = Set(
-            channels
-                .map { $0.category.trimmingCharacters(in: .whitespacesAndNewlines) }
-                .filter { !$0.isEmpty }
-        )
-        return ["الكل"] + values.sorted()
-    }
-
-    var featured: [Zone66Channel] {
-        channels.filter { $0.enabled && $0.isFeatured }
-    }
-
-    var enabledChannels: [Zone66Channel] {
-        channels.filter { $0.enabled }
-    }
-
     func refresh() {
-        isLoading = true
-        lastError = nil
+        guard !isSyncing else { return }
+        isSyncing = true
 
-        Task {
-            do {
-                var request = URLRequest(url: catalogURL)
-                request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-                request.timeoutInterval = 10
+        let group = DispatchGroup()
 
-                let (catalogData, _) = try await URLSession.shared.data(for: request)
-                let decoded = try JSONDecoder().decode([Zone66Channel].self, from: catalogData)
+        group.enter()
+        fetchRemoteChannels {
+            group.leave()
+        }
 
-                var fetchedSettings = Zone66RemoteSettings()
-                if let (settingsData, _) = try? await URLSession.shared.data(from: settingsURL),
-                   let remote = try? JSONDecoder().decode(Zone66RemoteSettings.self, from: settingsData) {
-                    fetchedSettings = remote
+        group.enter()
+        fetchRemoteMatches {
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            self.isSyncing = false
+            self.lastSyncDate = Date()
+        }
+    }
+
+    private func fetchRemoteChannels(completion: @escaping () -> Void) {
+        var request = URLRequest(url: channelsURL)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.timeoutInterval = 10
+
+        URLSession.shared.dataTask(with: request) { data, _, _ in
+            defer { completion() }
+            guard let data = data,
+                  let remote = try? JSONDecoder().decode([Zone66Channel].self, from: data),
+                  !remote.isEmpty else { return }
+
+            DispatchQueue.main.async {
+                self.channels = remote
+            }
+        }.resume()
+    }
+
+    private func fetchRemoteMatches(completion: @escaping () -> Void) {
+        var request = URLRequest(url: matchesURL)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.timeoutInterval = 8
+
+        URLSession.shared.dataTask(with: request) { data, _, _ in
+            defer { completion() }
+            if let data = data,
+               let remote = try? JSONDecoder().decode([ZHMatch].self, from: data),
+               !remote.isEmpty {
+                DispatchQueue.main.async {
+                    self.matches = remote
                 }
-
-                let enabledOnly = decoded.filter { $0.enabled }
-
-                await MainActor.run {
-                    self.channels = enabledOnly
-                    self.remoteSettings = fetchedSettings
-                    Zone66Theme.shared.apply(hex: fetchedSettings.accentHex)
-                    self.isLoading = false
-                    self.saveCachedCatalog()
-                }
-            } catch {
-                await MainActor.run {
-                    self.lastError = "تعذر تحديث القنوات"
-                    self.isLoading = false
+            } else {
+                DispatchQueue.main.async {
+                    if self.matches.isEmpty {
+                        self.matches = self.defaultMatches()
+                    }
                 }
             }
-        }
+        }.resume()
+    }
+
+    private func defaultMatches() -> [ZHMatch] {
+        return [
+            ZHMatch(
+                id: "m1",
+                teamA: "ريال مدريد",
+                teamB: "مانشستر سيتي",
+                teamALogo: "👑",
+                teamBLogo: "⚡",
+                league: "دوري أبطال أوروبا",
+                time: "10:00 م",
+                score: "2 - 1",
+                status: "مباشر",
+                channelName: "beIN Sports 1 HD",
+                streamURL: nil
+            ),
+            ZHMatch(
+                id: "m2",
+                teamA: "برشلونة",
+                teamB: "بايرن ميونخ",
+                teamALogo: "🔴🔵",
+                teamBLogo: "🔴⚪",
+                league: "دوري أبطال أوروبا",
+                time: "10:00 م",
+                score: "0 - 0",
+                status: "مباشر",
+                channelName: "beIN Sports 2 HD",
+                streamURL: nil
+            ),
+            ZHMatch(
+                id: "m3",
+                teamA: "ليفربول",
+                teamB: "أرسنال",
+                teamALogo: "🔴",
+                teamBLogo: "⚪🔴",
+                league: "الدوري الإنجليزي الممتاز",
+                time: "07:30 م",
+                score: "vs",
+                status: "قادمة",
+                channelName: "beIN Sports 1 HD",
+                streamURL: nil
+            ),
+            ZHMatch(
+                id: "m4",
+                teamA: "الهلال",
+                teamB: "النصر",
+                teamALogo: "🔵",
+                teamBLogo: "🟡",
+                league: "دوري روشن السعودي",
+                time: "09:00 م",
+                score: "vs",
+                status: "قادمة",
+                channelName: "SSC 1 HD",
+                streamURL: nil
+            )
+        ]
     }
 
     func toggleFavorite(_ id: String) {
-        var set = favoriteIDs()
-        if set.contains(id) {
-            set.remove(id)
+        if favorites.contains(id) {
+            favorites.remove(id)
         } else {
-            set.insert(id)
+            favorites.insert(id)
         }
-        UserDefaults.standard.set(Array(set), forKey: favoritesKey)
-        objectWillChange.send()
+        saveFavorites()
     }
 
     func isFavorite(_ id: String) -> Bool {
-        favoriteIDs().contains(id)
+        favorites.contains(id)
     }
 
-    var favoriteChannels: [Zone66Channel] {
-        channels.filter { favoriteIDs().contains($0.id) }
+    private func loadFavorites() {
+        if let array = UserDefaults.standard.stringArray(forKey: favoritesKey) {
+            favorites = Set(array)
+        }
     }
 
-    private func favoriteIDs() -> Set<String> {
-        Set(UserDefaults.standard.stringArray(forKey: favoritesKey) ?? [])
+    private func saveFavorites() {
+        UserDefaults.standard.set(Array(favorites), forKey: favoritesKey)
     }
 
-    private func loadFavorites() {}
-
-    private func loadCachedCatalog() {
-        guard let data = UserDefaults.standard.data(forKey: cachedCatalogKey),
-              let cached = try? JSONDecoder().decode([Zone66Channel].self, from: data),
-              !cached.isEmpty else {
+    private func loadLocalData() {
+        self.matches = defaultMatches()
+        guard let url = Bundle.main.url(forResource: "ChannelsData", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let list = try? JSONDecoder().decode([Zone66Channel].self, from: data) else {
             return
         }
-        self.channels = cached.filter { $0.enabled }
-    }
-
-    private func loadBundledFallback() {
-        guard channels.isEmpty else { return }
-
-        // جرّب أولاً channels.json ثم ChannelsData.json
-        let candidates = ["channels", "ChannelsData"]
-        for name in candidates {
-            if let url = Bundle.main.url(forResource: name, withExtension: "json"),
-               let data = try? Data(contentsOf: url),
-               let decoded = try? JSONDecoder().decode([Zone66Channel].self, from: data),
-               !decoded.isEmpty {
-                self.channels = decoded.filter { $0.enabled }
-                return
-            }
-        }
-    }
-
-    private func saveCachedCatalog() {
-        guard let data = try? JSONEncoder().encode(channels) else { return }
-        UserDefaults.standard.set(data, forKey: cachedCatalogKey)
+        self.channels = list
     }
 }
