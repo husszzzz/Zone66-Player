@@ -4,25 +4,28 @@ struct HomeView: View {
     @EnvironmentObject var repository: ChannelRepository
     @EnvironmentObject var theme: Zone66Theme
     @State private var selectedChannel: Zone66Channel?
-    @State private var category = "الكل"
+    @State private var filterState: String = "الكل"
 
-    private var visibleChannels: [Zone66Channel] {
-        let base = category == "الكل"
-            ? repository.enabledChannels
-            : repository.enabledChannels.filter { ch in ch.category == category }
-
-        return Array(base.prefix(16))
+    private var filteredMatches: [ZHMatch] {
+        switch filterState {
+        case "مباشر":
+            return repository.matches.filter { $0.isLive }
+        case "قادمة":
+            return repository.matches.filter { !$0.isLive && $0.status != "انتهت" }
+        case "انتهت":
+            return repository.matches.filter { $0.status == "انتهت" }
+        default:
+            return repository.matches
+        }
     }
 
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     header
-                    heroBanner
-                    matchesSection
-                    categoriesBar
-                    channelsGrid
+                    filterTabs
+                    verticalMatchesList
                 }
                 .padding(.top, 10)
                 .padding(.bottom, 30)
@@ -40,15 +43,21 @@ struct HomeView: View {
     }
 
     private var header: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 8) {
+        HStack(spacing: 12) {
+            BundledImageView(name: "zh_logo", ext: "png", placeholder: "tv.fill")
+                .frame(width: 44, height: 44)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(theme.accent, lineWidth: 1.5))
+                .shadow(color: theme.accent.opacity(0.4), radius: 5)
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
                     Text("ZH TEAM")
-                        .font(.system(size: 26, weight: .black, design: .rounded))
+                        .font(.system(size: 24, weight: .black, design: .rounded))
                         .foregroundColor(theme.accent)
-                    
+
                     Text("PRO")
-                        .font(.system(size: 11, weight: .heavy))
+                        .font(.system(size: 10, weight: .black))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(theme.accent)
@@ -56,8 +65,8 @@ struct HomeView: View {
                         .cornerRadius(6)
                 }
 
-                Text("منصة البث المباشر والمباريات الحصرية")
-                    .font(.system(size: 12, weight: .medium))
+                Text("جدول وأهم مباريات اليوم المباشرة")
+                    .font(.system(size: 11, weight: .semibold))
                     .foregroundColor(.white.opacity(0.65))
             }
 
@@ -67,310 +76,241 @@ struct HomeView: View {
                 repository.refresh()
             } label: {
                 Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath.circle.fill" : "arrow.clockwise.circle.fill")
-                    .font(.system(size: 26))
+                    .font(.system(size: 28))
                     .foregroundColor(theme.accent)
             }
         }
         .padding(.horizontal, 18)
     }
 
-    private var heroBanner: some View {
-        ZStack(alignment: .bottomLeading) {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(
-                    LinearGradient(
-                        colors: [Color(red: 0.12, green: 0.16, blue: 0.08), Color(red: 0.05, green: 0.05, blue: 0.07)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(theme.accent.opacity(0.35), lineWidth: 1.2)
-                )
-
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(theme.accent)
-                            .frame(width: 8, height: 8)
-                        Text("بث مباشر بجودة فائقة")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(theme.accent)
+    private var filterTabs: some View {
+        HStack(spacing: 10) {
+            ForEach(["الكل", "مباشر", "قادمة", "انتهت"], id: \.self) { tab in
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        filterState = tab
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(Color.black.opacity(0.6))
+                } label: {
+                    HStack(spacing: 4) {
+                        if tab == "مباشر" {
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 6, height: 6)
+                        }
+                        Text(tab)
+                            .font(.system(size: 13, weight: filterState == tab ? .bold : .medium))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(filterState == tab ? theme.accent : theme.card)
+                    .foregroundColor(filterState == tab ? .black : .white.opacity(0.8))
                     .cornerRadius(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(filterState == tab ? Color.clear : Color.white.opacity(0.08), lineWidth: 1)
+                    )
+                }
+            }
+            Spacer()
+        }
+        .padding(.horizontal, 18)
+    }
 
-                    Spacer()
-
-                    Text("\(repository.enabledChannels.count) قناة")
-                        .font(.system(size: 12, weight: .semibold))
+    private var verticalMatchesList: some View {
+        VStack(spacing: 14) {
+            if filteredMatches.isEmpty {
+                VStack(spacing: 12) {
+                    Image(systemName: "sportscourt")
+                        .font(.system(size: 40))
+                        .foregroundColor(.gray)
+                    Text("لا توجد مباريات في هذا التصنيف حالياً")
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundColor(.white.opacity(0.7))
                 }
-
-                Text("أقوى الباقات الرياضية والترفيهية")
-                    .font(.system(size: 18, weight: .bold))
-                    .foregroundColor(.white)
-
-                Text("شاهد مباريات اليوم ومئات القنوات بدون تقطيع مع دعم ميزة صورة داخل صورة (PiP)")
-                    .font(.system(size: 12))
-                    .foregroundColor(.white.opacity(0.75))
-                    .lineLimit(2)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 40)
+            } else {
+                ForEach(filteredMatches) { match in
+                    verticalMatchCard(match)
+                }
             }
-            .padding(18)
         }
-        .frame(height: 145)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 18)
     }
 
-    private var matchesSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+    private func verticalMatchCard(_ match: ZHMatch) -> some View {
+        VStack(spacing: 12) {
+            // League and match status header
             HStack {
                 HStack(spacing: 6) {
-                    Image(systemName: "sportscourt.fill")
+                    Image(systemName: "trophy.fill")
+                        .font(.system(size: 11))
                         .foregroundColor(theme.accent)
-                    Text("مباريات اليوم")
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundColor(.white)
+                    Text(match.league)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.white.opacity(0.9))
                 }
-
-                Spacer()
-
-                HStack(spacing: 4) {
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 7, height: 7)
-                    Text("محدث تلقائياً")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.white.opacity(0.6))
-                }
-            }
-            .padding(.horizontal, 18)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(repository.matches) { match in
-                        matchCard(match)
-                    }
-                }
-                .padding(.horizontal, 18)
-            }
-        }
-    }
-
-    private func matchCard(_ match: ZHMatch) -> some View {
-        VStack(spacing: 10) {
-            HStack {
-                Text(match.league)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.8))
-                    .lineLimit(1)
 
                 Spacer()
 
                 if match.isLive {
-                    Text("مباشر")
-                        .font(.system(size: 10, weight: .bold))
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(6)
-                } else {
-                    Text(match.time)
-                        .font(.system(size: 10, weight: .bold))
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.white.opacity(0.12))
-                        .foregroundColor(.white.opacity(0.9))
-                        .cornerRadius(6)
-                }
-            }
-
-            HStack(spacing: 10) {
-                VStack(spacing: 4) {
-                    Text(match.teamALogo)
-                        .font(.system(size: 24))
-                    Text(match.teamA)
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.white)
-                        .lineLimit(1)
-                }
-                .frame(width: 75)
-
-                Text(match.score)
-                    .font(.system(size: 15, weight: .black, design: .rounded))
-                    .foregroundColor(theme.accent)
+                    HStack(spacing: 5) {
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 7, height: 7)
+                        Text("مباشر الان")
+                            .font(.system(size: 11, weight: .black))
+                            .foregroundColor(.white)
+                    }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(Color.black.opacity(0.4))
+                    .background(Color.red)
                     .cornerRadius(8)
-
-                VStack(spacing: 4) {
-                    Text(match.teamBLogo)
-                        .font(.system(size: 24))
-                    Text(match.teamB)
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.white)
-                        .lineLimit(1)
+                } else if match.status == "انتهت" {
+                    Text("انتهت المباراة")
+                        .font(.system(size: 11, weight: .bold))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.gray.opacity(0.3))
+                        .foregroundColor(.white.opacity(0.7))
+                        .cornerRadius(8)
+                } else {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock.fill")
+                            .font(.system(size: 10))
+                        Text(match.time)
+                            .font(.system(size: 11, weight: .bold))
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(theme.accent.opacity(0.2))
+                    .foregroundColor(theme.accent)
+                    .cornerRadius(8)
                 }
-                .frame(width: 75)
             }
 
+            Divider()
+                .background(Color.white.opacity(0.1))
+
+            // Teams & Score
+            HStack(spacing: 16) {
+                // Team A
+                VStack(spacing: 6) {
+                    Text(match.teamALogo)
+                        .font(.system(size: 32))
+                    Text(match.teamA)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                }
+                .frame(maxWidth: .infinity)
+
+                // Score or VS
+                VStack(spacing: 4) {
+                    Text(match.score)
+                        .font(.system(size: 22, weight: .black, design: .rounded))
+                        .foregroundColor(match.isLive ? theme.accent : .white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(Color.black.opacity(0.5))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(match.isLive ? theme.accent.opacity(0.5) : Color.white.opacity(0.1), lineWidth: 1)
+                        )
+
+                    if match.isLive {
+                        Text("الشوط الثاني")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(theme.accent)
+                    }
+                }
+
+                // Team B
+                VStack(spacing: 6) {
+                    Text(match.teamBLogo)
+                        .font(.system(size: 32))
+                    Text(match.teamB)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .padding(.vertical, 6)
+
+            Divider()
+                .background(Color.white.opacity(0.1))
+
+            // Footer with Channel info & Watch button
             HStack {
-                HStack(spacing: 4) {
-                    Image(systemName: "tv")
-                        .font(.system(size: 10))
+                HStack(spacing: 6) {
+                    Image(systemName: "tv.fill")
+                        .font(.system(size: 13))
                         .foregroundColor(theme.accent)
+
                     Text(match.channelName)
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.white.opacity(0.85))
-                        .lineLimit(1)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.white.opacity(0.9))
                 }
 
                 Spacer()
 
                 Button {
+                    // Find the channel in repository or match channelName
                     let matchCh = repository.enabledChannels.first { ch in
-                        ch.name.localizedCaseInsensitiveContains(match.channelName) || match.channelName.localizedCaseInsensitiveContains(ch.name)
+                        ch.name.localizedCaseInsensitiveContains(match.channelName) ||
+                        match.channelName.localizedCaseInsensitiveContains(ch.name)
                     }
                     if let found = matchCh {
                         selectedChannel = found
+                    } else if let customURL = match.streamURL, !customURL.isEmpty {
+                        selectedChannel = Zone66Channel(
+                            id: "match_\(match.id)",
+                            name: "\(match.teamA) vs \(match.teamB)",
+                            category: "مباريات",
+                            streamURL: customURL
+                        )
                     } else if let fallback = repository.enabledChannels.first {
                         selectedChannel = fallback
                     }
                 } label: {
-                    Text("مشاهدة")
-                        .font(.system(size: 11, weight: .bold))
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(theme.accent)
-                        .foregroundColor(.black)
-                        .cornerRadius(12)
-                }
-            }
-            .padding(.top, 4)
-        }
-        .padding(14)
-        .frame(width: 260)
-        .background(theme.card)
-        .cornerRadius(16)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(match.isLive ? theme.accent.opacity(0.6) : Color.white.opacity(0.1), lineWidth: 1)
-        )
-    }
-
-    private var categoriesBar: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("الأقسام")
-                .font(.system(size: 17, weight: .bold))
-                .foregroundColor(.white)
-                .padding(.horizontal, 18)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(repository.categories, id: \.self) { cat in
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                category = cat
-                            }
-                        } label: {
-                            Text(cat)
-                                .font(.system(size: 13, weight: category == cat ? .bold : .medium))
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
-                                .background(category == cat ? theme.accent : theme.card)
-                                .foregroundColor(category == cat ? .black : .white.opacity(0.8))
-                                .cornerRadius(20)
-                        }
+                    HStack(spacing: 6) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 11))
+                        Text("مشاهدة البث المباشر")
+                            .font(.system(size: 12, weight: .black))
                     }
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .background(
+                        LinearGradient(
+                            colors: [theme.accent, theme.accent.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .foregroundColor(.black)
+                    .cornerRadius(12)
+                    .shadow(color: theme.accent.opacity(0.4), radius: 4)
                 }
-                .padding(.horizontal, 18)
             }
         }
-    }
-
-    private var channelsGrid: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("قنوات مميزة")
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundColor(.white)
-
-                Spacer()
-
-                NavigationLink(destination: ChannelsView()) {
-                    Text("عرض الكل (\(repository.enabledChannels.count))")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(theme.accent)
-                }
-            }
-            .padding(.horizontal, 18)
-
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
-                ForEach(visibleChannels) { channel in
-                    channelCard(channel)
-                }
-            }
-            .padding(.horizontal, 18)
-        }
-    }
-
-    private func channelCard(_ channel: Zone66Channel) -> some View {
-        Button {
-            selectedChannel = channel
-        } label: {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.08))
-                            .frame(width: 38, height: 38)
-
-                        Image(systemName: "play.tv.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(theme.accent)
-                    }
-
-                    Spacer()
-
-                    Button {
-                        repository.toggleFavorite(channel.id)
-                    } label: {
-                        Image(systemName: repository.isFavorite(channel.id) ? "heart.fill" : "heart")
-                            .font(.system(size: 16))
-                            .foregroundColor(repository.isFavorite(channel.id) ? .red : .white.opacity(0.4))
-                    }
-                }
-
-                Text(channel.name)
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(.white)
-                    .lineLimit(1)
-
-                HStack {
-                    Text(channel.category)
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundColor(.white.opacity(0.6))
-
-                    Spacer()
-
-                    Circle()
-                        .fill(theme.accent)
-                        .frame(width: 6, height: 6)
-                }
-            }
-            .padding(12)
-            .background(theme.card)
-            .cornerRadius(14)
-            .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
+        .padding(16)
+        .background(
+            LinearGradient(
+                colors: [theme.card, theme.card.opacity(0.85)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
             )
-        }
+        )
+        .cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(match.isLive ? theme.accent.opacity(0.7) : Color.white.opacity(0.08), lineWidth: match.isLive ? 1.5 : 1)
+        )
+        .shadow(color: match.isLive ? theme.accent.opacity(0.2) : Color.black.opacity(0.3), radius: 8)
     }
 }
