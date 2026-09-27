@@ -8,20 +8,15 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("المشاهدة")) {
-                    Toggle("التشغيل التلقائي", isOn: $settings.autoPlay)
+                Section(header: Text("التشغيل")) {
+                    Toggle("تشغيل تلقائي", isOn: $settings.autoPlay)
                     Toggle("ملء الشاشة", isOn: $settings.fillVideo)
-                    Toggle("العلامة المائية", isOn: $settings.watermarkEnabled)
-
-                    if settings.watermarkEnabled {
-                        TextField("نص العلامة المائية", text: $settings.watermarkText)
-                    }
                 }
                 .listRowBackground(theme.card)
 
-                Section(header: Text("البيانات")) {
+                Section(header: Text("القنوات")) {
                     HStack {
-                        Text("القنوات المتاحة")
+                        Text("عدد القنوات المتاحة")
                         Spacer()
                         Text("\(repository.enabledChannels.count)")
                             .foregroundColor(theme.accent)
@@ -47,7 +42,7 @@ struct SettingsView: View {
                     HStack {
                         Text("الإصدار")
                         Spacer()
-                        Text("4.0.0")
+                        Text("4.1.0")
                             .foregroundColor(.gray)
                     }
 
