@@ -6,7 +6,19 @@ struct BundledImageView: View {
     var placeholder: String = "photo"
 
     var body: some View {
-        if let path = Bundle.main.path(forResource: name, ofType: ext),
+        if name == "zh_logo", let img = AppAssets.zhLogo {
+            Image(uiImage: img)
+                .resizable()
+                .scaledToFill()
+        } else if (name == "developer_hussein" || name.contains("hussein")), let img = AppAssets.husseinPhoto {
+            Image(uiImage: img)
+                .resizable()
+                .scaledToFill()
+        } else if (name == "manager_abboud" || name.contains("abboud")), let img = AppAssets.abboudPhoto {
+            Image(uiImage: img)
+                .resizable()
+                .scaledToFill()
+        } else if let path = Bundle.main.path(forResource: name, ofType: ext),
            let uiImage = UIImage(contentsOfFile: path) {
             Image(uiImage: uiImage)
                 .resizable()
