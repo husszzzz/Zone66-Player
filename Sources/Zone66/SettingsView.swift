@@ -8,52 +8,153 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("التشغيل")) {
-                    Toggle("تشغيل تلقائي", isOn: $settings.autoPlay)
-                    Toggle("ملء الشاشة", isOn: $settings.fillVideo)
+                // MARK: - About ZH TEAM Header
+                Section {
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [theme.accent.opacity(0.3), Color.clear],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 80, height: 80)
+
+                            Text("ZH")
+                                .font(.system(size: 30, weight: .black, design: .rounded))
+                                .foregroundColor(theme.accent)
+                        }
+
+                        Text("ZH TEAM TV PRO")
+                            .font(.system(size: 20, weight: .black))
+                            .foregroundColor(.white)
+
+                        Text("الإصدار 5.0.0 • أقوى تطبيق بث مباشر")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
                 }
                 .listRowBackground(theme.card)
 
-                Section(header: Text("القنوات")) {
+                // MARK: - Development Team (حول التطبيق وفريق العمل)
+                Section(header: Text("حول التطبيق وفريق العمل").foregroundColor(theme.accent)) {
+                    // Main Developer
+                    HStack(spacing: 12) {
+                        Image(systemName: "person.crop.circle.badge.checkmark")
+                            .font(.system(size: 24))
+                            .foregroundColor(theme.accent)
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("المطور الرئيسي")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(.white.opacity(0.6))
+                            Text("حسين الحسني")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+
+                        Spacer()
+
+                        Link(destination: URL(string: "https://t.me/OM_G9")!) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "paperplane.fill")
+                                    .font(.system(size: 12))
+                                Text("@OM_G9")
+                                    .font(.system(size: 12, weight: .bold))
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(theme.accent)
+                            .foregroundColor(.black)
+                            .cornerRadius(12)
+                        }
+                    }
+                    .padding(.vertical, 4)
+
+                    // Designer & Channel Manager
+                    HStack(spacing: 12) {
+                        Image(systemName: "paintpalette.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(theme.accent)
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("مصمم ومدير القنوات")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(.white.opacity(0.6))
+                            Text("عبود سكوفيلد")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+
+                        Spacer()
+
+                        Link(destination: URL(string: "https://t.me/rbf_8")!) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "paperplane.fill")
+                                    .font(.system(size: 12))
+                                Text("@rbf_8")
+                                    .font(.system(size: 12, weight: .bold))
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(theme.accent)
+                            .foregroundColor(.black)
+                            .cornerRadius(12)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+                .listRowBackground(theme.card)
+
+                // MARK: - Playback Settings
+                Section(header: Text("إعدادات المشغل").foregroundColor(.white.opacity(0.7))) {
+                    Toggle("تشغيل تلقائي للبث", isOn: .autoPlay)
+                    Toggle("ملء الشاشة تلقائياً", isOn: .fillVideo)
                     HStack {
-                        Text("عدد القنوات المتاحة")
+                        Text("دعم Picture in Picture (PiP)")
+                        Spacer()
+                        Text("مفعل تلقائياً")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(theme.accent)
+                    }
+                }
+                .listRowBackground(theme.card)
+
+                // MARK: - Channels Management
+                Section(header: Text("إدارة القنوات والبيانات").foregroundColor(.white.opacity(0.7))) {
+                    HStack {
+                        Text("القنوات المتوفرة")
                         Spacer()
                         Text("\(repository.enabledChannels.count)")
+                            .fontWeight(.bold)
                             .foregroundColor(theme.accent)
+                    }
+
+                    HStack {
+                        Text("المفضلة")
+                        Spacer()
+                        Text("\(repository.favoriteChannels.count)")
+                            .fontWeight(.bold)
+                            .foregroundColor(.red)
                     }
 
                     Button {
                         repository.refresh()
                     } label: {
                         HStack {
-                            Text("تحديث القنوات الآن")
+                            Image(systemName: "arrow.clockwise")
+                            Text("تحديث قائمة القنوات والمباريات")
                             Spacer()
-                            if repository.isLoading {
+                            if repository.isSyncing {
                                 ProgressView()
-                            } else {
-                                Image(systemName: "arrow.clockwise")
+                                    .tint(theme.accent)
                             }
                         }
-                    }
-                }
-                .listRowBackground(theme.card)
-
-                Section(header: Text("حول التطبيق")) {
-                    HStack {
-                        Text("الإصدار")
-                        Spacer()
-                        Text("4.1.0")
-                            .foregroundColor(.gray)
-                    }
-
-                    if !repository.remoteSettings.supportURL.isEmpty,
-                       let url = URL(string: repository.remoteSettings.supportURL) {
-                        Link(destination: url) {
-                            Label(
-                                repository.remoteSettings.supportTitle,
-                                systemImage: "paperplane.fill"
-                            )
-                        }
+                        .foregroundColor(theme.accent)
                     }
                 }
                 .listRowBackground(theme.card)
@@ -61,6 +162,6 @@ struct SettingsView: View {
             .background(theme.background.ignoresSafeArea())
             .navigationTitle("الإعدادات")
         }
-        .navigationViewStyle(.stack)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
