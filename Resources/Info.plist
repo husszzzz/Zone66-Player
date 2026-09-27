@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>com.zone66.player</string>
+    <string>com.zhteam.player</string>
     <key>CFBundleName</key>
-    <string>Zone66 TV</string>
+    <string>ZH TEAM</string>
     <key>CFBundleDisplayName</key>
-    <string>Zone66 TV</string>
+    <string>ZH TEAM</string>
     <key>CFBundleExecutable</key>
     <string>Zone66</string>
     <key>CFBundleVersion</key>
-    <string>4.0.0</string>
+    <string>5.0.0</string>
     <key>CFBundleShortVersionString</key>
-    <string>4.0.0</string>
+    <string>5.0.0</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSRequiresIPhoneOS</key>
@@ -22,6 +22,19 @@
     <array>
         <string>arm64</string>
     </array>
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>AppIcon60x60</string>
+                <string>AppIcon</string>
+            </array>
+            <key>UIPrerenderedIcon</key>
+            <true/>
+        </dict>
+    </dict>
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
