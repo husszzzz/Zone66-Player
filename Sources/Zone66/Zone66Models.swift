@@ -1,82 +1,68 @@
 import Foundation
-import SwiftUI
 
-struct Zone66Channel: Identifiable, Codable, Equatable, Sendable {
+struct Zone66Channel: Identifiable, Codable {
     let id: String
-    var name: String
-    var category: String
-    var url: String
-    var iconURL: String
-    var isFeatured: Bool
-    var enabled: Bool
+    let name: String
+    let category: String
+    let streamURL: String
+    let iconURL: String?
+    let isFeatured: Bool
+    let isEnabled: Bool
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case title
         case category
-        case url
         case streamURL
-        case icon
+        case url
         case iconURL
-        case featured
+        case icon
+        case logo
         case isFeatured
+        case featured
+        case isEnabled
         case enabled
     }
 
-    init(
-        id: String = UUID().uuidString,
-        name: String,
-        category: String = "عام",
-        url: String,
-        iconURL: String = "",
-        isFeatured: Bool = false,
-        enabled: Bool = true
-    ) {
+    init(id: String, name: String, category: String, streamURL: String, iconURL: String? = nil, isFeatured: Bool = false, isEnabled: Bool = true) {
         self.id = id
         self.name = name
-        self.category = category.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "عام" : category
-        self.url = url
+        self.category = category
+        self.streamURL = streamURL
         self.iconURL = iconURL
         self.isFeatured = isFeatured
-        self.enabled = enabled
+        self.isEnabled = isEnabled
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = (try? container.decode(String.self, forKey: .id)) ?? UUID().uuidString
-        self.name = (try? container.decode(String.self, forKey: .name)) ?? "قناة"
 
-        let rawCategory = (try? container.decode(String.self, forKey: .category)) ?? "عام"
-        self.category = rawCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "عام" : rawCategory
+        let decodedName = (try? container.decode(String.self, forKey: .name))
+            ?? (try? container.decode(String.self, forKey: .title))
+            ?? "قناة بدون اسم"
+        name = decodedName
 
-        // يدعم رابط البث سواء كان streamURL أو url
-        if let stream = try? container.decode(String.self, forKey: .streamURL), !stream.isEmpty {
-            self.url = stream
-        } else if let standardUrl = try? container.decode(String.self, forKey: .url) {
-            self.url = standardUrl
-        } else {
-            self.url = ""
-        }
+        id = (try? container.decode(String.self, forKey: .id)) ?? decodedName
 
-        // يدعم icon أو iconURL
-        if let ic = try? container.decode(String.self, forKey: .icon), !ic.isEmpty {
-            self.iconURL = ic
-        } else if let icUrl = try? container.decode(String.self, forKey: .iconURL) {
-            self.iconURL = icUrl
-        } else {
-            self.iconURL = ""
-        }
+        category = (try? container.decode(String.self, forKey: .category)) ?? "أخرى"
 
-        // يدعم featured أو isFeatured
-        if let feat = try? container.decode(Bool.self, forKey: .featured) {
-            self.isFeatured = feat
-        } else if let isFeat = try? container.decode(Bool.self, forKey: .isFeatured) {
-            self.isFeatured = isFeat
-        } else {
-            self.isFeatured = false
-        }
+        let rawURL = (try? container.decode(String.self, forKey: .streamURL))
+            ?? (try? container.decode(String.self, forKey: .url))
+            ?? ""
+        streamURL = rawURL
 
-        self.enabled = (try? container.decode(Bool.self, forKey: .enabled)) ?? true
+        iconURL = (try? container.decode(String.self, forKey: .iconURL))
+            ?? (try? container.decode(String.self, forKey: .icon))
+            ?? (try? container.decode(String.self, forKey: .logo))
+
+        isFeatured = (try? container.decode(Bool.self, forKey: .isFeatured))
+            ?? (try? container.decode(Bool.self, forKey: .featured))
+            ?? false
+
+        isEnabled = (try? container.decode(Bool.self, forKey: .isEnabled))
+            ?? (try? container.decode(Bool.self, forKey: .enabled))
+            ?? true
     }
 
     func encode(to encoder: Encoder) throws {
@@ -84,35 +70,27 @@ struct Zone66Channel: Identifiable, Codable, Equatable, Sendable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(category, forKey: .category)
-        try container.encode(url, forKey: .url)
-        try container.encode(url, forKey: .streamURL)
+        try container.encode(streamURL, forKey: .streamURL)
         try container.encode(iconURL, forKey: .iconURL)
-        try container.encode(iconURL, forKey: .icon)
         try container.encode(isFeatured, forKey: .isFeatured)
-        try container.encode(isFeatured, forKey: .featured)
-        try container.encode(enabled, forKey: .enabled)
+        try container.encode(isEnabled, forKey: .isEnabled)
     }
 }
 
-struct Zone66RemoteSettings: Codable, Sendable {
-    var appName: String = "Zone66 TV"
-    var heroTitle: String = "تجربة مشاهدة احترافية"
-    var heroSubtitle: String = "قنواتك المفضلة في مكان واحد"
-    var heroButtonTitle: String = "مشاهدة القنوات"
-    var supportTitle: String = "قناة التحديثات"
-    var supportURL: String = ""
-    var accentHex: String = "#FF3045"
-}
+struct ZHMatch: Identifiable, Codable {
+    let id: String
+    let teamA: String
+    let teamB: String
+    let teamALogo: String
+    let teamBLogo: String
+    let league: String
+    let time: String
+    let score: String
+    let status: String // مباشر, قادمة, انتهت
+    let channelName: String
+    let streamURL: String?
 
-extension Color {
-    init(zone66Hex: String) {
-        let hex = zone66Hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var value: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&value)
-
-        let r = Double((value >> 16) & 0xFF) / 255.0
-        let g = Double((value >> 8) & 0xFF) / 255.0
-        let b = Double(value & 0xFF) / 255.0
-        self.init(red: r, green: g, blue: b)
+    var isLive: Bool {
+        status == "مباشر" || status.contains("جارية")
     }
 }
