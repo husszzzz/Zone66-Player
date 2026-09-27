@@ -7,5 +7,15 @@
     "iconURL": "",
     "isFeatured": false,
     "enabled": true
+  },
+  {
+    "id": "channel-muj2kp1x-o6lhlr",
+    "name": "Sex",
+    "category": "نيج",
+    "description": "",
+    "icon": "",
+    "streamURL": "http://premium2.ottpro2.org/live/alexandre/5939369/78372.m3u8",
+    "enabled": true,
+    "featured": false
   }
 ]
