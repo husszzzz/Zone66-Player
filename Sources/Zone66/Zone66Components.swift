@@ -15,7 +15,7 @@ struct ChannelLogoView: View {
                     )
                 )
 
-            if let url = URL(string: channel.iconURL), !channel.iconURL.isEmpty {
+            if let iconStr = channel.iconURL, !iconStr.isEmpty, let url = URL(string: iconStr) {
                 AsyncImage(url: url) { phase in
                     switch phase {
                     case .success(let image):
