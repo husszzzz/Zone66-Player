@@ -25,19 +25,26 @@ struct ChannelsView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
+                // Category Pills Bar
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(repository.categories, id: \.self) { cat in
                             Button {
-                                selectedCategory = cat
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    selectedCategory = cat
+                                }
                             } label: {
                                 Text(cat)
-                                    .font(.system(size: 12, weight: .bold))
+                                    .font(.system(size: 13, weight: selectedCategory == cat ? .bold : .medium))
                                     .foregroundColor(selectedCategory == cat ? .black : .white)
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 9)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
                                     .background(selectedCategory == cat ? theme.accent : theme.card)
                                     .clipShape(Capsule())
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(selectedCategory == cat ? Color.clear : Color.white.opacity(0.08), lineWidth: 1)
+                                    )
                             }
                         }
                     }
@@ -49,34 +56,35 @@ struct ChannelsView: View {
                     Spacer()
                     VStack(spacing: 12) {
                         Image(systemName: "tv.slash")
-                            .font(.system(size: 45))
+                            .font(.system(size: 48))
                             .foregroundColor(.gray)
 
-                        Text("لا توجد قنوات")
-                            .font(.system(size: 19, weight: .bold))
+                        Text("لا توجد قنوات مطابقة")
+                            .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.white)
 
-                        Text("أضف القنوات من لوحة التحكم الخارجية")
+                        Text("جرب البحث عن اسم آخر أو اختيار تصنيف مختلف")
                             .font(.system(size: 13))
                             .foregroundColor(.gray)
                     }
                     Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
-                        LazyVStack(spacing: 10) {
+                        LazyVStack(spacing: 12) {
                             ForEach(filtered) { channel in
                                 ChannelRow(channel: channel) {
                                     selectedChannel = channel
                                 }
                             }
                         }
-                        .padding(16)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
                     }
                 }
             }
             .background(theme.background.ignoresSafeArea())
-            .navigationTitle("القنوات")
-            .searchable(text: $searchText, prompt: "ابحث عن قناة...")
+            .navigationTitle("باقة القنوات")
+            .searchable(text: $searchText, prompt: "ابحث في القنوات...")
             .fullScreenCover(item: $selectedChannel) {
                 PlayerView(channel: $0)
             }
