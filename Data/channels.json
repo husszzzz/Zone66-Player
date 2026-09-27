@@ -18,5 +18,15 @@
     "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743609.m3u8",
     "enabled": true,
     "featured": false
+  },
+  {
+    "id": "channel-mukcwcxa-qiu0gw",
+    "name": "BEIN SPORT 1",
+    "category": "رياضه",
+    "description": "",
+    "icon": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743609.m3u8",
+    "streamURL": "https://i.top4top.io/p_3922k3du01.jpg",
+    "enabled": true,
+    "featured": false
   }
 ]
