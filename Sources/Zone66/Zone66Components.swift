@@ -1,93 +1,104 @@
 import SwiftUI
 
-struct ChannelLogoView: View {
-    let channel: Zone66Channel
-    @EnvironmentObject var theme: Zone66Theme
+struct BundledImageView: View {
+    let name: String
+    let ext: String
+    var placeholder: String = "photo"
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 18)
-                .fill(
-                    LinearGradient(
-                        colors: [theme.accent.opacity(0.24), Color.white.opacity(0.05)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-
-            if let iconStr = channel.iconURL, !iconStr.isEmpty, let url = URL(string: iconStr) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .padding(14)
-                    default:
-                        Image(systemName: "tv.fill")
-                            .font(.system(size: 28))
-                            .foregroundColor(theme.accent)
-                    }
-                }
-            } else {
-                Image(systemName: "tv.fill")
-                    .font(.system(size: 28))
-                    .foregroundColor(theme.accent)
-            }
+        if let path = Bundle.main.path(forResource: name, ofType: ext),
+           let uiImage = UIImage(contentsOfFile: path) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+        } else if let uiImage = UIImage(named: name) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+        } else {
+            Image(systemName: placeholder)
+                .resizable()
+                .scaledToFit()
         }
     }
 }
 
 struct ChannelRow: View {
     let channel: Zone66Channel
-    var onPlay: () -> Void
+    let onSelect: () -> Void
     @EnvironmentObject var repository: ChannelRepository
     @EnvironmentObject var theme: Zone66Theme
 
     var body: some View {
-        Button(action: onPlay) {
+        Button(action: onSelect) {
             HStack(spacing: 14) {
-                ChannelLogoView(channel: channel)
-                    .frame(width: 62, height: 62)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.12), Color.white.opacity(0.04)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 50, height: 50)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14)
+                                .stroke(theme.accent.opacity(0.3), lineWidth: 1)
+                        )
 
-                VStack(alignment: .leading, spacing: 7) {
+                    Image(systemName: "tv.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(theme.accent)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
                     Text(channel.name)
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.system(size: 15, weight: .bold))
                         .foregroundColor(.white)
                         .lineLimit(1)
 
-                    HStack(spacing: 7) {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 7, height: 7)
-
-                        Text("مباشر")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(.gray)
-
-                        Text("•")
-                            .foregroundColor(.gray)
-
+                    HStack(spacing: 6) {
                         Text(channel.category)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundColor(theme.accent)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(theme.accent.opacity(0.15))
+                            .cornerRadius(6)
+
+                        Circle()
+                            .fill(Color.green)
+                            .frame(width: 6, height: 6)
+
+                        Text("HD • بث مباشر")
                             .font(.system(size: 11))
-                            .foregroundColor(.gray)
-                            .lineLimit(1)
+                            .foregroundColor(.white.opacity(0.5))
                     }
                 }
 
                 Spacer()
 
-                Image(systemName: repository.isFavorite(channel.id) ? "heart.fill" : "play.fill")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(repository.isFavorite(channel.id) ? .red : theme.accent)
-                    .frame(width: 38, height: 38)
-                    .background(Color.white.opacity(0.06))
-                    .clipShape(Circle())
+                Button {
+                    repository.toggleFavorite(channel.id)
+                } label: {
+                    Image(systemName: repository.isFavorite(channel.id) ? "heart.fill" : "heart")
+                        .font(.system(size: 20))
+                        .foregroundColor(repository.isFavorite(channel.id) ? .red : .white.opacity(0.4))
+                        .padding(8)
+                }
+
+                Image(systemName: "play.circle.fill")
+                    .font(.system(size: 26))
+                    .foregroundColor(theme.accent)
             }
-            .padding(12)
+            .padding(14)
             .background(theme.card)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .cornerRadius(18)
+            .overlay(
+                RoundedRectangle(cornerRadius: 18)
+                    .stroke(Color.white.opacity(0.07), lineWidth: 1)
+            )
         }
-        .buttonStyle(PlainButtonStyle())
     }
 }
