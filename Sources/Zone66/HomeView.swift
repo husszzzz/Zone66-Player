@@ -36,9 +36,15 @@ struct HomeView: View {
                 VStack(spacing: 16) {
                     header
                     searchBar
-                    if let topChannel = repository.enabledChannels.first, searchQuery.isEmpty && selectedCategory == "الكل" {
+                    
+                    if !repository.recentChannels.isEmpty && searchQuery.isEmpty && selectedCategory == "الكل" {
+                        recentChannelsSection
+                    }
+
+                    if let topChannel = repository.enabledChannels.first, searchQuery.isEmpty && selectedCategory == "الكل" && repository.recentChannels.isEmpty {
                         heroLiveCard(channel: topChannel)
                     }
+
                     categoryChips
                     realChannelsVerticalList
                 }
@@ -121,6 +127,59 @@ struct HomeView: View {
         .padding(.horizontal, 16)
     }
 
+    private var recentChannelsSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Image(systemName: "clock.arrow.circlepath")
+                    .foregroundColor(theme.accent)
+                Text("شوهد مؤخراً")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .padding(.horizontal, 16)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(repository.recentChannels) { ch in
+                        Button {
+                            selectedChannel = ch
+                        } label: {
+                            HStack(spacing: 10) {
+                                ZStack {
+                                    Circle()
+                                        .fill(theme.accent.opacity(0.2))
+                                        .frame(width: 36, height: 36)
+                                    Image(systemName: "play.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(theme.accent)
+                                }
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(ch.name)
+                                        .font(.system(size: 13, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                    Text(ch.category)
+                                        .font(.system(size: 10))
+                                        .foregroundColor(theme.accent)
+                                }
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(theme.card)
+                            .cornerRadius(14)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(theme.accent.opacity(0.3), lineWidth: 1)
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+    }
+
     private func heroLiveCard(channel: Zone66Channel) -> some View {
         Button {
             selectedChannel = channel
@@ -134,7 +193,7 @@ struct HomeView: View {
                             endPoint: .bottomLeading
                         )
                     )
-                    .frame(height: 150)
+                    .frame(height: 140)
                     .overlay(
                         RoundedRectangle(cornerRadius: 22)
                             .stroke(theme.accent.opacity(0.4), lineWidth: 1.5)
@@ -158,7 +217,7 @@ struct HomeView: View {
                         Spacer()
 
                         Image(systemName: "play.circle.fill")
-                            .font(.system(size: 40))
+                            .font(.system(size: 38))
                             .foregroundColor(theme.accent)
                             .shadow(color: theme.accent.opacity(0.6), radius: 10)
                     }
@@ -167,7 +226,7 @@ struct HomeView: View {
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(channel.name)
-                            .font(.system(size: 19, weight: .black))
+                            .font(.system(size: 18, weight: .black))
                             .foregroundColor(.white)
                         Text(channel.category)
                             .font(.system(size: 12, weight: .bold))
