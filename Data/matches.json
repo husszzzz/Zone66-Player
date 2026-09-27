@@ -1,0 +1,67 @@
+[
+  {
+    "id": "match_cl_1",
+    "teamA": "ريال مدريد",
+    "teamB": "مانشستر سيتي",
+    "teamALogo": "👑",
+    "teamBLogo": "⚡",
+    "league": "دوري أبطال أوروبا",
+    "time": "10:00 م",
+    "score": "2 - 1",
+    "status": "مباشر",
+    "channelName": "beIN Sports 1 HD",
+    "streamURL": ""
+  },
+  {
+    "id": "match_cl_2",
+    "teamA": "برشلونة",
+    "teamB": "باريس سان جيرمان",
+    "teamALogo": "🔴🔵",
+    "teamBLogo": "🗼",
+    "league": "دوري أبطال أوروبا",
+    "time": "10:00 م",
+    "score": "1 - 1",
+    "status": "مباشر",
+    "channelName": "beIN Sports 2 HD",
+    "streamURL": ""
+  },
+  {
+    "id": "match_epl_1",
+    "teamA": "ليفربول",
+    "teamB": "أرسنال",
+    "teamALogo": "🔴",
+    "teamBLogo": "⚪🔴",
+    "league": "الدوري الإنجليزي الممتاز",
+    "time": "07:30 م",
+    "score": "vs",
+    "status": "قادمة",
+    "channelName": "beIN Sports 1 HD",
+    "streamURL": ""
+  },
+  {
+    "id": "match_spl_1",
+    "teamA": "الهلال",
+    "teamB": "النصر",
+    "teamALogo": "🔵",
+    "teamBLogo": "🟡",
+    "league": "دوري روشن السعودي",
+    "time": "09:00 م",
+    "score": "vs",
+    "status": "قادمة",
+    "channelName": "SSC 1 HD",
+    "streamURL": ""
+  },
+  {
+    "id": "match_laliga_1",
+    "teamA": "أتلتيكو مدريد",
+    "teamB": "إشبيلية",
+    "teamALogo": "🔴⚪",
+    "teamBLogo": "⚪🔴",
+    "league": "الدوري الإسباني",
+    "time": "05:15 م",
+    "score": "3 - 0",
+    "status": "انتهت",
+    "channelName": "beIN Sports 3 HD",
+    "streamURL": ""
+  }
+]
