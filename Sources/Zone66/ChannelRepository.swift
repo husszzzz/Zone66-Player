@@ -7,10 +7,12 @@ final class ChannelRepository: ObservableObject {
     @Published var channels: [Zone66Channel] = []
     @Published var matches: [ZHMatch] = []
     @Published var favorites: Set<String> = []
+    @Published var recentChannelIDs: [String] = []
     @Published var isSyncing: Bool = false
     @Published var lastSyncDate: Date?
 
     private let favoritesKey = "zh_team_favorites"
+    private let recentsKey = "zh_team_recents"
     private let channelsURL = URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/channels.json")!
     private let matchesURL = URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/matches.json")!
 
@@ -22,6 +24,16 @@ final class ChannelRepository: ObservableObject {
         channels.filter { ch in favorites.contains(ch.id) }
     }
 
+    var recentChannels: [Zone66Channel] {
+        var list: [Zone66Channel] = []
+        for id in recentChannelIDs {
+            if let ch = channels.first(where: { $0.id == id && $0.isEnabled }) {
+                list.append(ch)
+            }
+        }
+        return list
+    }
+
     var categories: [String] {
         let set = Set(enabledChannels.map { ch in ch.category })
         return ["الكل"] + Array(set).sorted()
@@ -29,8 +41,44 @@ final class ChannelRepository: ObservableObject {
 
     private init() {
         loadFavorites()
+        loadRecents()
         loadLocalData()
         refresh()
+    }
+
+    func recordWatched(_ channelID: String) {
+        var updated = recentChannelIDs.filter { $0 != channelID }
+        updated.insert(channelID, at: 0)
+        if updated.count > 10 {
+            updated = Array(updated.prefix(10))
+        }
+        recentChannelIDs = updated
+        UserDefaults.standard.set(updated, forKey: recentsKey)
+    }
+
+    func toggleFavorite(_ id: String) {
+        if favorites.contains(id) {
+            favorites.remove(id)
+        } else {
+            favorites.insert(id)
+        }
+        UserDefaults.standard.set(Array(favorites), forKey: favoritesKey)
+    }
+
+    func isFavorite(_ id: String) -> Bool {
+        favorites.contains(id)
+    }
+
+    private func loadFavorites() {
+        if let array = UserDefaults.standard.stringArray(forKey: favoritesKey) {
+            favorites = Set(array)
+        }
+    }
+
+    private func loadRecents() {
+        if let array = UserDefaults.standard.stringArray(forKey: recentsKey) {
+            recentChannelIDs = array
+        }
     }
 
     func refresh() {
@@ -85,98 +133,11 @@ final class ChannelRepository: ObservableObject {
                 DispatchQueue.main.async {
                     self.matches = remote
                 }
-            } else {
-                DispatchQueue.main.async {
-                    if self.matches.isEmpty {
-                        self.matches = self.defaultMatches()
-                    }
-                }
             }
         }.resume()
     }
 
-    private func defaultMatches() -> [ZHMatch] {
-        return [
-            ZHMatch(
-                id: "m1",
-                teamA: "ريال مدريد",
-                teamB: "مانشستر سيتي",
-                teamALogo: "👑",
-                teamBLogo: "⚡",
-                league: "دوري أبطال أوروبا",
-                time: "10:00 م",
-                score: "2 - 1",
-                status: "مباشر",
-                channelName: "beIN Sports 1 HD",
-                streamURL: nil
-            ),
-            ZHMatch(
-                id: "m2",
-                teamA: "برشلونة",
-                teamB: "بايرن ميونخ",
-                teamALogo: "🔴🔵",
-                teamBLogo: "🔴⚪",
-                league: "دوري أبطال أوروبا",
-                time: "10:00 م",
-                score: "0 - 0",
-                status: "مباشر",
-                channelName: "beIN Sports 2 HD",
-                streamURL: nil
-            ),
-            ZHMatch(
-                id: "m3",
-                teamA: "ليفربول",
-                teamB: "أرسنال",
-                teamALogo: "🔴",
-                teamBLogo: "⚪🔴",
-                league: "الدوري الإنجليزي الممتاز",
-                time: "07:30 م",
-                score: "vs",
-                status: "قادمة",
-                channelName: "beIN Sports 1 HD",
-                streamURL: nil
-            ),
-            ZHMatch(
-                id: "m4",
-                teamA: "الهلال",
-                teamB: "النصر",
-                teamALogo: "🔵",
-                teamBLogo: "🟡",
-                league: "دوري روشن السعودي",
-                time: "09:00 م",
-                score: "vs",
-                status: "قادمة",
-                channelName: "SSC 1 HD",
-                streamURL: nil
-            )
-        ]
-    }
-
-    func toggleFavorite(_ id: String) {
-        if favorites.contains(id) {
-            favorites.remove(id)
-        } else {
-            favorites.insert(id)
-        }
-        saveFavorites()
-    }
-
-    func isFavorite(_ id: String) -> Bool {
-        favorites.contains(id)
-    }
-
-    private func loadFavorites() {
-        if let array = UserDefaults.standard.stringArray(forKey: favoritesKey) {
-            favorites = Set(array)
-        }
-    }
-
-    private func saveFavorites() {
-        UserDefaults.standard.set(Array(favorites), forKey: favoritesKey)
-    }
-
     private func loadLocalData() {
-        self.matches = defaultMatches()
         guard let url = Bundle.main.url(forResource: "ChannelsData", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let list = try? JSONDecoder().decode([Zone66Channel].self, from: data) else {
