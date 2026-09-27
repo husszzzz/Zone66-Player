@@ -13,7 +13,6 @@ struct PlayerView: View {
     @State private var playing = true
     @State private var isMuted = false
     @State private var showControls = true
-    @State private var playerController: AVPlayerViewController?
 
     var body: some View {
         ZStack {
@@ -39,7 +38,6 @@ struct PlayerView: View {
                 }
             }
 
-            // Controls Overlay
             if showControls {
                 VStack {
                     topBar
@@ -86,7 +84,6 @@ struct PlayerView: View {
 
             Spacer()
 
-            // Favorite Button
             Button {
                 repository.toggleFavorite(channel.id)
             } label: {
@@ -108,7 +105,6 @@ struct PlayerView: View {
 
     private var bottomBar: some View {
         HStack(spacing: 20) {
-            // Play / Pause
             Button {
                 if playing {
                     player?.pause()
@@ -119,14 +115,12 @@ struct PlayerView: View {
             } label: {
                 Image(systemName: playing ? "pause.fill" : "play.fill")
                     .font(.system(size: 22))
-                    .foregroundColor(.white)
                     .frame(width: 44, height: 44)
                     .background(theme.accent)
                     .foregroundColor(.black)
                     .clipShape(Circle())
             }
 
-            // Mute / Unmute
             Button {
                 isMuted.toggle()
                 player?.isMuted = isMuted
@@ -141,12 +135,11 @@ struct PlayerView: View {
 
             Spacer()
 
-            // Picture in Picture hint
             HStack(spacing: 6) {
                 Image(systemName: "pip.enter")
                     .font(.system(size: 16))
                     .foregroundColor(theme.accent)
-                Text("دعم PiP مفعل")
+                Text("دعم PiP مفعّل")
                     .font(.system(size: 11, weight: .bold))
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -165,12 +158,11 @@ struct PlayerView: View {
     private func setupPlayer() {
         guard let url = URL(string: channel.streamURL) else { return }
         
-        // Setup audio session for background playback and PiP
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print("AudioSession error: \(error)")
+            print("AudioSession error")
         }
 
         let playerItem = AVPlayerItem(url: url)
@@ -185,7 +177,6 @@ struct PlayerView: View {
     }
 }
 
-// UIViewControllerRepresentable using AVPlayerViewController to provide native PiP
 struct CustomVideoPlayer: UIViewControllerRepresentable {
     let player: AVPlayer
     let fillVideo: Bool
