@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "channel-muk9wony-owwjie",
+    "name": "MBF",
+    "category": "عام",
+    "description": "",
+    "icon": "",
+    "streamURL": "Ui",
+    "enabled": true,
+    "featured": true
+  }
+]
