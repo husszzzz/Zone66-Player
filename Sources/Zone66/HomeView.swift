@@ -5,18 +5,13 @@ struct HomeView: View {
     @EnvironmentObject var theme: Zone66Theme
     @State private var selectedChannel: Zone66Channel?
     @State private var category = "الكل"
-    @State private var searchText = ""
 
     private var visibleChannels: [Zone66Channel] {
         let base = category == "الكل"
             ? repository.enabledChannels
-            : repository.enabledChannels.filter { bash.category == category }
+            : repository.enabledChannels.filter { ch in ch.category == category }
 
-        if searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-            return Array(base.prefix(15))
-        } else {
-            return base.filter { bash.name.localizedCaseInsensitiveContains(searchText) }
-        }
+        return Array(base.prefix(16))
     }
 
     var body: some View {
@@ -34,8 +29,8 @@ struct HomeView: View {
             }
             .background(theme.background.ignoresSafeArea())
             .navigationBarHidden(true)
-            .fullScreenCover(item: ) {
-                PlayerView(channel: bash)
+            .fullScreenCover(item: $selectedChannel) { ch in
+                PlayerView(channel: ch)
             }
             .refreshable {
                 repository.refresh()
@@ -44,7 +39,6 @@ struct HomeView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 
-    // MARK: - Header
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
@@ -75,14 +69,11 @@ struct HomeView: View {
                 Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath.circle.fill" : "arrow.clockwise.circle.fill")
                     .font(.system(size: 26))
                     .foregroundColor(theme.accent)
-                    .rotationEffect(.degrees(repository.isSyncing ? 360 : 0))
-                    .animation(repository.isSyncing ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default, value: repository.isSyncing)
             }
         }
         .padding(.horizontal, 18)
     }
 
-    // MARK: - Hero Banner
     private var heroBanner: some View {
         ZStack(alignment: .bottomLeading) {
             RoundedRectangle(cornerRadius: 20)
@@ -135,7 +126,6 @@ struct HomeView: View {
         .padding(.horizontal, 16)
     }
 
-    // MARK: - Matches Section (مباريات اليوم)
     private var matchesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -173,7 +163,6 @@ struct HomeView: View {
 
     private func matchCard(_ match: ZHMatch) -> some View {
         VStack(spacing: 10) {
-            // League & Status
             HStack {
                 Text(match.league)
                     .font(.system(size: 11, weight: .semibold))
@@ -201,7 +190,6 @@ struct HomeView: View {
                 }
             }
 
-            // Teams & Score
             HStack(spacing: 10) {
                 VStack(spacing: 4) {
                     Text(match.teamALogo)
@@ -232,7 +220,6 @@ struct HomeView: View {
                 .frame(width: 75)
             }
 
-            // Channel & Watch Button
             HStack {
                 HStack(spacing: 4) {
                     Image(systemName: "tv")
@@ -247,9 +234,11 @@ struct HomeView: View {
                 Spacer()
 
                 Button {
-                    // Find channel by name or fallback to first matching channel
-                    if let channel = repository.enabledChannels.first(where: { bash.name.localizedCaseInsensitiveContains(match.channelName) || match.channelName.localizedCaseInsensitiveContains(bash.name) }) {
-                        selectedChannel = channel
+                    let matchCh = repository.enabledChannels.first { ch in
+                        ch.name.localizedCaseInsensitiveContains(match.channelName) || match.channelName.localizedCaseInsensitiveContains(ch.name)
+                    }
+                    if let found = matchCh {
+                        selectedChannel = found
                     } else if let fallback = repository.enabledChannels.first {
                         selectedChannel = fallback
                     }
@@ -275,7 +264,6 @@ struct HomeView: View {
         )
     }
 
-    // MARK: - Categories Bar
     private var categoriesBar: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("الأقسام")
@@ -306,7 +294,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Channels Grid
     private var channelsGrid: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
