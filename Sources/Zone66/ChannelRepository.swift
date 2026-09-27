@@ -15,15 +15,15 @@ final class ChannelRepository: ObservableObject {
     private let matchesURL = URL(string: "https://raw.githubusercontent.com/husszzzz/Zone66-Player/main/Data/matches.json")!
 
     var enabledChannels: [Zone66Channel] {
-        channels.filter { bash.isEnabled }
+        channels.filter { ch in ch.isEnabled }
     }
 
     var favoriteChannels: [Zone66Channel] {
-        channels.filter { favorites.contains(bash.id) }
+        channels.filter { ch in favorites.contains(ch.id) }
     }
 
     var categories: [String] {
-        let set = Set(enabledChannels.map { bash.category })
+        let set = Set(enabledChannels.map { ch in ch.category })
         return ["الكل"] + Array(set).sorted()
     }
 
