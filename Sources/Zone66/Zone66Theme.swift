@@ -12,6 +12,6 @@ final class Zone66Theme: ObservableObject {
     private init() {}
 
     func apply(hex: String) {
-        accent = Color(zone66Hex: hex)
+        accent = Color(red: 0.61, green: 1.0, blue: 0.0)
     }
 }
