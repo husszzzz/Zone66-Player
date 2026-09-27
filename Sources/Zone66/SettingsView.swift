@@ -112,8 +112,14 @@ struct SettingsView: View {
 
                 // MARK: - Playback Settings
                 Section(header: Text("إعدادات المشغل").foregroundColor(.white.opacity(0.7))) {
-                    Toggle("تشغيل تلقائي للبث", isOn: .autoPlay)
-                    Toggle("ملء الشاشة تلقائياً", isOn: .fillVideo)
+                    Toggle("تشغيل تلقائي للبث", isOn: Binding(
+                        get: { settings.autoPlay },
+                        set: { val in settings.autoPlay = val }
+                    ))
+                    Toggle("ملء الشاشة تلقائياً", isOn: Binding(
+                        get: { settings.fillVideo },
+                        set: { val in settings.fillVideo = val }
+                    ))
                     HStack {
                         Text("دعم Picture in Picture (PiP)")
                         Spacer()
