@@ -6,6 +6,8 @@ struct SettingsView: View {
     @EnvironmentObject var settings: Zone66Settings
     @ObservedObject var loc = LocalizationManager.shared
 
+    @State private var showLanguagePicker = false
+
     var body: some View {
         NavigationView {
             List {
@@ -28,7 +30,7 @@ struct SettingsView: View {
                             .font(.system(size: 22, weight: .black, design: .rounded))
                             .foregroundColor(.white)
 
-                        Text("الإصدار 5.3.0 • المشغل الملكي للبث المباشر")
+                        Text("الإصدار 5.4.0 • المشغل الملكي للبث المباشر")
                             .font(.system(size: 12, weight: .medium))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -37,26 +39,64 @@ struct SettingsView: View {
                 }
                 .listRowBackground(theme.card)
 
-                // MARK: - Language Selector
+                // MARK: - Language Selector Button
                 Section(header: Text(loc.tr("language")).foregroundColor(theme.accent)) {
-                    ForEach(AppLanguage.allCases) { lang in
-                        Button {
-                            withAnimation {
-                                loc.currentLanguage = lang
-                            }
-                        } label: {
-                            HStack {
-                                Text(lang.flag)
-                                    .font(.system(size: 18))
-                                Text(lang.title)
+                    Button {
+                        showLanguagePicker = true
+                    } label: {
+                        HStack(spacing: 12) {
+                            Text(loc.currentLanguage.flag)
+                                .font(.system(size: 22))
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(loc.tr("language"))
+                                    .font(.system(size: 15, weight: .semibold))
                                     .foregroundColor(.white)
-                                    .font(.system(size: 15, weight: .medium))
-                                Spacer()
-                                if loc.currentLanguage == lang {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(theme.accent)
-                                }
+
+                                Text(loc.currentLanguage.title)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(theme.accent)
                             }
+
+                            Spacer()
+
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(.white.opacity(0.5))
+                        }
+                    }
+                }
+                .listRowBackground(theme.card)
+
+                // MARK: - Report a Problem (Contact Hussein Al-Hassani)
+                Section(header: Text("الدعم الفني والإبلاغ").foregroundColor(theme.accent)) {
+                    Link(destination: URL(string: "https://t.me/OM_G9")!) {
+                        HStack(spacing: 12) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.orange.opacity(0.15))
+                                    .frame(width: 38, height: 38)
+
+                                Image(systemName: "exclamationmark.bubble.fill")
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.orange)
+                            }
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("إبلاغ عن مشكلة")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(.white)
+
+                                Text("تواصل مباشر مع المطور حسين الحسني")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+
+                            Spacer()
+
+                            Image(systemName: "paperplane.fill")
+                                .font(.system(size: 13))
+                                .foregroundColor(.orange)
                         }
                     }
                 }
@@ -160,7 +200,7 @@ struct SettingsView: View {
 
                 // MARK: - Player & Performance Settings
                 Section(header: Text("إعدادات المشغل والجودة").foregroundColor(theme.accent)) {
-                    Toggle(isOn: $settings.hardwareAcceleration) {
+                    Toggle(isOn: .hardwareAcceleration) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("تسريع العتاد (Hardware Decoding)")
                                 .font(.system(size: 14, weight: .semibold))
@@ -171,7 +211,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: $settings.lowLatencyMode) {
+                    Toggle(isOn: .lowLatencyMode) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("وضع البث فائق السرعة (Low Latency)")
                                 .font(.system(size: 14, weight: .semibold))
@@ -182,7 +222,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: $settings.autoReconnect) {
+                    Toggle(isOn: .autoReconnect) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("إعادة الاتصال التلقائي")
                                 .font(.system(size: 14, weight: .semibold))
@@ -236,7 +276,86 @@ struct SettingsView: View {
             .listStyle(InsetGroupedListStyle())
             .background(theme.background.ignoresSafeArea())
             .navigationTitle(loc.tr("settings"))
+            .sheet(isPresented: ) {
+                LanguageSelectionModal(isPresented: )
+                    .environmentObject(theme)
+                    .environmentObject(loc)
+            }
         }
         .navigationViewStyle(.stack)
+    }
+}
+
+struct LanguageSelectionModal: View {
+    @Binding var isPresented: Bool
+    @EnvironmentObject var theme: Zone66Theme
+    @ObservedObject var loc = LocalizationManager.shared
+
+    var body: some View {
+        ZStack {
+            theme.background.ignoresSafeArea()
+
+            VStack(spacing: 20) {
+                HStack {
+                    Text(loc.tr("language"))
+                        .font(.system(size: 20, weight: .black, design: .rounded))
+                        .foregroundColor(.white)
+
+                    Spacer()
+
+                    Button {
+                        isPresented = false
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 24)
+
+                VStack(spacing: 12) {
+                    ForEach(AppLanguage.allCases) { lang in
+                        Button {
+                            withAnimation(.easeInOut) {
+                                loc.currentLanguage = lang
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                isPresented = false
+                            }
+                        } label: {
+                            HStack(spacing: 14) {
+                                Text(lang.flag)
+                                    .font(.system(size: 26))
+
+                                Text(lang.title)
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.white)
+
+                                Spacer()
+
+                                if loc.currentLanguage == lang {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(theme.accent)
+                                }
+                            }
+                            .padding(16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(loc.currentLanguage == lang ? theme.accent.opacity(0.15) : theme.card)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(loc.currentLanguage == lang ? theme.accent : Color.white.opacity(0.08), lineWidth: 1.5)
+                                    )
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, 20)
+
+                Spacer()
+            }
+        }
     }
 }
