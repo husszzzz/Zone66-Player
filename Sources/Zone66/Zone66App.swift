@@ -73,7 +73,7 @@ struct ZHSplashIntroView: View {
 
             VStack(spacing: 24) {
                 // Ball entry animation
-                Image(systemName: soccerball)
+                Image(systemName: "soccerball")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(theme.accent)
                     .offset(y: ballOffset)
