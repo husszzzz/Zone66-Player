@@ -1,20 +1,5 @@
 [
   {
-    "id": "match_3",
-    "team1": "ليفربول",
-    "team2": "أرسنال",
-    "team1Logo": "🔴",
-    "team2Logo": "⚪🔴",
-    "time": "07:30 م",
-    "date": "2026-09-28",
-    "details": "الدوري الإنجليزي الممتاز • خليل البلوشي",
-    "status": "upcoming",
-    "score": "vs",
-    "channelId": "ch_bein1",
-    "channelName": "beIN Sports 1 HD",
-    "streamURL": ""
-  },
-  {
     "id": "match_4",
     "team1": "الهلال",
     "team2": "النصر",
