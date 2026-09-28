@@ -1,20 +1,5 @@
 [
   {
-    "id": "match_2",
-    "team1": "برشلونة",
-    "team2": "باريس سان جيرمان",
-    "team1Logo": "🔴🔵",
-    "team2Logo": "🗼",
-    "time": "10:00 م",
-    "date": "2026-09-28",
-    "details": "دوري أبطال أوروبا • حفيظ دراجي",
-    "status": "live",
-    "score": "1 - 1",
-    "channelId": "ch_bein2",
-    "channelName": "beIN Sports 2 HD",
-    "streamURL": ""
-  },
-  {
     "id": "match_3",
     "team1": "ليفربول",
     "team2": "أرسنال",
