@@ -105,7 +105,7 @@ struct PlayerView: View {
         }
         .onAppear {
             setupPlayer(with: channel.streamURL)
-            repository.recordRecentChannel(channel.id)
+            repository.recordWatched(channel.id)
         }
         .onDisappear {
             player?.pause()
@@ -336,7 +336,7 @@ struct PlayerView: View {
         showQuickChannels = false
         player?.pause()
         setupPlayer(with: newCh.streamURL)
-        repository.recordRecentChannel(newCh.id)
+        repository.recordWatched(newCh.id)
     }
 
     private func togglePlay() {
