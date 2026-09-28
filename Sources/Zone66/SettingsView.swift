@@ -200,7 +200,7 @@ struct SettingsView: View {
 
                 // MARK: - Player & Performance Settings
                 Section(header: Text("إعدادات المشغل والجودة").foregroundColor(theme.accent)) {
-                    Toggle(isOn: .hardwareAcceleration) {
+                    Toggle(isOn: $settings.hardwareAcceleration) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("تسريع العتاد (Hardware Decoding)")
                                 .font(.system(size: 14, weight: .semibold))
@@ -211,7 +211,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: .lowLatencyMode) {
+                    Toggle(isOn: $settings.lowLatencyMode) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("وضع البث فائق السرعة (Low Latency)")
                                 .font(.system(size: 14, weight: .semibold))
@@ -222,7 +222,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: .autoReconnect) {
+                    Toggle(isOn: $settings.autoReconnect) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("إعادة الاتصال التلقائي")
                                 .font(.system(size: 14, weight: .semibold))
@@ -276,8 +276,8 @@ struct SettingsView: View {
             .listStyle(InsetGroupedListStyle())
             .background(theme.background.ignoresSafeArea())
             .navigationTitle(loc.tr("settings"))
-            .sheet(isPresented: ) {
-                LanguageSelectionModal(isPresented: )
+            .sheet(isPresented: $showLanguagePicker) {
+                LanguageSelectionModal(isPresented: $showLanguagePicker)
                     .environmentObject(theme)
                     .environmentObject(loc)
             }
