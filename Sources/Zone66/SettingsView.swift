@@ -4,11 +4,12 @@ struct SettingsView: View {
     @EnvironmentObject var theme: Zone66Theme
     @EnvironmentObject var repository: ChannelRepository
     @EnvironmentObject var settings: Zone66Settings
+    @ObservedObject var loc = LocalizationManager.shared
 
     var body: some View {
         NavigationView {
             List {
-                // MARK: - App Brand Header with Real Logo
+                // MARK: - App Brand Header
                 Section {
                     VStack(spacing: 12) {
                         ZStack {
@@ -27,7 +28,7 @@ struct SettingsView: View {
                             .font(.system(size: 22, weight: .black, design: .rounded))
                             .foregroundColor(.white)
 
-                        Text("الإصدار 5.2.0 • المشغل الملكي للبث المباشر")
+                        Text("الإصدار 5.3.0 • المشغل الملكي للبث المباشر")
                             .font(.system(size: 12, weight: .medium))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -36,7 +37,32 @@ struct SettingsView: View {
                 }
                 .listRowBackground(theme.card)
 
-                // MARK: - Development Team (فريق العمل والمطورين)
+                // MARK: - Language Selector
+                Section(header: Text(loc.tr("language")).foregroundColor(theme.accent)) {
+                    ForEach(AppLanguage.allCases) { lang in
+                        Button {
+                            withAnimation {
+                                loc.currentLanguage = lang
+                            }
+                        } label: {
+                            HStack {
+                                Text(lang.flag)
+                                    .font(.system(size: 18))
+                                Text(lang.title)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15, weight: .medium))
+                                Spacer()
+                                if loc.currentLanguage == lang {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(theme.accent)
+                                }
+                            }
+                        }
+                    }
+                }
+                .listRowBackground(theme.card)
+
+                // MARK: - Development Team
                 Section(header: Text("فريق العمل والإدارة").foregroundColor(theme.accent)) {
                     // Main Developer: Hussein Al-Hasani
                     HStack(spacing: 14) {
@@ -209,7 +235,7 @@ struct SettingsView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .background(theme.background.ignoresSafeArea())
-            .navigationTitle("الإعدادات")
+            .navigationTitle(loc.tr("settings"))
         }
         .navigationViewStyle(.stack)
     }
