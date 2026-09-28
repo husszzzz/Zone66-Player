@@ -1,20 +1,5 @@
 [
   {
-    "id": "match_4",
-    "team1": "الهلال",
-    "team2": "النصر",
-    "team1Logo": "🔵",
-    "team2Logo": "🟡",
-    "time": "09:00 م",
-    "date": "2026-09-28",
-    "details": "دوري روشن السعودي • فارس عوض",
-    "status": "upcoming",
-    "score": "vs",
-    "channelId": "ch_ssc1",
-    "channelName": "SSC 1 HD",
-    "streamURL": ""
-  },
-  {
     "id": "match_5",
     "team1": "أتلتيكو مدريد",
     "team2": "إشبيلية",
