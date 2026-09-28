@@ -19,7 +19,7 @@ struct BundledImageView: View {
                 .resizable()
                 .scaledToFill()
         } else if let path = Bundle.main.path(forResource: name, ofType: ext),
-           let uiImage = UIImage(contentsOfFile: path) {
+                  let uiImage = UIImage(contentsOfFile: path) {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
@@ -32,6 +32,79 @@ struct BundledImageView: View {
                 .resizable()
                 .scaledToFit()
         }
+    }
+}
+
+// Supports normal text/emoji and remote image URLs.
+struct RemoteOrTextImage: View {
+    let value: String
+    var size: CGFloat = 56
+    var cornerRadius: CGFloat = 14
+
+    private var cleanedValue: String {
+        value.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var remoteURL: URL? {
+        guard let url = URL(string: cleanedValue),
+              let scheme = url.scheme?.lowercased(),
+              (scheme == "http" || scheme == "https"),
+              !cleanedValue.isEmpty else {
+            return nil
+        }
+        return url
+    }
+
+    var body: some View {
+        Group {
+            if let url = remoteURL {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .padding(4)
+
+                    case .failure:
+                        fallback
+
+                    case .empty:
+                        ZStack {
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .fill(Color.white.opacity(0.06))
+
+                            ProgressView()
+                                .progressViewStyle(
+                                    CircularProgressViewStyle(
+                                        tint: .white.opacity(0.7)
+                                    )
+                                )
+                        }
+
+                    @unknown default:
+                        fallback
+                    }
+                }
+            } else {
+                fallback
+            }
+        }
+        .frame(width: size, height: size)
+        .background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(Color.white.opacity(0.06))
+        )
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+    }
+
+    private var fallback: some View {
+        Text(cleanedValue.isEmpty ? "⚽" : cleanedValue)
+            .font(.system(size: min(size * 0.55, 38), weight: .bold))
+            .foregroundColor(.white)
+            .minimumScaleFactor(0.4)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
@@ -48,7 +121,10 @@ struct ChannelRow: View {
                     RoundedRectangle(cornerRadius: 14)
                         .fill(
                             LinearGradient(
-                                colors: [Color.white.opacity(0.12), Color.white.opacity(0.04)],
+                                colors: [
+                                    Color.white.opacity(0.12),
+                                    Color.white.opacity(0.04)
+                                ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
@@ -59,9 +135,18 @@ struct ChannelRow: View {
                                 .stroke(theme.accent.opacity(0.3), lineWidth: 1)
                         )
 
-                    Image(systemName: "tv.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(theme.accent)
+                    if let icon = channel.iconURL,
+                       !icon.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        RemoteOrTextImage(
+                            value: icon,
+                            size: 42,
+                            cornerRadius: 11
+                        )
+                    } else {
+                        Image(systemName: "tv.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(theme.accent)
+                    }
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -94,10 +179,18 @@ struct ChannelRow: View {
                 Button {
                     repository.toggleFavorite(channel.id)
                 } label: {
-                    Image(systemName: repository.isFavorite(channel.id) ? "heart.fill" : "heart")
-                        .font(.system(size: 20))
-                        .foregroundColor(repository.isFavorite(channel.id) ? .red : .white.opacity(0.4))
-                        .padding(8)
+                    Image(
+                        systemName: repository.isFavorite(channel.id)
+                            ? "heart.fill"
+                            : "heart"
+                    )
+                    .font(.system(size: 20))
+                    .foregroundColor(
+                        repository.isFavorite(channel.id)
+                            ? .red
+                            : .white.opacity(0.4)
+                    )
+                    .padding(8)
                 }
 
                 Image(systemName: "play.circle.fill")

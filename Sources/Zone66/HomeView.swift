@@ -27,13 +27,9 @@ struct HomeView: View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
-                    // MARK: - Header Branding Card
                     headerBrandSection
-
-                    // MARK: - Match Filter Tabs
                     filterTabsSection
 
-                    // MARK: - Matches List
                     if filteredMatches.isEmpty {
                         emptyMatchesView
                     } else {
@@ -47,7 +43,6 @@ struct HomeView: View {
                         .padding(.horizontal, 16)
                     }
 
-                    // Spacer for bottom tabs
                     Spacer(minLength: 40)
                 }
                 .padding(.top, 12)
@@ -77,7 +72,6 @@ struct HomeView: View {
         .navigationViewStyle(.stack)
     }
 
-    // MARK: - Header Branding Section
     private var headerBrandSection: some View {
         HStack(spacing: 12) {
             BundledImageView(name: "zh_logo", ext: "png", placeholder: "tv.fill")
@@ -102,18 +96,21 @@ struct HomeView: View {
             Button {
                 repository.refresh()
             } label: {
-                Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(width: 38, height: 38)
-                    .background(Color.white.opacity(0.08))
-                    .clipShape(Circle())
+                Image(
+                    systemName: repository.isSyncing
+                        ? "arrow.triangle.2.circlepath"
+                        : "arrow.clockwise"
+                )
+                .font(.system(size: 15, weight: .bold))
+                .foregroundColor(.white)
+                .frame(width: 38, height: 38)
+                .background(Color.white.opacity(0.08))
+                .clipShape(Circle())
             }
         }
         .padding(.horizontal, 16)
     }
 
-    // MARK: - Filter Tabs Section
     private var filterTabsSection: some View {
         HStack(spacing: 8) {
             filterButton(title: loc.tr("all"), id: "all")
@@ -124,7 +121,11 @@ struct HomeView: View {
         .padding(.horizontal, 16)
     }
 
-    private func filterButton(title: String, id: String, isLive: Bool = false) -> some View {
+    private func filterButton(
+        title: String,
+        id: String,
+        isLive: Bool = false
+    ) -> some View {
         Button {
             withAnimation(.easeInOut(duration: 0.2)) {
                 selectedFilter = id
@@ -136,6 +137,7 @@ struct HomeView: View {
                         .fill(Color.red)
                         .frame(width: 6, height: 6)
                 }
+
                 Text(title)
                     .font(.system(size: 13, weight: .bold))
             }
@@ -143,15 +145,14 @@ struct HomeView: View {
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
             .background(
-                selectedFilter == id ?
-                theme.accent :
-                Color.white.opacity(0.08)
+                selectedFilter == id
+                    ? theme.accent
+                    : Color.white.opacity(0.08)
             )
             .cornerRadius(20)
         }
     }
 
-    // MARK: - Empty Matches View
     private var emptyMatchesView: some View {
         VStack(spacing: 16) {
             Image(systemName: "sportscourt")
@@ -171,7 +172,6 @@ struct HomeView: View {
         .padding(32)
     }
 
-    // MARK: - Playback Router
     private func handleMatchPlayback(_ match: ZHMatch) {
         if let directUrl = match.streamURL, !directUrl.isEmpty {
             let channel = Zone66Channel(
@@ -183,6 +183,7 @@ struct HomeView: View {
                 isFeatured: false,
                 isEnabled: true
             )
+
             withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
                 playingChannel = channel
             }
@@ -190,7 +191,9 @@ struct HomeView: View {
         }
 
         if let chName = match.channelName,
-           let found = repository.channels.first(where: { $0.name.contains(chName) || chName.contains($0.name) }) {
+           let found = repository.channels.first(where: {
+               $0.name.contains(chName) || chName.contains($0.name)
+           }) {
             withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
                 playingChannel = found
             }
@@ -202,7 +205,6 @@ struct HomeView: View {
     }
 }
 
-// MARK: - Match Card View with Frosted Glass & Neon Glow
 struct MatchCardView: View {
     let match: ZHMatch
     let onPlay: () -> Void
@@ -223,7 +225,6 @@ struct MatchCardView: View {
 
     var body: some View {
         VStack(spacing: 14) {
-            // League and Time Info Header
             HStack {
                 HStack(spacing: 6) {
                     Image(systemName: "trophy.fill")
@@ -238,7 +239,6 @@ struct MatchCardView: View {
 
                 Spacer()
 
-                // Status Badge with Pulse
                 HStack(spacing: 6) {
                     if match.isLive {
                         Circle()
@@ -246,6 +246,7 @@ struct MatchCardView: View {
                             .frame(width: 6, height: 6)
                             .shadow(color: .white, radius: 4)
                     }
+
                     Text(statusBadgeText)
                         .font(.system(size: 11, weight: .heavy))
                 }
@@ -259,12 +260,14 @@ struct MatchCardView: View {
                 )
             }
 
-            // Teams Versus Section
             HStack(alignment: .center, spacing: 10) {
-                // Team 1
                 VStack(spacing: 6) {
-                    Text(match.team1Logo)
-                        .font(.system(size: 38))
+                    RemoteOrTextImage(
+                        value: match.team1Logo,
+                        size: 62,
+                        cornerRadius: 16
+                    )
+
                     Text(match.team1)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.white)
@@ -273,7 +276,6 @@ struct MatchCardView: View {
                         .frame(maxWidth: .infinity)
                 }
 
-                // Score / Time Center
                 VStack(spacing: 4) {
                     Text(match.score)
                         .font(.system(size: 22, weight: .black, design: .monospaced))
@@ -284,7 +286,12 @@ struct MatchCardView: View {
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(match.isLive ? theme.accent.opacity(0.7) : Color.white.opacity(0.1), lineWidth: 1)
+                                .stroke(
+                                    match.isLive
+                                        ? theme.accent.opacity(0.7)
+                                        : Color.white.opacity(0.1),
+                                    lineWidth: 1
+                                )
                         )
 
                     if !match.date.isEmpty {
@@ -295,10 +302,13 @@ struct MatchCardView: View {
                 }
                 .frame(width: 90)
 
-                // Team 2
                 VStack(spacing: 6) {
-                    Text(match.team2Logo)
-                        .font(.system(size: 38))
+                    RemoteOrTextImage(
+                        value: match.team2Logo,
+                        size: 62,
+                        cornerRadius: 16
+                    )
+
                     Text(match.team2)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.white)
@@ -309,7 +319,6 @@ struct MatchCardView: View {
             }
             .padding(.vertical, 4)
 
-            // Watch Button & Channel Info
             Button(action: onPlay) {
                 HStack(spacing: 8) {
                     Image(systemName: "play.fill")
@@ -328,7 +337,10 @@ struct MatchCardView: View {
                 .padding(.vertical, 10)
                 .background(
                     LinearGradient(
-                        colors: [theme.accent, theme.accent.opacity(0.85)],
+                        colors: [
+                            theme.accent,
+                            theme.accent.opacity(0.85)
+                        ],
                         startPoint: .leading,
                         endPoint: .trailing
                     )
@@ -347,9 +359,16 @@ struct MatchCardView: View {
                 RoundedRectangle(cornerRadius: 22)
                     .stroke(
                         LinearGradient(
-                            colors: match.isLive ?
-                                [theme.accent, theme.accent.opacity(0.4), Color.red.opacity(0.6)] :
-                                [theme.accent.opacity(0.4), Color.white.opacity(0.12)],
+                            colors: match.isLive
+                                ? [
+                                    theme.accent,
+                                    theme.accent.opacity(0.4),
+                                    Color.red.opacity(0.6)
+                                ]
+                                : [
+                                    theme.accent.opacity(0.4),
+                                    Color.white.opacity(0.12)
+                                ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -357,11 +376,16 @@ struct MatchCardView: View {
                     )
             }
         )
-        .shadow(color: match.isLive ? theme.accent.opacity(0.25) : Color.black.opacity(0.4), radius: 10, y: 5)
+        .shadow(
+            color: match.isLive
+                ? theme.accent.opacity(0.25)
+                : Color.black.opacity(0.4),
+            radius: 10,
+            y: 5
+        )
     }
 }
 
-// MARK: - Match Channel Picker Sheet
 struct MatchChannelPickerSheet: View {
     let match: ZHMatch
     let onSelect: (Zone66Channel) -> Void
@@ -377,15 +401,22 @@ struct MatchChannelPickerSheet: View {
         if search.isEmpty {
             return repository.enabledChannels
         }
-        return repository.enabledChannels.filter { $0.name.localizedCaseInsensitiveContains(search) }
+
+        return repository.enabledChannels.filter {
+            $0.name.localizedCaseInsensitiveContains(search)
+        }
     }
 
     var body: some View {
         NavigationView {
             VStack(spacing: 12) {
-                // Match Header Summary
                 HStack(spacing: 10) {
-                    Text(match.team1Logo)
+                    RemoteOrTextImage(
+                        value: match.team1Logo,
+                        size: 32,
+                        cornerRadius: 8
+                    )
+
                     Text(match.team1)
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.white)
@@ -397,7 +428,12 @@ struct MatchChannelPickerSheet: View {
                     Text(match.team2)
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.white)
-                    Text(match.team2Logo)
+
+                    RemoteOrTextImage(
+                        value: match.team2Logo,
+                        size: 32,
+                        cornerRadius: 8
+                    )
                 }
                 .padding(.vertical, 8)
                 .frame(maxWidth: .infinity)
@@ -405,33 +441,45 @@ struct MatchChannelPickerSheet: View {
                 .cornerRadius(12)
                 .padding(.horizontal, 16)
 
-                // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.white.opacity(0.5))
-                    TextField(loc.tr("search_placeholder"), text: $search)
-                        .foregroundColor(.white)
+
+                    TextField(
+                        loc.tr("search_placeholder"),
+                        text: $search
+                    )
+                    .foregroundColor(.white)
                 }
                 .padding(10)
                 .background(Color.white.opacity(0.08))
                 .cornerRadius(12)
                 .padding(.horizontal, 16)
 
-                // Channels List
                 List {
                     ForEach(filteredChannels) { channel in
                         Button {
                             onSelect(channel)
                         } label: {
                             HStack(spacing: 12) {
-                                Image(systemName: "tv.fill")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(theme.accent)
+                                if let icon = channel.iconURL,
+                                   !icon.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                    RemoteOrTextImage(
+                                        value: icon,
+                                        size: 38,
+                                        cornerRadius: 9
+                                    )
+                                } else {
+                                    Image(systemName: "tv.fill")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(theme.accent)
+                                }
 
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(channel.name)
                                         .font(.system(size: 14, weight: .bold))
                                         .foregroundColor(.white)
+
                                     Text(channel.category)
                                         .font(.system(size: 11))
                                         .foregroundColor(.white.opacity(0.5))
@@ -451,9 +499,12 @@ struct MatchChannelPickerSheet: View {
             }
             .background(theme.background.ignoresSafeArea())
             .navigationTitle(loc.tr("choose_channel"))
-            .navigationBarItems(leading: Button("إلغاء") {
-                presentationMode.wrappedValue.dismiss()
-            }.foregroundColor(theme.accent))
+            .navigationBarItems(
+                leading: Button("إلغاء") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(theme.accent)
+            )
         }
         .navigationViewStyle(.stack)
     }
