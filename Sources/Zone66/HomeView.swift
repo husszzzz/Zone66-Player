@@ -13,11 +13,11 @@ struct HomeView: View {
     var filteredMatches: [ZHMatch] {
         switch selectedFilter {
         case "live":
-            return repository.matches.filter { bash.isLive }
+            return repository.matches.filter { $0.isLive }
         case "upcoming":
-            return repository.matches.filter { bash.isUpcoming }
+            return repository.matches.filter { $0.isUpcoming }
         case "finished":
-            return repository.matches.filter { bash.isFinished }
+            return repository.matches.filter { $0.isFinished }
         default:
             return repository.matches
         }
@@ -54,12 +54,12 @@ struct HomeView: View {
             }
             .background(theme.background.ignoresSafeArea())
             .navigationBarHidden(true)
-            .fullScreenCover(item: ) { channel in
+            .fullScreenCover(item: $playingChannel) { channel in
                 PlayerView(channel: channel)
                     .environmentObject(theme)
                     .environmentObject(repository)
             }
-            .sheet(isPresented: ) {
+            .sheet(isPresented: $isPickerPresented) {
                 if let match = matchToSelectChannelFor {
                     MatchChannelPickerSheet(match: match) { selectedChannel in
                         isPickerPresented = false
@@ -173,14 +173,14 @@ struct HomeView: View {
 
     // MARK: - Playback Router
     private func handleMatchPlayback(_ match: ZHMatch) {
-        if let directUrl = match.streamURL, let url = URL(string: directUrl) {
+        if let directUrl = match.streamURL, !directUrl.isEmpty {
             let channel = Zone66Channel(
                 id: match.id,
                 name: "\(match.team1) vs \(match.team2)",
-                url: url,
                 category: "Sports",
+                streamURL: directUrl,
                 iconURL: nil,
-                isFavorite: false,
+                isFeatured: false,
                 isEnabled: true
             )
             withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
@@ -190,7 +190,7 @@ struct HomeView: View {
         }
 
         if let chName = match.channelName,
-           let found = repository.channels.first(where: { bash.name.contains(chName) || chName.contains(bash.name) }) {
+           let found = repository.channels.first(where: { $0.name.contains(chName) || chName.contains($0.name) }) {
             withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
                 playingChannel = found
             }
@@ -208,8 +208,6 @@ struct MatchCardView: View {
     let onPlay: () -> Void
     @EnvironmentObject var theme: Zone66Theme
     @ObservedObject var loc = LocalizationManager.shared
-
-    @State private var isHovered = false
 
     var statusColor: Color {
         if match.isLive { return .red }
@@ -340,15 +338,12 @@ struct MatchCardView: View {
             }
         }
         .padding(16)
-        // Frosted Glass & Neon Glow Effect
         .background(
             ZStack {
                 RoundedRectangle(cornerRadius: 22)
                     .fill(Color(white: 0.12).opacity(0.75))
-                    .background(.ultraThinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 22))
 
-                // Neon Glow Border
                 RoundedRectangle(cornerRadius: 22)
                     .stroke(
                         LinearGradient(
@@ -376,13 +371,13 @@ struct MatchChannelPickerSheet: View {
     @ObservedObject var loc = LocalizationManager.shared
     @Environment(\.presentationMode) var presentationMode
 
-    @State private var search = ""
+    @State private var search: String = ""
 
     var filteredChannels: [Zone66Channel] {
         if search.isEmpty {
             return repository.enabledChannels
         }
-        return repository.enabledChannels.filter { bash.name.localizedCaseInsensitiveContains(search) }
+        return repository.enabledChannels.filter { $0.name.localizedCaseInsensitiveContains(search) }
     }
 
     var body: some View {
@@ -414,7 +409,7 @@ struct MatchChannelPickerSheet: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.white.opacity(0.5))
-                    TextField(loc.tr("search_placeholder"), text: )
+                    TextField(loc.tr("search_placeholder"), text: $search)
                         .foregroundColor(.white)
                 }
                 .padding(10)
