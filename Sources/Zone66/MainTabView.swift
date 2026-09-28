@@ -2,27 +2,28 @@ import SwiftUI
 
 struct MainTabView: View {
     @EnvironmentObject var theme: Zone66Theme
+    @ObservedObject var loc = LocalizationManager.shared
 
     var body: some View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("الرئيسية", systemImage: "house.fill")
+                    Label(loc.tr("matches_today"), systemImage: "sportscourt.fill")
                 }
 
             ChannelsView()
                 .tabItem {
-                    Label("القنوات", systemImage: "play.tv.fill")
+                    Label(loc.tr("channels"), systemImage: "tv.fill")
                 }
 
             FavoritesView()
                 .tabItem {
-                    Label("المفضلة", systemImage: "heart.fill")
+                    Label(loc.tr("favorites"), systemImage: "star.fill")
                 }
 
             SettingsView()
                 .tabItem {
-                    Label("الإعدادات", systemImage: "gearshape.fill")
+                    Label(loc.tr("settings"), systemImage: "gearshape.fill")
                 }
         }
         .accentColor(theme.accent)
