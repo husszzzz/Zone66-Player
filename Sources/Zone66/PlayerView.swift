@@ -3,63 +3,109 @@ import AVKit
 
 struct PlayerView: View {
     let channel: Zone66Channel
-
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var settings: Zone66Settings
     @EnvironmentObject var repository: ChannelRepository
     @EnvironmentObject var theme: Zone66Theme
-    @EnvironmentObject var settings: Zone66Settings
+    @ObservedObject var loc = LocalizationManager.shared
 
-    @State private var player: AVPlayer?
-    @State private var playing = true
-    @State private var isMuted = false
-    @State private var showControls = true
-    @State private var isFillMode = false
-
-    // HUD Feedback
-    @State private var showHUD = false
-    @State private var hudIcon = ""
-    @State private var hudTitle = ""
-    @State private var hudValue: Double = 0.5
-    @State private var hudDismissWorkItem: DispatchWorkItem?
+    @State private var player: AVPlayer? = nil
+    @State private var isPlaying: Bool = true
+    @State private var showControls: Bool = true
+    @State private var isMuted: Bool = false
+    @State private var aspectRatio: AVLayerVideoGravity = .resizeAspect
+    @State private var isScreenLocked: Bool = false
+    @State private var showQuickChannels: Bool = false
+    @State private var volume: Float = 0.5
+    @State private var brightness: CGFloat = UIScreen.main.brightness
+    @State private var showHUD: Bool = false
+    @State private var hudIcon: String = ""
+    @State private var hudValue: Float = 0.0
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
+            // Video Player Core
             if let player = player {
-                CustomVideoPlayer(player: player, fillVideo: isFillMode)
+                CustomVideoPlayer(player: player, videoGravity: aspectRatio)
                     .ignoresSafeArea()
-                    .overlay(gestureOverlay)
-            } else {
-                VStack(spacing: 14) {
-                    ProgressView()
-                        .tint(theme.accent)
-                        .scaleEffect(1.3)
-
-                    Text("جاري الاتصال بالبث المباشر…")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(theme.accent)
-                }
+                    .onTapGesture {
+                        if !isScreenLocked {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                showControls.toggle()
+                            }
+                        }
+                    }
+                    .onTapGesture(count: 2) {
+                        if !isScreenLocked {
+                            toggleAspectRatio()
+                        }
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                if !isScreenLocked {
+                                    handleDrag(value)
+                                }
+                            }
+                            .onEnded { _ in
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    showHUD = false
+                                }
+                            }
+                    )
             }
 
-            if showHUD {
+            // HUD for Volume / Brightness
+            if showHUD && !isScreenLocked {
                 hudView
-                    .transition(.opacity)
             }
 
-            if showControls {
+            // Screen Lock Active floating badge
+            if isScreenLocked {
                 VStack {
-                    topBar
+                    HStack {
+                        Spacer()
+                        Button {
+                            withAnimation(.spring()) {
+                                isScreenLocked = false
+                                showControls = true
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "lock.open.fill")
+                                Text(loc.tr("unlock"))
+                                    .font(.system(size: 13, weight: .bold))
+                            }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(Color.black.opacity(0.75))
+                            .clipShape(Capsule())
+                            .overlay(Capsule().stroke(theme.accent, lineWidth: 1.5))
+                            .shadow(color: theme.accent.opacity(0.4), radius: 8)
+                        }
+                        .padding(.top, 40)
+                        .padding(.trailing, 20)
+                    }
                     Spacer()
-                    bottomBar
                 }
-                .transition(.opacity)
+            }
+
+            // Normal On-Screen Controls Overlay
+            if showControls && !isScreenLocked {
+                controlsOverlay
+            }
+
+            // Quick Channels Drawer (Side Drawer)
+            if showQuickChannels && !isScreenLocked {
+                quickChannelsDrawer
             }
         }
         .onAppear {
-            isFillMode = settings.fillVideo
-            setupPlayer()
-            repository.recordWatched(channel.id)
+            setupPlayer(with: channel.streamURL)
+            repository.recordRecentChannel(channel.id)
         }
         .onDisappear {
             player?.pause()
@@ -67,236 +113,281 @@ struct PlayerView: View {
         }
     }
 
-    private var gestureOverlay: some View {
-        GeometryReader { geo in
-            Color.clear
-                .contentShape(Rectangle())
-                .gesture(
-                    TapGesture(count: 2).onEnded {
-                        isFillMode.toggle()
-                        triggerHUD(icon: isFillMode ? "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left" : "aspectratio", title: isFillMode ? "ملء الشاشة" : "العرض الأصلي", value: isFillMode ? 1.0 : 0.0)
+    // MARK: - Controls Overlay
+    private var controlsOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.45).ignoresSafeArea()
+
+            VStack {
+                // Top Bar
+                HStack(spacing: 14) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
                     }
-                    .exclusively(before: TapGesture(count: 1).onEnded {
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            showControls.toggle()
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(channel.name)
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                        Text(channel.category)
+                            .font(.system(size: 12))
+                            .foregroundColor(theme.accent)
+                    }
+
+                    Spacer()
+
+                    // Quick Channels List Button
+                    Button {
+                        withAnimation(.spring()) {
+                            showQuickChannels.toggle()
                         }
-                    })
-                )
-                .gesture(
-                    DragGesture(minimumDistance: 15)
-                        .onChanged { val in
-                            let isRight = val.startLocation.x > (geo.size.width / 2)
-                            let delta = -Double(val.translation.height) / 300.0
-                            if isRight {
-                                let cur = Double(player?.volume ?? 1.0)
-                                let nextVal = min(max(cur + delta * 0.05, 0.0), 1.0)
-                                player?.volume = Float(nextVal)
-                                isMuted = (nextVal == 0.0)
-                                triggerHUD(icon: nextVal == 0 ? "speaker.slash.fill" : "speaker.wave.3.fill", title: "مستوى الصوت", value: nextVal)
-                            } else {
-                                let cur = Double(UIScreen.main.brightness)
-                                let nextVal = min(max(cur + delta * 0.05, 0.0), 1.0)
-                                UIScreen.main.brightness = CGFloat(nextVal)
-                                triggerHUD(icon: "sun.max.fill", title: "السطوع", value: nextVal)
+                    } label: {
+                        Image(systemName: "list.bullet.rectangle.portrait.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(theme.accent)
+                            .padding(10)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
+                    }
+
+                    // Touch Lock Button
+                    Button {
+                        withAnimation(.spring()) {
+                            isScreenLocked = true
+                            showControls = false
+                        }
+                    } label: {
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
+
+                Spacer()
+
+                // Center Play/Pause & Fast Actions
+                HStack(spacing: 40) {
+                    Button {
+                        isMuted.toggle()
+                        player?.isMuted = isMuted
+                    } label: {
+                        Image(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                            .font(.system(size: 22))
+                            .foregroundColor(.white)
+                            .padding(14)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
+                    }
+
+                    Button {
+                        togglePlay()
+                    } label: {
+                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                            .font(.system(size: 36))
+                            .foregroundColor(.black)
+                            .padding(22)
+                            .background(theme.accent)
+                            .clipShape(Circle())
+                            .shadow(color: theme.accent.opacity(0.6), radius: 10)
+                    }
+
+                    Button {
+                        toggleAspectRatio()
+                    } label: {
+                        Image(systemName: aspectRatio == .resizeAspect ? "viewfinder" : "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left")
+                            .font(.system(size: 22))
+                            .foregroundColor(.white)
+                            .padding(14)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
+                    }
+                }
+
+                Spacer()
+
+                // Bottom Status
+                HStack {
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 8, height: 8)
+                        Text(loc.tr("live_now"))
+                            .font(.system(size: 12, weight: .heavy))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Color.black.opacity(0.7))
+                    .cornerRadius(8)
+
+                    Spacer()
+
+                    Text("ZH TEAM PLAYER")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(.white.opacity(0.5))
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
+            }
+        }
+    }
+
+    // MARK: - Quick Channels Drawer
+    private var quickChannelsDrawer: some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text(loc.tr("quick_channels"))
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                    Spacer()
+                    Button {
+                        withAnimation { showQuickChannels = false }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                }
+                .padding(.bottom, 8)
+
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: 8) {
+                        ForEach(repository.enabledChannels.prefix(25)) { ch in
+                            Button {
+                                switchChannel(ch)
+                            } label: {
+                                HStack(spacing: 10) {
+                                    Circle()
+                                        .fill(ch.id == channel.id ? theme.accent : Color.white.opacity(0.2))
+                                        .frame(width: 8, height: 8)
+
+                                    Text(ch.name)
+                                        .font(.system(size: 13, weight: ch.id == channel.id ? .bold : .medium))
+                                        .foregroundColor(ch.id == channel.id ? theme.accent : .white)
+                                        .lineLimit(1)
+
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(ch.id == channel.id ? Color.white.opacity(0.12) : Color.white.opacity(0.04))
+                                .cornerRadius(10)
                             }
                         }
-                )
+                    }
+                }
+            }
+            .padding(16)
+            .frame(width: 260)
+            .background(Color.black.opacity(0.92).ignoresSafeArea())
+            .overlay(
+                Rectangle()
+                    .frame(width: 1)
+                    .foregroundColor(theme.accent.opacity(0.3)),
+                alignment: .leading
+            )
         }
+        .transition(.move(edge: .trailing))
     }
 
+    // MARK: - HUD
     private var hudView: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
             Image(systemName: hudIcon)
-                .font(.system(size: 28, weight: .bold))
+                .font(.system(size: 28))
                 .foregroundColor(theme.accent)
-
-            Text(hudTitle)
-                .font(.system(size: 13, weight: .bold))
-                .foregroundColor(.white)
-
-            ProgressView(value: hudValue, total: 1.0)
+            ProgressView(value: hudValue)
                 .progressViewStyle(LinearProgressViewStyle(tint: theme.accent))
-                .frame(width: 120)
+                .frame(width: 100)
         }
-        .padding(18)
-        .background(Color.black.opacity(0.85))
-        .cornerRadius(18)
-        .overlay(
-            RoundedRectangle(cornerRadius: 18)
-                .stroke(theme.accent.opacity(0.3), lineWidth: 1)
-        )
+        .padding(16)
+        .background(Color.black.opacity(0.8))
+        .cornerRadius(14)
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(theme.accent.opacity(0.3), lineWidth: 1))
     }
 
-    private func triggerHUD(icon: String, title: String, value: Double) {
-        hudIcon = icon
-        hudTitle = title
-        hudValue = value
-        withAnimation { showHUD = true }
-
-        hudDismissWorkItem?.cancel()
-        let item = DispatchWorkItem {
-            withAnimation { self.showHUD = false }
-        }
-        hudDismissWorkItem = item
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2, execute: item)
+    // MARK: - Helpers
+    private func setupPlayer(with urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        let item = AVPlayerItem(url: url)
+        let newPlayer = AVPlayer(playerItem: item)
+        newPlayer.automaticallyWaitsToMinimizeStalling = !settings.lowLatencyMode
+        self.player = newPlayer
+        newPlayer.play()
+        self.isPlaying = true
     }
 
-    private var topBar: some View {
-        HStack(spacing: 14) {
-            Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 28))
-                    .foregroundColor(.white.opacity(0.85))
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(channel.name)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.white)
-                    .lineLimit(1)
-
-                HStack(spacing: 6) {
-                    Circle()
-                        .fill(Color.green)
-                        .frame(width: 8, height: 8)
-                    Text("بث نشط • ZH TEAM")
-                        .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.7))
-                }
-            }
-
-            Spacer()
-
-            Button {
-                repository.toggleFavorite(channel.id)
-            } label: {
-                Image(systemName: repository.isFavorite(channel.id) ? "heart.fill" : "heart")
-                    .font(.system(size: 20))
-                    .foregroundColor(repository.isFavorite(channel.id) ? .red : .white)
-                    .padding(8)
-                    .background(Color.white.opacity(0.15))
-                    .clipShape(Circle())
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 16)
-        .padding(.bottom, 20)
-        .background(
-            LinearGradient(colors: [Color.black.opacity(0.85), Color.clear], startPoint: .top, endPoint: .bottom)
-        )
+    private func switchChannel(_ newCh: Zone66Channel) {
+        showQuickChannels = false
+        player?.pause()
+        setupPlayer(with: newCh.streamURL)
+        repository.recordRecentChannel(newCh.id)
     }
 
-    private var bottomBar: some View {
-        HStack(spacing: 16) {
-            Button {
-                if playing {
-                    player?.pause()
-                } else {
-                    player?.play()
-                }
-                playing.toggle()
-            } label: {
-                Image(systemName: playing ? "pause.fill" : "play.fill")
-                    .font(.system(size: 22))
-                    .frame(width: 44, height: 44)
-                    .background(theme.accent)
-                    .foregroundColor(.black)
-                    .clipShape(Circle())
-            }
-
-            Button {
-                isMuted.toggle()
-                player?.isMuted = isMuted
-            } label: {
-                Image(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .frame(width: 40, height: 40)
-                    .background(Color.white.opacity(0.2))
-                    .clipShape(Circle())
-            }
-
-            Button {
-                isFillMode.toggle()
-                triggerHUD(icon: isFillMode ? "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left" : "aspectratio", title: isFillMode ? "ملء الشاشة" : "العرض الأصلي", value: isFillMode ? 1.0 : 0.0)
-            } label: {
-                Image(systemName: isFillMode ? "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left" : "aspectratio")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(isFillMode ? theme.accent : .white)
-                    .frame(width: 40, height: 40)
-                    .background(Color.white.opacity(0.2))
-                    .clipShape(Circle())
-            }
-
-            Spacer()
-
-            HStack(spacing: 6) {
-                Image(systemName: "pip.enter")
-                    .font(.system(size: 16))
-                    .foregroundColor(theme.accent)
-                Text("PiP مفعّل")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(Color.black.opacity(0.6))
-            .cornerRadius(12)
+    private func togglePlay() {
+        if isPlaying {
+            player?.pause()
+            isPlaying = false
+        } else {
+            player?.play()
+            isPlaying = true
         }
-        .padding(.horizontal, 20)
-        .padding(.bottom, 24)
-        .background(
-            LinearGradient(colors: [Color.clear, Color.black.opacity(0.85)], startPoint: .top, endPoint: .bottom)
-        )
     }
 
-    private func setupPlayer() {
-        guard let url = URL(string: channel.streamURL) else { return }
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("AudioSession error")
+    private func toggleAspectRatio() {
+        withAnimation {
+            aspectRatio = (aspectRatio == .resizeAspect) ? .resizeAspectFill : .resizeAspect
         }
+    }
 
-        let playerItem = AVPlayerItem(url: url)
-        let avPlayer = AVPlayer(playerItem: playerItem)
-        avPlayer.allowsExternalPlayback = true
-        self.player = avPlayer
+    private func handleDrag(_ value: DragGesture.Value) {
+        let screenWidth = UIScreen.main.bounds.width
+        let isRightSide = value.startLocation.x > screenWidth / 2
+        let translation = -value.translation.height / 200.0
 
-        if settings.autoPlay {
-            avPlayer.play()
-            playing = true
+        if isRightSide {
+            volume = max(0.0, min(1.0, volume + Float(translation) * 0.05))
+            player?.volume = volume
+            hudIcon = volume == 0 ? "speaker.slash.fill" : "speaker.wave.2.fill"
+            hudValue = volume
+        } else {
+            brightness = max(0.0, min(1.0, brightness + translation * 0.05))
+            UIScreen.main.brightness = brightness
+            hudIcon = "sun.max.fill"
+            hudValue = Float(brightness)
         }
-
-        // Auto reconnect notification on stall
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemPlaybackStalled, object: playerItem, queue: .main) { _ in
-            if self.settings.autoReconnect {
-                self.player?.play()
-            }
-        }
+        showHUD = true
     }
 }
 
 struct CustomVideoPlayer: UIViewControllerRepresentable {
     let player: AVPlayer
-    let fillVideo: Bool
+    let videoGravity: AVLayerVideoGravity
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let controller = AVPlayerViewController()
         controller.player = player
         controller.showsPlaybackControls = false
-        controller.allowsPictureInPicturePlayback = true
-        controller.canStartPictureInPictureAutomaticallyFromInline = true
-        controller.videoGravity = fillVideo ? .resizeAspectFill : .resizeAspect
+        controller.videoGravity = videoGravity
         return controller
     }
 
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
-        uiViewController.player = player
-        uiViewController.videoGravity = fillVideo ? .resizeAspectFill : .resizeAspect
+        uiViewController.videoGravity = videoGravity
     }
 }
