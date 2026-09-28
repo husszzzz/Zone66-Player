@@ -13,11 +13,11 @@ struct HomeView: View {
     var filteredMatches: [ZHMatch] {
         switch selectedFilter {
         case "live":
-            return repository.matches.filter { $0.isLive }
+            return repository.matches.filter { bash.isLive }
         case "upcoming":
-            return repository.matches.filter { $0.isUpcoming }
+            return repository.matches.filter { bash.isUpcoming }
         case "finished":
-            return repository.matches.filter { $0.isFinished }
+            return repository.matches.filter { bash.isFinished }
         default:
             return repository.matches
         }
@@ -54,66 +54,60 @@ struct HomeView: View {
             }
             .background(theme.background.ignoresSafeArea())
             .navigationBarHidden(true)
-            .fullScreenCover(item: $playingChannel) { channel in
+            .fullScreenCover(item: ) { channel in
                 PlayerView(channel: channel)
+                    .environmentObject(theme)
+                    .environmentObject(repository)
             }
-            .sheet(isPresented: $isPickerPresented) {
-                channelSelectionSheet
-            }
-            .refreshable {
-                repository.refresh()
+            .sheet(isPresented: ) {
+                if let match = matchToSelectChannelFor {
+                    MatchChannelPickerSheet(match: match) { selectedChannel in
+                        isPickerPresented = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                                playingChannel = selectedChannel
+                            }
+                        }
+                    }
+                    .environmentObject(theme)
+                    .environmentObject(repository)
+                }
             }
         }
         .navigationViewStyle(.stack)
     }
 
-    // MARK: - Header Section
+    // MARK: - Header Branding Section
     private var headerBrandSection: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 12) {
             BundledImageView(name: "zh_logo", ext: "png", placeholder: "tv.fill")
                 .frame(width: 44, height: 44)
                 .clipShape(Circle())
                 .overlay(Circle().stroke(theme.accent, lineWidth: 1.5))
-                .shadow(color: theme.accent.opacity(0.4), radius: 6)
+                .shadow(color: theme.accent.opacity(0.6), radius: 8)
 
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 6) {
-                    Text("ZH TEAM")
-                        .font(.system(size: 20, weight: .black, design: .rounded))
-                        .foregroundColor(.white)
-
-                    Text("PRO")
-                        .font(.system(size: 10, weight: .heavy))
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(theme.accent)
-                        .foregroundColor(.black)
-                        .cornerRadius(6)
-                }
+            VStack(alignment: .leading, spacing: 2) {
+                Text("ZH TEAM")
+                    .font(.system(size: 20, weight: .black, design: .rounded))
+                    .foregroundColor(.white)
+                    .tracking(1)
 
                 Text(loc.tr("matches_today"))
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundColor(.white.opacity(0.6))
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(theme.accent)
             }
 
             Spacer()
 
             Button {
-                let generator = UIImpactFeedbackGenerator(style: .light)
-                generator.impactOccurred()
                 repository.refresh()
             } label: {
-                ZStack {
-                    Circle()
-                        .fill(theme.card)
-                        .frame(width: 40, height: 40)
-
-                    Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(theme.accent)
-                        .rotationEffect(.degrees(repository.isSyncing ? 360 : 0))
-                        .animation(repository.isSyncing ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default, value: repository.isSyncing)
-                }
+                Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 38, height: 38)
+                    .background(Color.white.opacity(0.08))
+                    .clipShape(Circle())
             }
         }
         .padding(.horizontal, 16)
@@ -122,137 +116,100 @@ struct HomeView: View {
     // MARK: - Filter Tabs Section
     private var filterTabsSection: some View {
         HStack(spacing: 8) {
-            filterButton(id: "all", title: loc.tr("all"))
-            filterButton(id: "live", title: loc.tr("live_now"), isLivePulse: true)
-            filterButton(id: "upcoming", title: loc.tr("upcoming"))
-            filterButton(id: "finished", title: loc.tr("finished"))
+            filterButton(title: loc.tr("all"), id: "all")
+            filterButton(title: loc.tr("live_now"), id: "live", isLive: true)
+            filterButton(title: loc.tr("upcoming"), id: "upcoming")
+            filterButton(title: loc.tr("finished"), id: "finished")
         }
         .padding(.horizontal, 16)
     }
 
-    private func filterButton(id: String, title: String, isLivePulse: Bool = false) -> some View {
-        let isSelected = selectedFilter == id
-        return Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+    private func filterButton(title: String, id: String, isLive: Bool = false) -> some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.2)) {
                 selectedFilter = id
             }
         } label: {
-            HStack(spacing: 6) {
-                if isLivePulse {
+            HStack(spacing: 5) {
+                if isLive {
                     Circle()
                         .fill(Color.red)
                         .frame(width: 6, height: 6)
                 }
                 Text(title)
-                    .font(.system(size: 13, weight: isSelected ? .bold : .medium))
+                    .font(.system(size: 13, weight: .bold))
             }
-            .foregroundColor(isSelected ? .black : .white.opacity(0.8))
+            .foregroundColor(selectedFilter == id ? .black : .white)
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
-            .background(isSelected ? theme.accent : theme.card)
-            .cornerRadius(18)
-            .overlay(
-                RoundedRectangle(cornerRadius: 18)
-                    .stroke(isSelected ? theme.accent : Color.white.opacity(0.1), lineWidth: 1)
+            .background(
+                selectedFilter == id ?
+                theme.accent :
+                Color.white.opacity(0.08)
             )
+            .cornerRadius(20)
         }
     }
 
-    // MARK: - Empty Matches State
+    // MARK: - Empty Matches View
     private var emptyMatchesView: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             Image(systemName: "sportscourt")
-                .font(.system(size: 44))
+                .font(.system(size: 48))
                 .foregroundColor(.white.opacity(0.3))
                 .padding(.top, 40)
 
             Text("لا توجد مباريات مسجلة حالياً")
-                .font(.system(size: 15, weight: .semibold))
+                .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.white.opacity(0.7))
 
-            Text("يتم تحديث جدول المباريات تلقائياً عبر لوحة التحكم")
+            Text("يمكنك إضافة المباريات عبر لوحة التحكم ومزامنتها فوراً")
                 .font(.system(size: 12))
                 .foregroundColor(.white.opacity(0.4))
+                .multilineTextAlignment(.center)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 40)
+        .padding(32)
     }
 
-    // MARK: - Match Playback Logic
+    // MARK: - Playback Router
     private func handleMatchPlayback(_ match: ZHMatch) {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-
-        // 1. Direct stream URL in match
-        if let directURL = match.streamURL, !directURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            playingChannel = Zone66Channel(
+        if let directUrl = match.streamURL, let url = URL(string: directUrl) {
+            let channel = Zone66Channel(
                 id: match.id,
                 name: "\(match.team1) vs \(match.team2)",
-                category: match.details,
-                streamURL: directURL
+                url: url,
+                category: "Sports",
+                iconURL: nil,
+                isFavorite: false,
+                isEnabled: true
             )
+            withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                playingChannel = channel
+            }
             return
         }
 
-        // 2. ChannelId specified and matched in repository
-        if let chId = match.channelId, let found = repository.channels.first(where: { $0.id == chId }) {
-            playingChannel = found
+        if let chName = match.channelName,
+           let found = repository.channels.first(where: { bash.name.contains(chName) || chName.contains(bash.name) }) {
+            withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                playingChannel = found
+            }
             return
         }
 
-        // 3. ChannelName match in repository
-        if let chName = match.channelName, let found = repository.channels.first(where: { $0.name.lowercased().contains(chName.lowercased()) }) {
-            playingChannel = found
-            return
-        }
-
-        // 4. Otherwise, open channel picker
         matchToSelectChannelFor = match
         isPickerPresented = true
     }
-
-    // MARK: - Channel Picker Sheet
-    private var channelSelectionSheet: some View {
-        NavigationView {
-            List(repository.enabledChannels) { ch in
-                Button {
-                    isPickerPresented = false
-                    playingChannel = ch
-                } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: "tv")
-                            .foregroundColor(theme.accent)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(ch.name)
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.white)
-                            Text(ch.category)
-                                .font(.system(size: 12))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                        Spacer()
-                        Image(systemName: "play.circle.fill")
-                            .foregroundColor(theme.accent)
-                            .font(.system(size: 20))
-                    }
-                    .padding(.vertical, 4)
-                }
-                .listRowBackground(theme.card)
-            }
-            .listStyle(InsetGroupedListStyle())
-            .background(theme.background.ignoresSafeArea())
-            .navigationTitle(loc.tr("choose_channel"))
-            .navigationBarItems(trailing: Button("إلغاء") { isPickerPresented = false })
-        }
-    }
 }
 
-// MARK: - Match Card View
+// MARK: - Match Card View with Frosted Glass & Neon Glow
 struct MatchCardView: View {
     let match: ZHMatch
     let onPlay: () -> Void
     @EnvironmentObject var theme: Zone66Theme
     @ObservedObject var loc = LocalizationManager.shared
+
+    @State private var isHovered = false
 
     var statusColor: Color {
         if match.isLive { return .red }
@@ -277,27 +234,31 @@ struct MatchCardView: View {
 
                     Text(match.details)
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.white.opacity(0.85))
                         .lineLimit(1)
                 }
 
                 Spacer()
 
-                // Status Badge
-                HStack(spacing: 5) {
+                // Status Badge with Pulse
+                HStack(spacing: 6) {
                     if match.isLive {
                         Circle()
                             .fill(Color.white)
-                            .frame(width: 5, height: 5)
+                            .frame(width: 6, height: 6)
+                            .shadow(color: .white, radius: 4)
                     }
                     Text(statusBadgeText)
-                        .font(.system(size: 11, weight: .bold))
+                        .font(.system(size: 11, weight: .heavy))
                 }
                 .foregroundColor(.white)
                 .padding(.horizontal, 10)
-                .padding(.vertical, 4)
-                .background(statusColor)
-                .cornerRadius(12)
+                .padding(.vertical, 5)
+                .background(
+                    Capsule()
+                        .fill(statusColor)
+                        .shadow(color: statusColor.opacity(0.6), radius: 6)
+                )
             }
 
             // Teams Versus Section
@@ -321,13 +282,17 @@ struct MatchCardView: View {
                         .foregroundColor(match.isLive ? theme.accent : .white)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
-                        .background(Color.black.opacity(0.4))
-                        .cornerRadius(10)
+                        .background(Color.black.opacity(0.55))
+                        .cornerRadius(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(match.isLive ? theme.accent.opacity(0.7) : Color.white.opacity(0.1), lineWidth: 1)
+                        )
 
                     if !match.date.isEmpty {
                         Text(match.date)
-                            .font(.system(size: 10))
-                            .foregroundColor(.white.opacity(0.5))
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
                     }
                 }
                 .frame(width: 90)
@@ -358,7 +323,7 @@ struct MatchCardView: View {
                     Spacer()
 
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: 11, weight: .bold))
                 }
                 .foregroundColor(.black)
                 .padding(.horizontal, 14)
@@ -371,18 +336,130 @@ struct MatchCardView: View {
                     )
                 )
                 .cornerRadius(12)
-                .shadow(color: theme.accent.opacity(0.3), radius: 6, y: 2)
+                .shadow(color: theme.accent.opacity(0.4), radius: 8, y: 2)
             }
         }
         .padding(16)
+        // Frosted Glass & Neon Glow Effect
         .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(theme.card)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(match.isLive ? theme.accent.opacity(0.5) : Color.white.opacity(0.08), lineWidth: 1.5)
-                )
+            ZStack {
+                RoundedRectangle(cornerRadius: 22)
+                    .fill(Color(white: 0.12).opacity(0.75))
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 22))
+
+                // Neon Glow Border
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(
+                        LinearGradient(
+                            colors: match.isLive ?
+                                [theme.accent, theme.accent.opacity(0.4), Color.red.opacity(0.6)] :
+                                [theme.accent.opacity(0.4), Color.white.opacity(0.12)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: match.isLive ? 2 : 1.2
+                    )
+            }
         )
-        .shadow(color: Color.black.opacity(0.3), radius: 8, y: 4)
+        .shadow(color: match.isLive ? theme.accent.opacity(0.25) : Color.black.opacity(0.4), radius: 10, y: 5)
+    }
+}
+
+// MARK: - Match Channel Picker Sheet
+struct MatchChannelPickerSheet: View {
+    let match: ZHMatch
+    let onSelect: (Zone66Channel) -> Void
+
+    @EnvironmentObject var theme: Zone66Theme
+    @EnvironmentObject var repository: ChannelRepository
+    @ObservedObject var loc = LocalizationManager.shared
+    @Environment(\.presentationMode) var presentationMode
+
+    @State private var search = ""
+
+    var filteredChannels: [Zone66Channel] {
+        if search.isEmpty {
+            return repository.enabledChannels
+        }
+        return repository.enabledChannels.filter { bash.name.localizedCaseInsensitiveContains(search) }
+    }
+
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 12) {
+                // Match Header Summary
+                HStack(spacing: 10) {
+                    Text(match.team1Logo)
+                    Text(match.team1)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(.white)
+
+                    Text("VS")
+                        .font(.system(size: 11, weight: .black))
+                        .foregroundColor(theme.accent)
+
+                    Text(match.team2)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(.white)
+                    Text(match.team2Logo)
+                }
+                .padding(.vertical, 8)
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.06))
+                .cornerRadius(12)
+                .padding(.horizontal, 16)
+
+                // Search Bar
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.white.opacity(0.5))
+                    TextField(loc.tr("search_placeholder"), text: )
+                        .foregroundColor(.white)
+                }
+                .padding(10)
+                .background(Color.white.opacity(0.08))
+                .cornerRadius(12)
+                .padding(.horizontal, 16)
+
+                // Channels List
+                List {
+                    ForEach(filteredChannels) { channel in
+                        Button {
+                            onSelect(channel)
+                        } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "tv.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(theme.accent)
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(channel.name)
+                                        .font(.system(size: 14, weight: .bold))
+                                        .foregroundColor(.white)
+                                    Text(channel.category)
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.white.opacity(0.5))
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "play.circle.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(theme.accent)
+                            }
+                        }
+                    }
+                    .listRowBackground(theme.card)
+                }
+                .listStyle(PlainListStyle())
+            }
+            .background(theme.background.ignoresSafeArea())
+            .navigationTitle(loc.tr("choose_channel"))
+            .navigationBarItems(leading: Button("إلغاء") {
+                presentationMode.wrappedValue.dismiss()
+            }.foregroundColor(theme.accent))
+        }
+        .navigationViewStyle(.stack)
     }
 }
