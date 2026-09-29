@@ -108,5 +108,15 @@
     "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625074.m3u8",
     "enabled": true,
     "featured": false
+  },
+  {
+    "id": "channel-mumuc5wn-y6duse",
+    "name": "Alkass 3",
+    "category": "خليجي 27",
+    "description": "",
+    "icon": "",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625075.m3u8",
+    "enabled": true,
+    "featured": false
   }
 ]
