@@ -11,7 +11,7 @@ struct PlayerView: View {
 
     @State private var player: AVPlayer? = nil
     @State private var isPlaying: Bool = true
-    @State private var showControls: Bool = true
+    @State private var showControls: Bool = false
     @State private var isMuted: Bool = false
     @State private var aspectRatio: AVLayerVideoGravity = .resizeAspect
     @State private var isScreenLocked: Bool = false
@@ -21,21 +21,19 @@ struct PlayerView: View {
     @State private var showHUD: Bool = false
     @State private var hudIcon: String = ""
     @State private var hudValue: Float = 0.0
+    @State private var autoHideTimer: DispatchWorkItem? = nil
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            // Video Player Core
+            // Video Player Core - Always full screen and taps dismiss/toggle controls
             if let player = player {
                 CustomVideoPlayer(player: player, videoGravity: aspectRatio)
                     .ignoresSafeArea()
+                    .contentShape(Rectangle())
                     .onTapGesture {
-                        if !isScreenLocked {
-                            withAnimation(.easeInOut(duration: 0.25)) {
-                                showControls.toggle()
-                            }
-                        }
+                        handleScreenTap()
                     }
                     .onTapGesture(count: 2) {
                         if !isScreenLocked {
@@ -71,6 +69,7 @@ struct PlayerView: View {
                             withAnimation(.spring()) {
                                 isScreenLocked = false
                                 showControls = true
+                                scheduleAutoHide()
                             }
                         } label: {
                             HStack(spacing: 6) {
@@ -106,17 +105,57 @@ struct PlayerView: View {
         .onAppear {
             setupPlayer(with: channel.streamURL)
             repository.recordWatched(channel.id)
+            // Start with brief controls then auto-hide cleanly
+            showControls = true
+            scheduleAutoHide(delay: 2.5)
         }
         .onDisappear {
+            autoHideTimer?.cancel()
             player?.pause()
             player = nil
         }
     }
 
+    // Handle screen tap: dismiss everything when visible, or show controls when hidden
+    private func handleScreenTap() {
+        if isScreenLocked { return }
+
+        withAnimation(.easeInOut(duration: 0.25)) {
+            if showControls || showQuickChannels {
+                // Tapping anywhere on screen hides all overlays immediately
+                showControls = false
+                showQuickChannels = false
+                autoHideTimer?.cancel()
+            } else {
+                // Tapping on empty video reveals controls
+                showControls = true
+                scheduleAutoHide()
+            }
+        }
+    }
+
+    private func scheduleAutoHide(delay: Double = 3.5) {
+        autoHideTimer?.cancel()
+        let item = DispatchWorkItem {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                if !self.showQuickChannels {
+                    self.showControls = false
+                }
+            }
+        }
+        autoHideTimer = item
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: item)
+    }
+
     // MARK: - Controls Overlay
     private var controlsOverlay: some View {
         ZStack {
+            // Tapping on the dimmed background dismisses all controls immediately
             Color.black.opacity(0.45).ignoresSafeArea()
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    handleScreenTap()
+                }
 
             VStack {
                 // Top Bar
@@ -124,7 +163,7 @@ struct PlayerView: View {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Image(systemName: "chevron.right")
+                        Image(systemName: loc.currentLanguage.isRTL ? "chevron.right" : "chevron.left")
                             .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.white)
                             .padding(10)
@@ -163,6 +202,7 @@ struct PlayerView: View {
                         withAnimation(.spring()) {
                             isScreenLocked = true
                             showControls = false
+                            showQuickChannels = false
                         }
                     } label: {
                         Image(systemName: "lock.fill")
@@ -183,6 +223,7 @@ struct PlayerView: View {
                     Button {
                         isMuted.toggle()
                         player?.isMuted = isMuted
+                        scheduleAutoHide()
                     } label: {
                         Image(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
                             .font(.system(size: 22))
@@ -194,6 +235,7 @@ struct PlayerView: View {
 
                     Button {
                         togglePlay()
+                        scheduleAutoHide()
                     } label: {
                         Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 36))
@@ -206,6 +248,7 @@ struct PlayerView: View {
 
                     Button {
                         toggleAspectRatio()
+                        scheduleAutoHide()
                     } label: {
                         Image(systemName: aspectRatio == .resizeAspect ? "viewfinder" : "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left")
                             .font(.system(size: 22))
@@ -321,13 +364,24 @@ struct PlayerView: View {
         .overlay(RoundedRectangle(cornerRadius: 14).stroke(theme.accent.opacity(0.3), lineWidth: 1))
     }
 
-    // MARK: - Helpers
+    // MARK: - Autoplay & Helpers
     private func setupPlayer(with urlString: String) {
         guard let url = URL(string: urlString) else { return }
+
+        // Configure audio session to play immediately through speaker/headphones
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback, options: [])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Audio session setup error: \(error)")
+        }
+
         let item = AVPlayerItem(url: url)
         let newPlayer = AVPlayer(playerItem: item)
         newPlayer.automaticallyWaitsToMinimizeStalling = !settings.lowLatencyMode
         self.player = newPlayer
+
+        // Autoplay immediately without waiting for play button press
         newPlayer.play()
         self.isPlaying = true
     }
@@ -337,6 +391,7 @@ struct PlayerView: View {
         player?.pause()
         setupPlayer(with: newCh.streamURL)
         repository.recordWatched(newCh.id)
+        scheduleAutoHide(delay: 2.0)
     }
 
     private func togglePlay() {
