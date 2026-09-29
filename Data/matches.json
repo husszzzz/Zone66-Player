@@ -13,20 +13,5 @@
     "channelId": "channel-mukcwcxa-qiu0gw",
     "channelName": "BEIN SPORT 2",
     "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743610.m3u8"
-  },
-  {
-    "id": "match_mularkji_zrlpq",
-    "team1": "العراق ",
-    "team2": "آلسعوديه ",
-    "team1Logo": "https://e.top4top.io/p_392381ix21.jpg",
-    "team2Logo": "https://h.top4top.io/s_3923pno421.jpg",
-    "time": "8:30",
-    "date": "2026-09-29",
-    "details": "كاس الخليج بث حصري ZH",
-    "status": "live",
-    "score": "vs",
-    "channelId": "",
-    "channelName": "",
-    "streamURL": ""
   }
 ]
