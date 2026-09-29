@@ -200,38 +200,23 @@ struct SettingsView: View {
 
                 // MARK: - Player & Performance Settings
                 Section(header: Text("إعدادات المشغل والجودة").foregroundColor(theme.accent)) {
-                    Toggle(isOn: $settings.hardwareAcceleration) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("تسريع العتاد (Hardware Decoding)")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("تقليل استهلاك البطارية وسلاسة في 60fps")
-                                .font(.system(size: 11))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                    }
+                    Toggle("تسريع العتاد (Hardware Decoding)", isOn: Binding(
+                        get: { settings.hardwareAcceleration },
+                        set: { settings.hardwareAcceleration = $0 }
+                    ))
+                    .foregroundColor(.white)
 
-                    Toggle(isOn: $settings.lowLatencyMode) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("وضع البث فائق السرعة (Low Latency)")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("تقليل فارق البث المباشر لأقل من ثانيتين")
-                                .font(.system(size: 11))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                    }
+                    Toggle("وضع البث فائق السرعة (Low Latency)", isOn: Binding(
+                        get: { settings.lowLatencyMode },
+                        set: { settings.lowLatencyMode = $0 }
+                    ))
+                    .foregroundColor(.white)
 
-                    Toggle(isOn: $settings.autoReconnect) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("إعادة الاتصال التلقائي")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("استئناف البث فوراً في حال انقطاع الشبكة")
-                                .font(.system(size: 11))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                    }
+                    Toggle("إعادة الاتصال التلقائي", isOn: Binding(
+                        get: { settings.autoReconnect },
+                        set: { settings.autoReconnect = $0 }
+                    ))
+                    .foregroundColor(.white)
                 }
                 .listRowBackground(theme.card)
 
@@ -276,13 +261,13 @@ struct SettingsView: View {
             .listStyle(InsetGroupedListStyle())
             .background(theme.background.ignoresSafeArea())
             .navigationTitle(loc.tr("settings"))
-            .sheet(isPresented: $showLanguagePicker) {
-                LanguageSelectionModal(isPresented: $showLanguagePicker)
-                    .environmentObject(theme)
-                    .environmentObject(loc)
-            }
         }
         .navigationViewStyle(.stack)
+        .sheet(isPresented: $showLanguagePicker) {
+            LanguageSelectionModal(isPresented: $showLanguagePicker)
+                .environmentObject(theme)
+                .environmentObject(loc)
+        }
     }
 }
 
