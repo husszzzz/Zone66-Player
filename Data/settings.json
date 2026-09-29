@@ -5,5 +5,7 @@
   "heroButtonTitle": "مشاهدة القنوات",
   "supportTitle": "قناة التحديثات",
   "supportURL": "",
-  "accentHex": "#FF3"
+  "accentHex": "#FF3",
+  "buttonTitle": "تشغيل البث الآن",
+  "telegramURL": "https://t.me/hassanyIPA"
 }
