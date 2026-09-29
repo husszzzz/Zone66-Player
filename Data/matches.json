@@ -1,5 +1,20 @@
 [
   {
+    "id": "match_mumq9gre_6gic",
+    "team1": "منتخب الكويت",
+    "team2": "منتخب عمان",
+    "team1Logo": "https://media.api-sports.io/football/teams/1570.png",
+    "team2Logo": "https://flagcdn.com/w640/om.png?utm_source=chatgpt.com",
+    "time": "20:30",
+    "date": "2026-09-29",
+    "details": "كاس الخليج ZH",
+    "status": "upcoming",
+    "score": "vs",
+    "channelId": "channel-mumlrbby-s7zc4n",
+    "channelName": "Bein sports 8",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743616.m3u8"
+  },
+  {
     "id": "match_mumjvt24_j1oj",
     "team1": "منتخب العراق",
     "team2": "منتخب السعودية",
