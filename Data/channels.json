@@ -1,52 +1,983 @@
 [
   {
-    "id": "channel-mukcwcxa-qiu0gw",
-    "name": "BEIN SPORT 2",
-    "category": "رياضه",
-    "description": "",
-    "icon": "https://i.top4top.io/p_3922k3du01.jpg",
+    "id": "ch_0001",
+    "name": "BeIN SPORTS 1 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743609.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0002",
+    "name": "BeIN SPORTS 2 SD",
+    "category": "beIN SPORTS",
     "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743610.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
-    "featured": false
+    "isFeatured": false
   },
   {
-    "id": "channel-mumj2p8r-slgovh",
-    "name": "Bein sports news",
-    "category": "كرة قدم",
-    "description": "والله ما ادري",
-    "icon": "",
-    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625105.m3u8",
+    "id": "ch_0003",
+    "name": "BeIN SPORTS 3 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743611.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
-    "featured": false
+    "isFeatured": false
   },
   {
-    "id": "channel-mumj4dly-vm2t6c",
-    "name": "Alkass 1",
-    "category": "كرة قدم",
-    "description": "",
-    "icon": "",
-    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625073.m3u8",
+    "id": "ch_0004",
+    "name": "BeIN SPORTS 4 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743612.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
-    "featured": false
+    "isFeatured": false
   },
   {
-    "id": "channel-mumj5jx1-z0vwg7",
-    "name": "Bein sports 1",
-    "category": "كرة قدم",
-    "description": "",
-    "icon": "",
+    "id": "ch_0005",
+    "name": "BeIN SPORTS 5 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743613.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0006",
+    "name": "BeIN SPORTS 6 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743614.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0007",
+    "name": "BeIN SPORTS 7 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743615.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0008",
+    "name": "BeIN SPORTS 8 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743616.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0009",
+    "name": "BeIN SPORTS 9 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743617.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0010",
+    "name": "BEIN_SPORTS2_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743560.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0011",
+    "name": "BEIN_SPORTS3_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743561.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0012",
+    "name": "BEIN_SPORTS4_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743562.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0013",
+    "name": "BEIN_SPORTS5_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743563.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0014",
+    "name": "BEIN_SPORTS6_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743564.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0015",
+    "name": "BEIN_SPORTS7_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743565.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0016",
+    "name": "BEIN_SPORTS8_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743566.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0017",
+    "name": "BEIN_SPORTS9_SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743567.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0018",
+    "name": "BeIN Sports 1 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743583.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0019",
+    "name": "BeIN Sports 2 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743584.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0020",
+    "name": "BeIN Sports 3 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743585.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0021",
+    "name": "BeIN Sports 4 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743586.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0022",
+    "name": "BeIN Sports 5 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743587.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0023",
+    "name": "BeIN Sports 6 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743588.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0024",
+    "name": "BeIN Sports 7 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743589.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0025",
+    "name": "BeIN Sports 8 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743590.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0026",
+    "name": "BeIN Sports 9 SD",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743591.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0027",
+    "name": "BEIN SPORTS 1 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743631.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0028",
+    "name": "BEIN SPORTS 2 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743632.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0029",
+    "name": "BEIN SPORTS 3 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743633.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0030",
+    "name": "BEIN SPORTS 4 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743634.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0031",
+    "name": "BEIN SPORTS 5 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743635.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0032",
+    "name": "BEIN SPORTS 6 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743636.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0033",
+    "name": "BEIN SPORTS 7 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743637.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0034",
+    "name": "BEIN SPORTS 8 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743638.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0035",
+    "name": "BEIN SPORTS 9 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743639.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0036",
+    "name": "beIN SPORTS 4 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51803.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0037",
+    "name": "beIN SPORTS 5 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51802.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0038",
+    "name": "beIN SPORTS 6 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51801.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0039",
+    "name": "beIN SPORTS 7 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51800.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0040",
+    "name": "beIN SPORTS 8 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51799.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0041",
+    "name": "beIN SPORTS 9 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51798.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0042",
+    "name": "beIN SPORTS 1 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51796.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0043",
+    "name": "beIN SPORTS 2 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51795.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0044",
+    "name": "beIN SPORTS 3 HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51794.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0045",
+    "name": "beIN Sport Extra 02",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/93676.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0046",
+    "name": "Bein Sports 09 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/93673.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0047",
+    "name": "Bein Sports 01 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61064.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0048",
+    "name": "Bein Sports 02 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61063.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0049",
+    "name": "Bein Sports 03 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61062.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0050",
+    "name": "Bein Sports 04 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61061.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0051",
+    "name": "Bein Sports 05 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61060.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0052",
+    "name": "Bein Sports 06 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61059.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0053",
+    "name": "Bein Sports 07 FHD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/61058.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0054",
+    "name": "Bein Sports 02 [4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51825.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0055",
+    "name": "Bein Sports 03 [4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51824.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0056",
+    "name": "Bein Sports 04 [4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51823.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0057",
+    "name": "Bein Sports 05 [4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51822.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0058",
+    "name": "Bein Sports 06 [4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51821.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0059",
+    "name": "Bein Sports  08[4k]",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51819.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0060",
+    "name": "BeIN SPORTS 9 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743649.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0061",
+    "name": "BeIN SPORTS 8 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743648.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0062",
+    "name": "BeIN SPORTS 7 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743647.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0063",
+    "name": "BeIN SPORTS 6 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743646.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0064",
+    "name": "BeIN SPORTS 5 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743645.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0065",
+    "name": "BeIN SPORTS 4 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743644.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0066",
+    "name": "BeIN SPORTS 3 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743643.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0067",
+    "name": "BeIN SPORTS 2 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743642.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0068",
+    "name": "BeIN SPORTS 1 H 265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743641.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0069",
+    "name": "beIN Sport 01 (1080p) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58868.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0070",
+    "name": "beIN Sport 02 (1080p) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58867.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0071",
+    "name": "beIN Sport 03 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58866.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0072",
+    "name": "beIN Sport 04 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58865.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0073",
+    "name": "beIN Sport 05 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58864.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0074",
+    "name": "beIN Sport 06 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58863.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0075",
+    "name": "beIN Sport 07 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58862.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0076",
+    "name": "beIN Sports 08 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58861.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0077",
+    "name": "beIN Sports 09 (1080P) H265",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/58860.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0078",
+    "name": "(AR)BEIN_SPORTS9 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743576.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0079",
+    "name": "(AR)BEIN_SPORTS8 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743575.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0080",
+    "name": "(AR)BEIN_SPORTS5 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743572.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0081",
+    "name": "(AR)BEIN_SPORTS4 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743571.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0082",
+    "name": "(AR)BEIN_SPORTS3 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743570.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0083",
+    "name": "(AR)BEIN_SPORTS2 HEVC(1080i)",
+    "category": "beIN SPORTS",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743569.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0084",
+    "name": "(AR)BEIN_SPORTS1 HEVC(1080i)",
+    "category": "beIN SPORTS",
     "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743568.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
-    "featured": false
+    "isFeatured": true
   },
   {
-    "id": "channel-mumjdu98-31tknx",
-    "name": "واحد كوت",
-    "category": "كرة قدم",
-    "description": "",
-    "icon": "",
-    "streamURL": "http://asmr4k.world:8080/live/9932081304/4200945603/540662.m3u8",
+    "id": "ch_0085",
+    "name": "beIN SPORTS HD",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625066.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
-    "featured": false
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0086",
+    "name": "beIN SPORTS NEWS FHD (H.265)",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625105.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0087",
+    "name": "beIN SPORTS FHD (H.265)",
+    "category": "beIN SPORTS HD",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625106.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0088",
+    "name": "Thmanayh 3 4K",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371723.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0089",
+    "name": "Thmanayh 2 4K",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371722.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0090",
+    "name": "Thmanayh 1 4K",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371721.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": true
+  },
+  {
+    "id": "ch_0091",
+    "name": "Thmanayh 3HD",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371720.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0092",
+    "name": "Thmanayh 2HD",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371719.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0093",
+    "name": "Thmanayh 1HD",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/371718.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0094",
+    "name": "Oman Sport HD",
+    "category": "قنوات الخليج",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625094.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0095",
+    "name": "AD Sport 2FHD (H.265)",
+    "category": "أبو ظبي الرياضية",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625098.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0096",
+    "name": "YAS Sport",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625099.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0097",
+    "name": "KSA Sport 1 FHD (H.265) (50FPS)",
+    "category": "قنوات الخليج",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625100.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0098",
+    "name": "KSA Sport 2 FHD (H.265) (50FPS)",
+    "category": "قنوات الخليج",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625101.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0099",
+    "name": "KSA Sport 3 FHD (H.265) (50FPS)",
+    "category": "قنوات الخليج",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625102.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0100",
+    "name": "Kuwait Sports FHD (H.265)",
+    "category": "قنوات الخليج",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625108.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0101",
+    "name": "ON Time Sports SD",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625110.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0102",
+    "name": "ON Time Sports 2 SD",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625111.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0103",
+    "name": "ON Time Sports HD",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625112.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0104",
+    "name": "ON Time Sports 2 HD",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625113.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0105",
+    "name": "ON Time Sports FHD (H.265) (50FPS)",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625114.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0106",
+    "name": "ON Time Sports 2FHD (H.265) (50FPS)",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625115.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0107",
+    "name": "Nile Sports",
+    "category": "قنوات رياضية متنوعة",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625116.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0108",
+    "name": "Al Ahly HD",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625117.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
+  },
+  {
+    "id": "ch_0109",
+    "name": "Zamalik TV",
+    "category": "أخرى",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/625118.m3u8",
+    "icon": "https://icon.dragcdn.win//Icone/d.png",
+    "enabled": true,
+    "isFeatured": false
   }
 ]
