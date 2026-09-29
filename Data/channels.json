@@ -979,5 +979,15 @@
     "icon": "https://icon.dragcdn.win//Icone/d.png",
     "enabled": true,
     "isFeatured": false
+  },
+  {
+    "id": "channel-mumkh0d1-rzqpek",
+    "name": "عبود",
+    "category": "عام",
+    "description": "",
+    "icon": "",
+    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/743609.m3u8",
+    "enabled": true,
+    "featured": false
   }
 ]
