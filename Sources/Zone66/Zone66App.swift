@@ -10,10 +10,15 @@ final class AppResetManager: ObservableObject {
         URLCache.shared.removeAllCachedResponses()
 
         // Reset player & app settings
-        Zone66Settings.shared.resetToDefaults()
+        let settings = Zone66Settings.shared
+        settings.autoPlay = true
+        settings.fillVideo = false
+        settings.hardwareAcceleration = true
+        settings.lowLatencyMode = true
+        settings.autoReconnect = true
 
         // Reload data from local and sync
-        ChannelRepository.shared.resetAndReload()
+        ChannelRepository.shared.refresh()
 
         // Smoothly restart app hierarchy
         DispatchQueue.main.async {
@@ -126,45 +131,6 @@ struct ZHSplashIntroView: View {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                 onFinished()
-            }
-        }
-    }
-}
-
-struct NoInternetView: View {
-    @EnvironmentObject var theme: Zone66Theme
-    @ObservedObject var loc = LocalizationManager.shared
-
-    var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-
-            VStack(spacing: 20) {
-                Image(systemName: "wifi.slash")
-                    .font(.system(size: 60))
-                    .foregroundColor(theme.accent)
-
-                Text(loc.tr("no_internet_title"))
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.white)
-
-                Text(loc.tr("no_internet_desc"))
-                    .font(.system(size: 13))
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 30)
-
-                Button {
-                    NetworkMonitor.shared.checkConnection()
-                } label: {
-                    Text(loc.tr("retry"))
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 12)
-                        .background(theme.accent)
-                        .clipShape(Capsule())
-                }
             }
         }
     }
