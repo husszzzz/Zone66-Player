@@ -1,15 +1,5 @@
 [
   {
-    "id": "channel-mumkpo44-em93a6",
-    "name": "Bein sports 1",
-    "category": "عام",
-    "description": "",
-    "icon": "",
-    "streamURL": "http://26.dragonpro.net:8080/live/980399222412/372838219650/51796.m3u8",
-    "enabled": true,
-    "featured": false
-  },
-  {
     "id": "channel-mumksnla-xuk0dw",
     "name": "ميو",
     "category": "عام",
