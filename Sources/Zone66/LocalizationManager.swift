@@ -79,7 +79,7 @@ class LocalizationManager: ObservableObject {
             "favorites_empty_desc": [.arabic: "اضغط على القلب داخل المشغل لحفظ القنوات هنا", .english: "Save favorite channels to show up here", .kurdish: "کەناڵە دڵخوازەکان لێرەدا پاشەکەوت بکە"],
             "no_matches_today": [.arabic: "لا توجد مباريات مسجلة حالياً", .english: "No matches scheduled today", .kurdish: "هیچ یارییەک لەم کاتەدا نییە"],
             "no_matches_desc": [.arabic: "يمكنك مزامنة المباريات والقنوات فوراً", .english: "Matches and channels can be synced instantly", .kurdish: "دەتوانیت یارییەکان و کەناڵەکان هاوکات بکەیت"],
-            "app_subtitle": [.arabic: "الإصدار 5.4.0 • المشغل الملكي للبث المباشر", .english: "v5.4.0 • Royal Live Stream Player", .kurdish: "وەشانی 5.4.0 • پەخشکەری شاهانەی ڕاستەوخۆ"],
+            "app_subtitle": [.arabic: "الإصدار 1.0.0 • المشغل الملكي للبث المباشر", .english: "v1.0.0 • Royal Live Stream Player", .kurdish: "وەشانی 1.0.0 • پەخشکەری شاهانەی ڕاستەوخۆ"],
             "support_section": [.arabic: "الدعم الفني والإبلاغ", .english: "Support & Feedback", .kurdish: "پشتیوانی و ڕاپۆرتکردن"],
             "report_issue": [.arabic: "إبلاغ عن مشكلة", .english: "Report an Issue", .kurdish: "ڕاپۆرتکردنی کێشە"],
             "report_desc": [.arabic: "تواصل مباشر مع المطور حسين الحسني", .english: "Direct contact with developer Hussein", .kurdish: "پەیوەندی ڕاستەوخۆ لەگەڵ گەشەپێدەر حوسێن"],
