@@ -4,9 +4,12 @@ struct SettingsView: View {
     @EnvironmentObject var theme: Zone66Theme
     @EnvironmentObject var repository: ChannelRepository
     @EnvironmentObject var settings: Zone66Settings
+    @EnvironmentObject var resetManager: AppResetManager
     @ObservedObject var loc = LocalizationManager.shared
 
     @State private var showLanguagePicker = false
+    @State private var showFixAlert = false
+    @State private var showSuccessNotice = false
 
     var body: some View {
         NavigationView {
@@ -30,7 +33,7 @@ struct SettingsView: View {
                             .font(.system(size: 22, weight: .black, design: .rounded))
                             .foregroundColor(.white)
 
-                        Text("الإصدار 5.4.0 • المشغل الملكي للبث المباشر")
+                        Text(loc.tr("app_subtitle"))
                             .font(.system(size: 12, weight: .medium))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -60,7 +63,7 @@ struct SettingsView: View {
 
                             Spacer()
 
-                            Image(systemName: "chevron.left")
+                            Image(systemName: loc.currentLanguage.isRTL ? "chevron.left" : "chevron.right")
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(.white.opacity(0.5))
                         }
@@ -68,26 +71,62 @@ struct SettingsView: View {
                 }
                 .listRowBackground(theme.card)
 
-                // MARK: - Report a Problem (Contact Hussein Al-Hassani)
-                Section(header: Text("الدعم الفني والإبلاغ").foregroundColor(theme.accent)) {
-                    Link(destination: URL(string: "https://t.me/OM_G9")!) {
+                // MARK: - Troubleshooting & Reset (إصلاح الأخطاء)
+                Section(header: Text(loc.tr("fix_bugs_title")).foregroundColor(theme.accent)) {
+                    Button {
+                        showFixAlert = true
+                    } label: {
                         HStack(spacing: 12) {
                             ZStack {
                                 Circle()
-                                    .fill(Color.orange.opacity(0.15))
+                                    .fill(Color.orange.opacity(0.18))
                                     .frame(width: 38, height: 38)
 
-                                Image(systemName: "exclamationmark.bubble.fill")
-                                    .font(.system(size: 17, weight: .bold))
+                                Image(systemName: "wrench.and.screwdriver.fill")
+                                    .font(.system(size: 16, weight: .bold))
                                     .foregroundColor(.orange)
                             }
 
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("إبلاغ عن مشكلة")
+                                Text(loc.tr("fix_bugs_btn"))
                                     .font(.system(size: 15, weight: .bold))
                                     .foregroundColor(.white)
 
-                                Text("تواصل مباشر مع المطور حسين الحسني")
+                                Text(loc.tr("fix_bugs_desc"))
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+
+                            Spacer()
+
+                            Image(systemName: "arrow.counterclockwise.circle.fill")
+                                .font(.system(size: 18))
+                                .foregroundColor(.orange)
+                        }
+                    }
+                }
+                .listRowBackground(theme.card)
+
+                // MARK: - Report a Problem (Contact Hussein Al-Hassani)
+                Section(header: Text(loc.tr("support_section")).foregroundColor(theme.accent)) {
+                    Link(destination: URL(string: "https://t.me/OM_G9")!) {
+                        HStack(spacing: 12) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.blue.opacity(0.15))
+                                    .frame(width: 38, height: 38)
+
+                                Image(systemName: "exclamationmark.bubble.fill")
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.blue)
+                            }
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(loc.tr("report_issue"))
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(.white)
+
+                                Text(loc.tr("report_desc"))
                                     .font(.system(size: 11))
                                     .foregroundColor(.white.opacity(0.6))
                             }
@@ -96,14 +135,14 @@ struct SettingsView: View {
 
                             Image(systemName: "paperplane.fill")
                                 .font(.system(size: 13))
-                                .foregroundColor(.orange)
+                                .foregroundColor(.blue)
                         }
                     }
                 }
                 .listRowBackground(theme.card)
 
                 // MARK: - Development Team
-                Section(header: Text("فريق العمل والإدارة").foregroundColor(theme.accent)) {
+                Section(header: Text(loc.tr("team_section")).foregroundColor(theme.accent)) {
                     // Main Developer: Hussein Al-Hasani
                     HStack(spacing: 14) {
                         BundledImageView(name: "developer_hussein", ext: "jpg", placeholder: "person.crop.circle.fill")
@@ -114,11 +153,11 @@ struct SettingsView: View {
 
                         VStack(alignment: .leading, spacing: 3) {
                             HStack(spacing: 6) {
-                                Text("حسين الحسني")
+                                Text(loc.tr("dev_name"))
                                     .font(.system(size: 15, weight: .bold))
                                     .foregroundColor(.white)
 
-                                Text("المطور الرئيسي")
+                                Text(loc.tr("dev_badge"))
                                     .font(.system(size: 10, weight: .heavy))
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
@@ -127,7 +166,7 @@ struct SettingsView: View {
                                     .cornerRadius(6)
                             }
 
-                            Text("برمجة وتطوير تطبيق ZH TEAM")
+                            Text(loc.tr("dev_desc"))
                                 .font(.system(size: 11))
                                 .foregroundColor(.white.opacity(0.6))
                         }
@@ -160,11 +199,11 @@ struct SettingsView: View {
 
                         VStack(alignment: .leading, spacing: 3) {
                             HStack(spacing: 6) {
-                                Text("عبود سكوفيلد")
+                                Text(loc.tr("manager_name"))
                                     .font(.system(size: 15, weight: .bold))
                                     .foregroundColor(.white)
 
-                                Text("مصمم ومدير القنوات")
+                                Text(loc.tr("manager_badge"))
                                     .font(.system(size: 10, weight: .heavy))
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
@@ -173,7 +212,7 @@ struct SettingsView: View {
                                     .cornerRadius(6)
                             }
 
-                            Text("إدارة مصادر وسيرفرات البث")
+                            Text(loc.tr("manager_desc"))
                                 .font(.system(size: 11))
                                 .foregroundColor(.white.opacity(0.6))
                         }
@@ -199,20 +238,20 @@ struct SettingsView: View {
                 .listRowBackground(theme.card)
 
                 // MARK: - Player & Performance Settings
-                Section(header: Text("إعدادات المشغل والجودة").foregroundColor(theme.accent)) {
-                    Toggle("تسريع العتاد (Hardware Decoding)", isOn: Binding(
+                Section(header: Text(loc.tr("player_settings")).foregroundColor(theme.accent)) {
+                    Toggle(loc.tr("hw_accel"), isOn: Binding(
                         get: { settings.hardwareAcceleration },
                         set: { settings.hardwareAcceleration = $0 }
                     ))
                     .foregroundColor(.white)
 
-                    Toggle("وضع البث فائق السرعة (Low Latency)", isOn: Binding(
+                    Toggle(loc.tr("low_latency"), isOn: Binding(
                         get: { settings.lowLatencyMode },
                         set: { settings.lowLatencyMode = $0 }
                     ))
                     .foregroundColor(.white)
 
-                    Toggle("إعادة الاتصال التلقائي", isOn: Binding(
+                    Toggle(loc.tr("auto_reconnect"), isOn: Binding(
                         get: { settings.autoReconnect },
                         set: { settings.autoReconnect = $0 }
                     ))
@@ -221,14 +260,14 @@ struct SettingsView: View {
                 .listRowBackground(theme.card)
 
                 // MARK: - Data Synchronization
-                Section(header: Text("مزامنة السيرفرات").foregroundColor(theme.accent)) {
+                Section(header: Text(loc.tr("server_sync")).foregroundColor(theme.accent)) {
                     Button {
                         repository.refresh()
                     } label: {
                         HStack {
                             Image(systemName: repository.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
                                 .foregroundColor(theme.accent)
-                            Text("تحديث جدول المباريات والقنوات فوراً")
+                            Text(loc.tr("sync_btn"))
                                 .foregroundColor(.white)
                             Spacer()
                             if repository.isSyncing {
@@ -239,7 +278,7 @@ struct SettingsView: View {
                     }
 
                     HStack {
-                        Text("إجمالي القنوات الفعالة")
+                        Text(loc.tr("total_channels"))
                             .foregroundColor(.white.opacity(0.7))
                         Spacer()
                         Text("\(repository.enabledChannels.count)")
@@ -248,7 +287,7 @@ struct SettingsView: View {
                     }
 
                     HStack {
-                        Text("عدد مباريات اليوم")
+                        Text(loc.tr("today_matches_count"))
                             .foregroundColor(.white.opacity(0.7))
                         Spacer()
                         Text("\(repository.matches.count)")
@@ -267,6 +306,16 @@ struct SettingsView: View {
             LanguageSelectionModal(isPresented: $showLanguagePicker)
                 .environmentObject(theme)
                 .environmentObject(loc)
+        }
+        .alert(isPresented: $showFixAlert) {
+            Alert(
+                title: Text(loc.tr("fix_confirm_title")),
+                message: Text(loc.tr("fix_confirm_msg")),
+                primaryButton: .destructive(Text(loc.tr("confirm"))) {
+                    resetManager.restartApp()
+                },
+                secondaryButton: .cancel(Text(loc.tr("cancel")))
+            )
         }
     }
 }
