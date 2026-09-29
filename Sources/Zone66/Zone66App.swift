@@ -1,5 +1,34 @@
 import SwiftUI
 
+final class AppResetManager: ObservableObject {
+    static let shared = AppResetManager()
+    @Published var restartToken: UUID = UUID()
+    @Published var isRestarting: Bool = false
+
+    func restartApp() {
+        // Clear all URL and data caches
+        URLCache.shared.removeAllCachedResponses()
+
+        // Reset player & app settings
+        Zone66Settings.shared.resetToDefaults()
+
+        // Reload data from local and sync
+        ChannelRepository.shared.resetAndReload()
+
+        // Smoothly restart app hierarchy
+        DispatchQueue.main.async {
+            self.isRestarting = true
+            self.restartToken = UUID()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    self.isRestarting = false
+                }
+            }
+        }
+    }
+}
+
 @main
 struct Zone66App: App {
     @StateObject private var theme = Zone66Theme.shared
@@ -7,13 +36,14 @@ struct Zone66App: App {
     @StateObject private var settings = Zone66Settings.shared
     @StateObject private var network = NetworkMonitor.shared
     @StateObject private var loc = LocalizationManager.shared
+    @StateObject private var resetManager = AppResetManager.shared
 
     @State private var showSplash = true
 
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if showSplash {
+                if showSplash || resetManager.isRestarting {
                     ZHSplashIntroView {
                         withAnimation(.easeInOut(duration: 0.6)) {
                             showSplash = false
@@ -29,11 +59,15 @@ struct Zone66App: App {
                             .environmentObject(settings)
                             .environmentObject(loc)
                             .environmentObject(network)
+                            .environmentObject(resetManager)
+                            .environment(\.layoutDirection, loc.currentLanguage.layoutDirection)
                             .preferredColorScheme(.dark)
                             .accentColor(theme.accent)
+                            .id("\(loc.currentLanguage.rawValue)-\(resetManager.restartToken)")
                     } else {
                         NoInternetView()
                             .environmentObject(theme)
+                            .environment(\.layoutDirection, loc.currentLanguage.layoutDirection)
                     }
                 }
             }
@@ -42,94 +76,95 @@ struct Zone66App: App {
 }
 
 struct ZHSplashIntroView: View {
-    @EnvironmentObject var theme: Zone66Theme
     var onFinished: () -> Void
+    @EnvironmentObject var theme: Zone66Theme
 
-    @State private var scale: CGFloat = 0.6
-    @State private var opacity: Double = 0.0
-    @State private var glowPulse: CGFloat = 1.0
-    @State private var ballOffset: CGFloat = -120
-    @State private var ballOpacity: Double = 0.0
+    @State private var logoScale: CGFloat = 0.7
+    @State private var logoOpacity: Double = 0.0
 
     var body: some View {
         ZStack {
-            // Dark futuristic background
-            Color.black.ignoresSafeArea()
+            Color(red: 0.04, green: 0.04, blue: 0.05).ignoresSafeArea()
 
-            RadialGradient(
-                colors: [theme.accent.opacity(0.25), Color.black],
-                center: .center,
-                startRadius: 20,
-                endRadius: 350
-            )
-            .ignoresSafeArea()
-
-            // Glowing pulsating sphere / aura
-            Circle()
-                .fill(theme.accent.opacity(0.18))
-                .frame(width: 240, height: 240)
-                .scaleEffect(glowPulse)
-                .blur(radius: 40)
-
-            VStack(spacing: 24) {
-                // Ball entry animation
-                Image(systemName: "soccerball")
-                    .font(.system(size: 32, weight: .bold))
-                    .foregroundColor(theme.accent)
-                    .offset(y: ballOffset)
-                    .opacity(ballOpacity)
-                    .shadow(color: theme.accent, radius: 10)
-
-                // ZH Logo Badge
+            VStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .stroke(
-                            LinearGradient(
-                                colors: [theme.accent, theme.accent.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 3
-                        )
+                        .fill(theme.accent.opacity(0.12))
                         .frame(width: 140, height: 140)
-                        .shadow(color: theme.accent.opacity(0.8), radius: 16)
+
+                    Circle()
+                        .stroke(theme.accent.opacity(0.3), lineWidth: 2)
+                        .frame(width: 120, height: 120)
 
                     BundledImageView(name: "zh_logo", ext: "png", placeholder: "tv.fill")
-                        .frame(width: 120, height: 120)
+                        .frame(width: 90, height: 90)
                         .clipShape(Circle())
+                        .shadow(color: theme.accent.opacity(0.7), radius: 12)
                 }
-                .scaleEffect(scale)
-                .opacity(opacity)
+                .scaleEffect(logoScale)
+                .opacity(logoOpacity)
 
-                VStack(spacing: 8) {
-                    Text("ZH TEAM TV PRO")
-                        .font(.system(size: 26, weight: .black, design: .rounded))
+                VStack(spacing: 6) {
+                    Text("ZH TEAM")
+                        .font(.system(size: 28, weight: .black, design: .rounded))
                         .foregroundColor(.white)
                         .tracking(2)
 
-                    Text("المشغل الملكي للبث المباشر")
-                        .font(.system(size: 14, weight: .medium))
+                    Text("ROYAL LIVE TV PRO")
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundColor(theme.accent)
+                        .tracking(3)
                 }
-                .opacity(opacity)
+                .opacity(logoOpacity)
             }
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.8)) {
-                scale = 1.0
-                opacity = 1.0
-            }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
-                ballOffset = 0
-                ballOpacity = 1.0
-            }
-            withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
-                glowPulse = 1.35
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                logoScale = 1.0
+                logoOpacity = 1.0
             }
 
-            // Dismiss intro after 2.4 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                 onFinished()
+            }
+        }
+    }
+}
+
+struct NoInternetView: View {
+    @EnvironmentObject var theme: Zone66Theme
+    @ObservedObject var loc = LocalizationManager.shared
+
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+
+            VStack(spacing: 20) {
+                Image(systemName: "wifi.slash")
+                    .font(.system(size: 60))
+                    .foregroundColor(theme.accent)
+
+                Text(loc.tr("no_internet_title"))
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+
+                Text(loc.tr("no_internet_desc"))
+                    .font(.system(size: 13))
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 30)
+
+                Button {
+                    NetworkMonitor.shared.checkConnection()
+                } label: {
+                    Text(loc.tr("retry"))
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 12)
+                        .background(theme.accent)
+                        .clipShape(Capsule())
+                }
             }
         }
     }
